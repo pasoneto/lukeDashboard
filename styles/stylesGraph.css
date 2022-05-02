@@ -1,0 +1,17 @@
+.graphBox {
+  background: snow;
+  height: 32vh;
+  margin: 1px;
+  width: 49%;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.graphBox.mainGraph {
+  width: 98%;
+}
+
+.graphsBox { 
+  width: 80%
+}
+

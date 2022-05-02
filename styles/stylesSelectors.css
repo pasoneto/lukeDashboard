@@ -1,0 +1,21 @@
+/*Dimension selectors*/
+.dimensionSelector {
+  height: 10vh;
+  width: 80%
+}
+
+.statisticsSelector {
+  height: 10vh;
+  width: 20%
+}
+
+
+/*Dropdown buttons*/
+.dropdown-btn {
+  float: left
+}
+#dropdown-btn {
+  float: left
+}
+
+

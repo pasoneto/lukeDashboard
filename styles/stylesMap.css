@@ -1,0 +1,18 @@
+/*Map styles*/
+.area{
+  fill : lightgray 
+}
+.areaAvailable {
+  fill: lightblue
+}
+.areaAvailable:hover {
+  fill: blue
+}
+#new-map {
+  margin: auto;
+}
+.mapBox  {
+  width: 20%;
+  resize:none;
+}
+/*Map styles*/

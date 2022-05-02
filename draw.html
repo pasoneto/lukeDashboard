@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<link rel="stylesheet" href="./styles/stylesGeneral.css">
+<link rel="stylesheet" href="./styles/stylesMap.css">
+<link rel="stylesheet" href="./styles/stylesGraph.css">
+<link rel="stylesheet" href="./styles/stylesMobile.css">
+<link rel="stylesheet" href="./styles/stylesSelectors.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<style>
+</style>
+</head>
+
+
+<body>
+
+<div class="header">
+  <h1>Dashboard</h1>
+  <h3 id="title"></h3>
+</div>
+
+
+<div class="row">
+  <div class="column statisticsSelector" id="statisticsSelector" style="background-color:#aaa;">
+    Database selector
+  </div>
+
+  <div class="column dimensionSelector" id="dimensionSelector" style="background-color:#bbb;">
+    Parameter selector
+  </div>
+
+  <div class="column mapBox" style="background-color:#ccc;">
+    Map selector
+    <div id="map-chart">
+    </div>
+  </div>
+
+  <div class="column graphsBox" style="background-color:#ddd;">
+    Graphs
+    <button id="buttonRender">Render graphs</button>
+    <div class="row">
+      <div class="column graphBox mainGraph" id="box"></div>
+      <div class="column graphBox" id="box2"></div>
+      <div class="column graphBox" id="box3"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script src="./src/map.js"></script>
+<script src="./src/renderDropdownSelection.js"></script> <!-- Renders database selector -->
+<script src="./src/wrapper.js"></script> <!-- Complete setup and function calls -->
+
+</html>
