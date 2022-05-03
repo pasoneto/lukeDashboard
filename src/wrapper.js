@@ -21,9 +21,11 @@ dataBaseSelector.addEventListener('change', async function() {
   console.log(url)
 
   //Add base data call here, which will determine optionIDS below
-  var options = ['a', 'b', 'c']
-  var optionNames = ['a', 'b', 'c']
-  var optionIDS = ['Year', 'Region', 'Size']
+  var categories = ['Year', 'Region', 'Size']
+  var optionsYear = ['2010', '2011', '2012']
+  var optionsRegion = ['USA', 'FIN', 'CAN']
+  var optionsSize = ['Small', 'Medium', 'Big']
+  var options = [optionsYear, optionsRegion, optionsSize]
 
   //Render checkbox selection buttons
   createClassifierButton("displayBoxButton", 'dimensionSelector')
@@ -32,13 +34,13 @@ dataBaseSelector.addEventListener('change', async function() {
     dimensionSelectionButtons[k].onclick = function(){showBoxSelector("boxTop")}
   }
 
-  //Adds function to button. Fetches the selected values in the boxes
+  //Adds function to button. Fetches the selected values in the boxes by category
   document.getElementById("buttonRender").onclick = function(){
-    genObjectClassifiers(optionIDS);
+    mergeVerifyCheckedBoxes(categories)
   };  
-  
+
   //Generate checkbox inside button
-  generateCheckBoxes(optionIDS, optionNames, 'boxTop')
+  generateCheckBoxes(categories, options, 'boxTop')
 
   //Add showBox to the button which shows the category name
   document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
