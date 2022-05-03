@@ -49,6 +49,7 @@ function verifyCheckedBoxes(category){
   return(json)
 }
 
+//Runs function verifyCheckedBoxes across all categories, and returns a single object with selections
 function mergeVerifyCheckedBoxes(categories){
   var allChecks = {}
   for(k in categories){
@@ -59,14 +60,20 @@ function mergeVerifyCheckedBoxes(categories){
   return(allChecks)
 }
 
+//Function prevents the selection of more than one category with more than one value
+function onlyOne(checkBoxes, current) {
+  for(k in checkBoxes){
+    if(checkBoxes[k].id !== current.id){
+      checkBoxes[k].checked = false
+    }
+  }
+}
 
-
-
-
-
-
-
-//generates object with checked boxes
-//function genObjectClassifiers(optionIDS) {
-  //implement
-  //}
+//Functions applies the onlyOne function to all elements of a category ID
+function applyOnlyOneToCategory(category){
+  var a = document.getElementById(category)
+  var b = a.getElementsByTagName('input')
+  for(j in b){
+    b[j].onclick = function(){onlyOne(b, this)}
+  }
+}
