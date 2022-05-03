@@ -10,11 +10,11 @@
 <link rel="stylesheet" href="./styles/stylesGraph.css">
 <link rel="stylesheet" href="./styles/stylesMobile.css">
 <link rel="stylesheet" href="./styles/stylesSelectors.css">
+<link rel="stylesheet" href="./styles/stylesBoxSelector.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <style>
 </style>
 </head>
-
 
 <body>
 
@@ -23,6 +23,11 @@
   <h3 id="title"></h3>
 </div>
 
+<!-- Box on top of everything. Selects classifiers -->
+<div id="boxTop">
+  <button id="buttonDimensionSelector">Done</button>
+</div>
+<!-- Box on top of everything. Selects classifiers -->
 
 <div class="row">
   <div class="column statisticsSelector" id="statisticsSelector" style="background-color:#aaa;">
@@ -53,7 +58,9 @@
 </body>
 
 <script src="./src/map.js"></script>
-<script src="./src/renderDropdownSelection.js"></script> <!-- Renders database selector -->
+<script src="./src/mapFunctions.js"></script>
+<script src="./src/dropdownSelection.js"></script> <!-- Renders database selector -->
+<script src="./src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
 <script src="./src/wrapper.js"></script> <!-- Complete setup and function calls -->
 
 </html>

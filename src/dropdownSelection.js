@@ -1,5 +1,5 @@
 //Renders boxes with a set of options
-function renderDropDownSelection(outerClass, options, optionNames, selectorTitle, whereAppend, nRuns = 1){
+function dropDownSelection(outerClass, options, optionNames, selectorTitle, whereAppend, nRuns = 1){
     html = '';
     for (let i = 0; i < nRuns; i++) {
       html += '<select class="' + outerClass + '"} id="' + selectorTitle[i] + '">';
@@ -18,16 +18,3 @@ function checkSelected(optionID){
   var selected = selectionBox.options[selectionBox.selectedIndex].value;
   return selected
 }
-
-//Based on selected elements, generates an object where keys are the names of classifiers (optionNames)
-//and the values are the selected values
-function genObjectClassifiers(optionIDS) {
-    optionsObject = {}
-    for(k in optionIDS){
-      var optionID = optionIDS[k]
-      optionsObject[optionID] = checkSelected(optionID)
-    }
-    console.log(optionsObject)
-    return(optionsObject)
-}
-

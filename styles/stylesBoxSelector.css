@@ -1,0 +1,26 @@
+/*Scroll div on top of everything*/
+#boxTop {
+  background-color: lightblue;
+  display: none;
+  z-index: 1000;
+  height: 30%;
+  width: 30%;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.30) 3px 2.2px 2.9px;
+  overflow:auto;
+}
+/*Scroll div on top of everything*/
+
+/*Button submit dimensions selected*/
+#buttonDimensionSelector{
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+}
+/*Button submit dimensions selected*/
