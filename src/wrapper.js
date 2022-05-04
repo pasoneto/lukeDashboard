@@ -27,23 +27,28 @@ dataBaseSelector.addEventListener('change', async function() {
   var optionsSize = ['Small', 'Medium', 'Big']
   var options = [optionsYear, optionsRegion, optionsSize]
 
-  //Render checkbox selection buttons
+  //Render button which renders checkbox selection box and adds showBoxSelector function to its click
   createClassifierButton("displayBoxButton", 'dimensionSelector')
-  var dimensionSelectionButtons = document.querySelectorAll(".displayBoxButton")
-  for(k in dimensionSelectionButtons){
-    dimensionSelectionButtons[k].onclick = function(){showBoxSelector("boxTop")}
-  }
+  var dimensionSelectionButtons = document.getElementById("SelectDimension")
+  dimensionSelectionButtons.onclick = function(){showBoxSelector("boxTop")} 
 
-  //Adds function to button. Fetches the selected values in the boxes by category
-  document.getElementById("buttonRender").onclick = function(){
-    mergeVerifyCheckedBoxes(categories)
-  };  
+  //Add function with shows box to the Select Dimension button
+  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
 
   //Generate checkbox inside button
   generateCheckBoxes(categories, options, 'boxTop')
-
-  //Add showBox to the button which shows the category name
-  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
+  
+  //Adds function to button.
+  //Fetches the selected values in the boxes by category and stores within checkedValues
+  var checkedValues
+  var allCheckboxes = document.querySelectorAll('input');
+  for(k in allCheckboxes){
+    allCheckboxes[k].onclick = function(){
+      var a = mergeVerifyCheckedBoxes(categories)
+      window.checkedValues = a
+    }
+  };
+  
 
   //Initiate map
   var mapRegionsCode = ['01', '02', '03', '04', '05', '10']

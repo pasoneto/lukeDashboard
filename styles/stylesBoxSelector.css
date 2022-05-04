@@ -13,6 +13,7 @@
   margin: auto;
   box-shadow: rgba(0, 0, 0, 0.30) 3px 2.2px 2.9px;
   overflow:auto;
+  resize: both;
 }
 /*Scroll div on top of everything*/
 
@@ -24,3 +25,18 @@
   bottom: 10px;
 }
 /*Button submit dimensions selected*/
+
+/*Checkbox list*/
+ul{
+  -moz-column-count: 2;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 20px;
+  column-count: 2;
+  column-gap: 20px;
+  list-style-type: none;
+}
+/*Checkbox list*/
+
+
+
