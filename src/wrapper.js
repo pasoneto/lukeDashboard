@@ -22,33 +22,25 @@ dataBaseSelector.addEventListener('change', async function() {
 
   //Add base data call here, which will determine optionIDS below
   var categories = ['Year', 'Region', 'Size']
-  var optionsYear = ['2010', '2011', '2012']
+  var optionsYear = ['2010', '2011', '2012', '20']
   var optionsRegion = ['USA', 'FIN', 'CAN']
   var optionsSize = ['Small', 'Medium', 'Big']
   var options = [optionsYear, optionsRegion, optionsSize]
 
-  //Render button which renders checkbox selection box and adds showBoxSelector function to its click
-  createClassifierButton("displayBoxButton", 'dimensionSelector')
-  var dimensionSelectionButtons = document.getElementById("SelectDimension")
-  dimensionSelectionButtons.onclick = function(){showBoxSelector("boxTop")} 
-
-  //Add function with shows box to the Select Dimension button
-  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
-
   //Generate checkbox inside button
   generateCheckBoxes(categories, options, 'boxTop')
-  
-  //Adds function to button.
-  //Fetches the selected values in the boxes by category and stores within checkedValues
-  var checkedValues
-  var allCheckboxes = document.querySelectorAll('input');
-  for(k in allCheckboxes){
-    allCheckboxes[k].onclick = function(){
-      var a = mergeVerifyCheckedBoxes(categories)
-      window.checkedValues = a
-    }
-  };
-  
+
+  //Add function to hide selection box to the click of Select Dimension button
+  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
+  //Add function to hide selection box to the click of button inside dimension selection box
+  document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")} 
+
+  //Creates empty object with category keys
+  var checkedValues = checkedValuesObjectGenerator(categories)
+  var allCheckBoxes = document.querySelectorAll('input');
+
+  onlyOneWrap(allCheckBoxes, categories, checkedValues)
+  onlyOneReverter(allCheckBoxes, categories, checkedValues)
 
   //Initiate map
   var mapRegionsCode = ['01', '02', '03', '04', '05', '10']

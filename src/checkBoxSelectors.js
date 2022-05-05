@@ -1,21 +1,4 @@
-//Renders boxes which will receive a set of options from function generateCheckBoxes
-function createClassifierButton(outerClass, whereAppend){
-    html = '';
-    html += '<button class="' + outerClass + '" id="SelectDimension">Select dimension</button>';
-    document.getElementById(whereAppend).innerHTML = html
-}
-
-//Changes style of checkBox container. Now it appears in front of everything
-function showBoxSelector(id){
-  var boxTop = document.getElementById(id)
-  if(boxTop.style.display == '') {
-    boxTop.style.display = 'block';
-  } else {
-    boxTop.style.display = '';
-  }
-}
-
-//Generates checkbox for a single parameter
+//Generates checkbox for classifier selection
 function generateCheckBoxes(categories, options, whereAppend){
   html = ''
   for(category in categories){
@@ -32,9 +15,26 @@ function generateCheckBoxes(categories, options, whereAppend){
   document.getElementById(whereAppend).innerHTML += html
 }
 
+//Changes style of checkBox container. Now it appears in front of everything
+function showBoxSelector(id){
+  var boxTop = document.getElementById(id)
+  if(boxTop.style.display == '') {
+    boxTop.style.display = 'block';
+  } else {
+    boxTop.style.display = '';
+  }
+}
+
+//Generates object with keys corresponding to the categories. Values are empty list, and will receive values when checkboxes are clicked
+function checkedValuesObjectGenerator(categories){
+  var checkedValues = {} //Creates empty object with category keys
+  for(k in categories){
+    checkedValues[categories[k]] = []
+  }
+  return(checkedValues)
+}
 
 //Checks what values were selected by the ID of the selector
-//Append this function to button which closes boxTop
 function verifyCheckedBoxes(category){
   var json = {}
   var ul = document.getElementById(category)
@@ -77,3 +77,46 @@ function applyOnlyOneToCategory(category){
     b[j].onclick = function(){onlyOne(b, this)}
   }
 }
+
+//Function decides which category will receive the applyOnlyOnetToCategory function
+function onlyOneEnforcer(categories, checkedValues){
+  for(k in categories){
+    var nCheckedByCategory = checkedValues[categories[k]].length
+    if(nCheckedByCategory > 1){
+      for(l in categories){
+        if(categories[l] != categories[k]){
+          applyOnlyOneToCategory(categories[l])
+        }
+      }
+    }
+  }
+}
+
+function onlyOneReverter(allCheckBoxes, categories, checkedValues){
+  var nChecked = []
+  for(k in categories){
+    var nCheckedByCategory = checkedValues[categories[k]].length
+    nChecked.push(nCheckedByCategory) 
+  }
+  var notManyChecked = nChecked.every(function(e) {return e <= 1} )
+  console.log(notManyChecked)
+  if(notManyChecked){
+    var b = document.getElementsByTagName('input')
+    for(j in b){
+      b[j].onclick = function(){
+        onlyOneWrap(allCheckBoxes, categories, checkedValues)  
+      }
+    }
+  }
+};
+
+function onlyOneWrap(allCheckBoxes, categories, checkedValues){
+  for(k in allCheckBoxes){
+    allCheckBoxes[k].onclick = function(){
+      var a = mergeVerifyCheckedBoxes(categories)
+      checkedValues = a
+      onlyOneEnforcer(categories, checkedValues)//Verifies if a category received more than one check, and disables this in other categories
+      onlyOneReverter(allCheckBoxes, categories, checkedValues)
+    }
+  }
+};
