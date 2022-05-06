@@ -56,12 +56,11 @@ function mergeVerifyCheckedBoxes(categories){
     var a = verifyCheckedBoxes(categories[k])
     Object.assign(allChecks, a)
   }
-  console.log(allChecks)
   return(allChecks)
 }
 
 //Function prevents the selection of more than one category with more than one value
-function onlyOne(checkBoxes, current) {
+function removeChecksExceptCurrent(checkBoxes, current) {
   for(k in checkBoxes){
     if(checkBoxes[k].id !== current.id){
       checkBoxes[k].checked = false
@@ -70,29 +69,35 @@ function onlyOne(checkBoxes, current) {
 }
 
 //Functions applies the onlyOne function to all elements of a category ID
-function applyOnlyOneToCategory(category){
+function onlyOne(category, checkedValues, categories){
   var a = document.getElementById(category)
   var b = a.getElementsByTagName('input')
   for(j in b){
-    b[j].onclick = function(){onlyOne(b, this)}
+    b[j].onclick = function(){
+      removeChecksExceptCurrent(b, this)
+      checkedValues = mergeVerifyCheckedBoxes(categories)
+      console.log(checkedValues)
+    }
   }
 }
 
-//Function decides which category will receive the applyOnlyOnetToCategory function
+//Checks number of selected boxes per category. If one category has more than 1 checks, 
+//applies onlyOne to all except that category.
 function onlyOneEnforcer(categories, checkedValues){
   for(k in categories){
     var nCheckedByCategory = checkedValues[categories[k]].length
     if(nCheckedByCategory > 1){
       for(l in categories){
         if(categories[l] != categories[k]){
-          applyOnlyOneToCategory(categories[l])
+          onlyOne(categories[l], checkedValues, categories)
         }
       }
     }
   }
 }
 
-function onlyOneReverter(allCheckBoxes, categories, checkedValues){
+//Function returns true if ALL categories have up to 1 checkbox selected
+function allOK(categories, checkedValues){
   var nChecked = []
   for(k in categories){
     var nCheckedByCategory = checkedValues[categories[k]].length
@@ -100,23 +105,19 @@ function onlyOneReverter(allCheckBoxes, categories, checkedValues){
   }
   var notManyChecked = nChecked.every(function(e) {return e <= 1} )
   console.log(notManyChecked)
-  if(notManyChecked){
-    var b = document.getElementsByTagName('input')
-    for(j in b){
-      b[j].onclick = function(){
-        onlyOneWrap(allCheckBoxes, categories, checkedValues)  
-      }
-    }
-  }
-};
+  return(notManyChecked)
+}
 
-function onlyOneWrap(allCheckBoxes, categories, checkedValues){
-  for(k in allCheckBoxes){
-    allCheckBoxes[k].onclick = function(){
-      var a = mergeVerifyCheckedBoxes(categories)
-      checkedValues = a
-      onlyOneEnforcer(categories, checkedValues)//Verifies if a category received more than one check, and disables this in other categories
-      onlyOneReverter(allCheckBoxes, categories, checkedValues)
+function establishInitial(allCheckBoxes, categories, checkedValues){
+  var notMany = allOK(categories, checkedValues)
+  if(notMany){ //Removes OnlyOne
+    for(j in allCheckBoxes){
+      allCheckBoxes[j].onclick = function(){
+        checkedValues = mergeVerifyCheckedBoxes(categories)
+        onlyOneEnforcer(categories, checkedValues)
+        establishInitial(allCheckBoxes, categories, checkedValues)
+        console.log(checkedValues)
+      }
     }
   }
 };

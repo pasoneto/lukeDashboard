@@ -39,8 +39,8 @@ dataBaseSelector.addEventListener('change', async function() {
   var checkedValues = checkedValuesObjectGenerator(categories)
   var allCheckBoxes = document.querySelectorAll('input');
 
-  onlyOneWrap(allCheckBoxes, categories, checkedValues)
-  onlyOneReverter(allCheckBoxes, categories, checkedValues)
+  establishInitial(allCheckBoxes, categories, checkedValues)
+  onlyOneEnforcer(categories, checkedValues)
 
   //Initiate map
   var mapRegionsCode = ['01', '02', '03', '04', '05', '10']
