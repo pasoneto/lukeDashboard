@@ -3,7 +3,7 @@ function generateCheckBoxes(categories, options, whereAppend){
   html = ''
   html += '<div id="checkBoxListContainer">'
   for(category in categories){
-    html += '<label>' + categories[category] + '</label>'
+    html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '</label>'
     html += '<ul id="' + categories[category] + '">'
     for(option in options[category]){
       console.log(options[category][option])

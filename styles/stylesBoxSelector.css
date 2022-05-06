@@ -1,10 +1,10 @@
 /*Scroll div on top of everything*/
 #boxTop {
-  background-color: lightblue;
+  background-color: #1abc9c;
   display: none;
   z-index: 1000;
-  height: 30%;
-  width: 30%;
+  height: 45%;
+  width: 50%;
   position: absolute;
   top:0;
   bottom: 0;
@@ -21,13 +21,17 @@
 #buttonDimensionSelector{
   margin: 0;
   position: absolute;
-  left: 50%;
+  left: 50%
 }
 /*Button submit dimensions selected*/
 
 /*Container wraping list of classifiers*/
 #checkBoxListContainer{
-  margin: 10px;
+  background-color: snow;
+  margin: auto;
+  margin-top: 10px;
+  height: 90%;
+  width: 95%;
 }
 /*Container wraping list of classifiers*/
 
