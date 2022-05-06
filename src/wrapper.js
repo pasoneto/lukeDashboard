@@ -30,9 +30,9 @@ dataBaseSelector.addEventListener('change', async function() {
   //Generate checkbox inside button
   generateCheckBoxes(categories, options, 'boxTop')
 
-  //Add function to hide selection box to the click of Select Dimension button
-  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
   //Add function to hide selection box to the click of button inside dimension selection box
+  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
+  //Add function to hide selection box to the click of Select Dimension button
   document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")} 
 
   //Creates empty object with category keys
@@ -40,7 +40,6 @@ dataBaseSelector.addEventListener('change', async function() {
   var allCheckBoxes = document.querySelectorAll('input');
 
   establishInitial(allCheckBoxes, categories, checkedValues)
-  onlyOneEnforcer(categories, checkedValues)
 
   //Initiate map
   var mapRegionsCode = ['01', '02', '03', '04', '05', '10']

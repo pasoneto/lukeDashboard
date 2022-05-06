@@ -22,9 +22,17 @@
   margin: 0;
   position: absolute;
   left: 50%;
-  top: 120%;
 }
 /*Button submit dimensions selected*/
+
+/*Container wraping list of classifiers*/
+#checkBoxListContainer{
+  margin: 10px;
+}
+/*Container wraping list of classifiers*/
+
+
+
 
 /*Checkbox list*/
 ul{

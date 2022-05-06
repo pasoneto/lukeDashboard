@@ -1,8 +1,8 @@
 //Generates checkbox for classifier selection
 function generateCheckBoxes(categories, options, whereAppend){
   html = ''
+  html += '<div id="checkBoxListContainer">'
   for(category in categories){
-    console.log(categories[category])
     html += '<label>' + categories[category] + '</label>'
     html += '<ul id="' + categories[category] + '">'
     for(option in options[category]){
@@ -12,6 +12,8 @@ function generateCheckBoxes(categories, options, whereAppend){
     }
     html += '</ul>'
   }
+  html +=  '<button id="buttonDimensionSelector">Done</button>'
+  html += '</div>'
   document.getElementById(whereAppend).innerHTML += html
 }
 
@@ -56,6 +58,7 @@ function mergeVerifyCheckedBoxes(categories){
     var a = verifyCheckedBoxes(categories[k])
     Object.assign(allChecks, a)
   }
+  window.checkedValues = allChecks
   return(allChecks)
 }
 
