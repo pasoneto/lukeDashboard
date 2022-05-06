@@ -17,16 +17,14 @@ dropDownSelection('dropdown-btn', options, optionNames, optionIDS, 'statisticsSe
 var dataBaseSelector = document.getElementById('Database')
 dataBaseSelector.addEventListener('change', async function() {
 
-  var url = checkSelected('Database')
-  console.log(url)
-
-  //Add base data call here, which will determine optionIDS below
-  var categories = ['Year', 'Region', 'Size']
-  var optionsYear = ['2010', '2011', '2012', '20']
-  var optionsRegion = ['USA', 'FIN', 'CAN']
-  var optionsSize = ['Small', 'Medium', 'Big']
-  var options = [optionsYear, optionsRegion, optionsSize]
-
+  //Fetch data
+  var url = checkSelected('Database');
+  var baseData = await baseURL(url);
+  
+  //Extracting categories and options
+  var categories = baseData['variables'].map(i => i.code);
+  var options = baseData['variables'].map(i => i.values)
+  
   //Generate checkbox inside button
   generateCheckBoxes(categories, options, 'boxTop')
 
@@ -39,10 +37,16 @@ dataBaseSelector.addEventListener('change', async function() {
   var checkedValues = checkedValuesObjectGenerator(categories)
   var allCheckBoxes = document.querySelectorAll('input');
 
-  establishInitial(allCheckBoxes, categories, checkedValues)
+  //Establishes checkbox verification system. Multiple or single selection
+  establishInitial(allCheckBoxes, categories, checkedValues) //Value is written inside the global variable checkedValues
+
+  //Add function to render graph button. Function shows what variables were selected.
+  document.getElementById("buttonRender").onclick = function(){
+    document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
+  }
 
   //Initiate map
-  var mapRegionsCode = ['01', '02', '03', '04', '05', '10']
+  var mapRegionsCode = ['01', '02', '03', '04', '05', '10', '06', '07']
   clickableMap(mapRegionsCode, alert)
   showMap(mapRegionsCode)
 

@@ -6,7 +6,7 @@ function generateCheckBoxes(categories, options, whereAppend){
     html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '</label>'
     html += '<ul id="' + categories[category] + '">'
     for(option in options[category]){
-      console.log(options[category][option])
+      //console.log(options[category][option])
       html += '<li><input type="checkbox" id="'
       html += options[category][option] + '">' + options[category][option] + '</li>'
     }
@@ -79,7 +79,7 @@ function onlyOne(category, checkedValues, categories){
     b[j].onclick = function(){
       removeChecksExceptCurrent(b, this)
       checkedValues = mergeVerifyCheckedBoxes(categories)
-      console.log(checkedValues)
+      //console.log(checkedValues)
     }
   }
 }
@@ -109,10 +109,11 @@ function allOK(categories, checkedValues){
     nChecked.push(nCheckedByCategory) 
   }
   var notManyChecked = nChecked.every(function(e) {return e <= 1} )
-  console.log(notManyChecked)
+  //console.log(notManyChecked)
   return(notManyChecked)
 }
 
+//If no category has more than 1 check, initial function state is established (multiple selection allowed)
 function establishInitial(allCheckBoxes, categories, checkedValues){
   var notMany = allOK(categories, checkedValues)
   if(notMany){ //Removes OnlyOne
@@ -124,7 +125,7 @@ function establishInitial(allCheckBoxes, categories, checkedValues){
         checkedValues = mergeVerifyCheckedBoxes(categories)
         onlyOneEnforcer(categories, checkedValues)
         establishInitial(allCheckBoxes, categories, checkedValues)
-        console.log(checkedValues)
+        //console.log(checkedValues)
       }
     }
   }
