@@ -90,8 +90,10 @@ function onlyOneEnforcer(categories, checkedValues){
   for(k in categories){
     var nCheckedByCategory = checkedValues[categories[k]].length
     if(nCheckedByCategory > 1){
+      document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
       for(l in categories){
         if(categories[l] != categories[k]){
+          document.getElementById(categories[l] + 'Label').innerHTML = categories[l] + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
           onlyOne(categories[l], checkedValues, categories)
         }
       }
@@ -114,6 +116,9 @@ function allOK(categories, checkedValues){
 function establishInitial(allCheckBoxes, categories, checkedValues){
   var notMany = allOK(categories, checkedValues)
   if(notMany){ //Removes OnlyOne
+    for(k in categories){
+      document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+    }
     for(j in allCheckBoxes){
       allCheckBoxes[j].onclick = function(){
         checkedValues = mergeVerifyCheckedBoxes(categories)
