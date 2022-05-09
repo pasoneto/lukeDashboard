@@ -21,6 +21,15 @@ dataBaseSelector.addEventListener('change', async function() {
   var url = checkSelected('Database');
   var baseData = await baseURL(url);
   
+  //Prepare POST request to get all data
+  var queryBody = await queryBodyMaker(baseData)
+  
+  //Fetch all data from given report
+  var allData = await fetch(url, queryBody);
+  var allData = await allData.json();
+  var allData = await restructureData(baseData, allData)
+  var allData = Object.values(allData)
+
   //Extracting categories and options
   var categories = baseData['variables'].map(i => i.code);
   var options = baseData['variables'].map(i => i.values)
@@ -28,8 +37,14 @@ dataBaseSelector.addEventListener('change', async function() {
   //Generate checkbox inside button
   generateCheckBoxes(categories, options, 'boxTop')
 
-  //Add function to hide selection box to the click of button inside dimension selection box
-  document.getElementById("buttonDimensionSelector").onclick = function(){showBoxSelector("boxTop")}
+  //Generate dropdown selection for x, and group axis
+  dropDownSelection('axisSelector', categories, categories, ['xAxis', 'group'], "dimensionSelector", nRuns = 2)
+
+  //Once data has been fetched and checkboxes created, Select dimension button will receive the following functiong
+  document.getElementById("buttonDimensionSelector").onclick = function(){
+    showBoxSelector("boxTop") //Show box with checkboxes
+  }
+  
   //Add function to hide selection box to the click of Select Dimension button
   document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")} 
 
@@ -42,9 +57,20 @@ dataBaseSelector.addEventListener('change', async function() {
 
   //Add function to render graph button. Function shows what variables were selected.
   document.getElementById("buttonRender").onclick = function(){
+
+    var xAxisName = checkSelected('xAxis');
+    var groupName = checkSelected('group');
+
+    var filteredAllData = filterDataByCheckBoxSelector(categories, allData, checkedValues)
+    
+    console.log(filteredAllData)
+    var xAxis = 
     document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
   }
 
+  var boxSelector = document.getElementById("boxTop")
+  var headerSelector = document.getElementById("categorySelectorHeader")
+  dragElement(boxSelector, headerSelector);
   //Initiate map
   var mapRegionsCode = ['01', '02', '03', '04', '05', '10', '06', '07']
   clickableMap(mapRegionsCode, alert)

@@ -1,19 +1,19 @@
 /*Scroll div on top of everything*/
 #boxTop {
-  background-color: #1abc9c;
+  background-color: lightgray;
   display: none;
   z-index: 1000;
   height: 45%;
   width: 50%;
   position: absolute;
-  top:0;
+  top:20%;
   bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  left: 20%;
+  border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.30) 3px 2.2px 2.9px;
   overflow:auto;
   resize: both;
+  border: 2px solid black;
 }
 /*Scroll div on top of everything*/
 
@@ -34,7 +34,15 @@
 }
 /*Container wraping list of classifiers*/
 
-
+/*Header of category selector box*/
+#categorySelectorHeader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
+/*Header of category selector box*/
 
 
 /*Checkbox list*/

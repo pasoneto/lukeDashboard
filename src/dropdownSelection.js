@@ -9,7 +9,7 @@ function dropDownSelection(outerClass, options, optionNames, selectorTitle, wher
       }
       html += '</select>';
     }
-    document.getElementById(whereAppend).innerHTML = html
+    document.getElementById(whereAppend).innerHTML += html
 }
 
 //Checks what values were selected by the ID of the selector
