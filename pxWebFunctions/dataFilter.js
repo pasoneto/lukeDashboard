@@ -8,8 +8,16 @@ function filterDataByCheckBoxSelector(categories, allData, checkedValues){
   return(allData)
 }
 
-async function getData(groupsSelected, checkedValues){
-  // Implement
+function separateDataInGroups(filteredData, groupSelected, checkedValues){
+  var yAxis = []
+  var labels = []
+  for(k in window.checkedValues[groupSelected]){
+    var group = filteredData.filter(i => i[groupSelected] == window.checkedValues[groupSelected][k])
+    var y = [group.map(i => Number(i.value))]
+    yAxis.push(y)
+    labels.push(window.checkedValues[groupSelected][k])
+  }
+  return [yAxis, labels];
 }
 
 //Also change selector to allow for 2 multidimension checkboxes, instead of 1

@@ -63,8 +63,11 @@ dataBaseSelector.addEventListener('change', async function() {
 
     var filteredAllData = filterDataByCheckBoxSelector(categories, allData, checkedValues)
     
-    console.log(filteredAllData)
-    var xAxis = 
+    var [yAxis, labels] = separateDataInGroups(filteredAllData, groupName, checkedValues)
+    var xAxis = window.checkedValues[xAxisName]
+    
+    
+
     document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
   }
 
