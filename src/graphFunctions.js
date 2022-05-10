@@ -46,3 +46,34 @@ function graphCustom(xAxis, yAxis, labels, id, type, title){
     }
   });
 };
+
+//Pie chart
+function graphCustomPie(xAxis, yAxis, id, type, title){
+  var barColors = [];
+  for (var i=0; i<yAxis.length; i++) {
+    var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+    barColors.push(randomColor)
+  }
+  new Chart(id, {
+    type: type,
+    data: {
+      labels: xAxis,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yAxis
+      }]
+    },
+    options: {
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+      title: {
+        display: true,
+        text: title 
+      },
+      spanGaps: true, //Interpolates missing data
+      maintainAspectRatio: false,
+    }
+  })
+}

@@ -85,19 +85,23 @@ dataBaseSelector.addEventListener('change', async function() {
 
     var box = document.getElementById("box")
     var box2 = document.getElementById("box2")
+    var box3 = document.getElementById("box3")
     box.innerHTML = '<canvas id="myChart"></canvas>'
     box2.innerHTML = '<canvas id="myChart2"></canvas>'
+    box3.innerHTML = '<canvas id="myChart3"></canvas>'
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', 'Bar plot')
     graphCustom(xAxis2, yAxis2, labels2, "myChart2", 'line', 'Line plot')
-    
+
+    graphCustomPie(xAxis1, yAxis1[0], "myChart3", "pie", labels1[0])
     //document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
   }
 
   var boxSelector = document.getElementById("boxTop")
   var headerSelector = document.getElementById("categorySelectorHeader")
   dragElement(boxSelector, headerSelector);
+  
   //Initiate map
-  var mapRegionsCode = ['01', '02', '03', '04', '05', '10', '06', '07']
+  var mapRegionsCode = ['01' , '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16']
   clickableMap(mapRegionsCode, alert)
   showMap(mapRegionsCode)
 
