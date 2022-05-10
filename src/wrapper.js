@@ -40,18 +40,13 @@ dataBaseSelector.addEventListener('change', async function() {
   //Add function to show checkboxes div
   document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
 
-  var dropdownCategories = []
   //Once data has been fetched and checkboxes created, Select dimension button will receive the following functions
   document.getElementById("buttonDimensionSelector").onclick = function(){
 
     showBoxSelector("boxTop") //Hide box with checkboxes
     
-    //Selects only categories with multiple values checked
-    var dropdownCategories;
-    pickMultiClassCategories(checkedValues, categories) 
-
     //Create dropdown menu for dimension seletion. Only multiclasses
-    dropDownSelection('axisSelector', window.dropdownCategories, window.dropdownCategories, ['group'], "dimensionSelector", nRuns = 1)
+    //dropDownSelection('axisSelector', window.dropdownCategories, window.dropdownCategories, ['group'], "dimensionSelector", nRuns = 1)
 
     //Add back function to show checkboxes div
     document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
@@ -68,26 +63,32 @@ dataBaseSelector.addEventListener('change', async function() {
   //Add function to render graph button. Function shows what variables were selected.
   document.getElementById("buttonRender").onclick = function(){
 
-    var groupName = checkSelected('group');
-    var filteredAllData = filterDataByCheckBoxSelector(categories, allData, checkedValues)
-    var [yAxis, labels] = separateDataInGroups(filteredAllData, groupName, checkedValues)
-     
-    var xAxisName = window.dropdownCategories.filter(i => i !== groupName)
-    var xAxis = window.checkedValues[xAxisName]
+    //Selects categories which will be used as group and xAxis  
+    var dropdownCategories;
+    pickMultiClassCategories(checkedValues, categories) 
 
-    console.log(yAxis)    
-    console.log(xAxis)    
-    console.log(labels)    
-     
+    //var groupName = checkSelected('group');
+    var filteredAllData = filterDataByCheckBoxSelector(categories, allData, checkedValues)
+    //Add further filter here
+  
+    var group1 = window.dropdownCategories[0]
+    var group2 = window.dropdownCategories[1]
+
+    var xAxisName1 = window.dropdownCategories[1]
+    var xAxisName2 = window.dropdownCategories[0]
+
+    var [yAxis1, labels1] = separateDataInGroups(filteredAllData, group1, checkedValues)
+    var [yAxis2, labels2] = separateDataInGroups(filteredAllData, group2, checkedValues)
+
+    var xAxis1 = window.checkedValues[xAxisName1]
+    var xAxis2 = window.checkedValues[xAxisName2]
+
     var box = document.getElementById("box")
     var box2 = document.getElementById("box2")
-    var box3 = document.getElementById("box3")
     box.innerHTML = '<canvas id="myChart"></canvas>'
     box2.innerHTML = '<canvas id="myChart2"></canvas>'
-    box3.innerHTML = '<canvas id="myChart3"></canvas>'
-    graphCustom(xAxis, yAxis, labels, "myChart", 'bar', 'Bar plot')
-    graphCustom(xAxis, yAxis, labels, "myChart2", 'line', 'Line plot')
-    graphCustom(xAxis, yAxis, labels, "myChart3", 'bar', 'Line plot')
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', 'Bar plot')
+    graphCustom(xAxis2, yAxis2, labels2, "myChart2", 'line', 'Line plot')
     
     //document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
   }
