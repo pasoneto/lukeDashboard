@@ -37,8 +37,8 @@ dataBaseSelector.addEventListener('change', async function() {
   //Generate checkbox inside button
   generateCheckBoxes(categories, options, 'boxTop')
 
-  //Generate dropdown selection for x, and group axis
-  dropDownSelection('axisSelector', categories, categories, ['xAxis', 'group'], "dimensionSelector", nRuns = 2)
+  console.log(window.checkedValues) 
+  dropDownSelection('axisSelector', categories, categories, ['group'], "dimensionSelector", nRuns = 1)
 
   //Once data has been fetched and checkboxes created, Select dimension button will receive the following functiong
   document.getElementById("buttonDimensionSelector").onclick = function(){
@@ -58,17 +58,31 @@ dataBaseSelector.addEventListener('change', async function() {
   //Add function to render graph button. Function shows what variables were selected.
   document.getElementById("buttonRender").onclick = function(){
 
-    var xAxisName = checkSelected('xAxis');
     var groupName = checkSelected('group');
-
     var filteredAllData = filterDataByCheckBoxSelector(categories, allData, checkedValues)
-    
     var [yAxis, labels] = separateDataInGroups(filteredAllData, groupName, checkedValues)
+     
+    //Generate dropdown selection for group axis. Only possibilites are multipleSelection categories
+    var dropdownCategories = []
+    for(k in categories){
+      var nChecks = window.checkedValues[categories[k]].length
+      if(nChecks > 1){
+        dropdownCategories.push(categories[k])
+      }
+    }
+    var xAxisName = dropdownCategories.filter(i => i !== groupName)
+    
     var xAxis = window.checkedValues[xAxisName]
-    
-    
 
-    document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
+    console.log(yAxis)    
+    console.log(xAxis)    
+    console.log(labels)    
+     
+    var box = document.getElementById("box")
+    box.innerHTML = '<canvas id="myChart"></canvas>'
+    graphCustom(xAxis, yAxis, labels, "myChart", 'line', 'Line plot')
+    
+    //document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
   }
 
   var boxSelector = document.getElementById("boxTop")

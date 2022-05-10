@@ -1,11 +1,3 @@
-//Runs through list of classifiers and sees which boxes were checked.
-function selectTarget(allDataObject, selectedValue){
-  var c = rawBody.filter(i => i.code == catTarget)[0]
-  return c.selection.values
-}
-
-
-
 //Generates data object to feed into graph
 function dataGenerator(yAxis, labels){
   var dataConstructor = [];

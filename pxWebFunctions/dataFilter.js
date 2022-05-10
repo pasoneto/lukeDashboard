@@ -8,16 +8,18 @@ function filterDataByCheckBoxSelector(categories, allData, checkedValues){
   return(allData)
 }
 
+//Receives filtered (by checkbox selector) data and returns list of lists
+//where each list contains values of yAxis separated. Group selected
+//determines what category will be used to separate yAxis
 function separateDataInGroups(filteredData, groupSelected, checkedValues){
   var yAxis = []
   var labels = []
   for(k in window.checkedValues[groupSelected]){
     var group = filteredData.filter(i => i[groupSelected] == window.checkedValues[groupSelected][k])
     var y = [group.map(i => Number(i.value))]
-    yAxis.push(y)
+    yAxis.push(y[0])
     labels.push(window.checkedValues[groupSelected][k])
   }
   return [yAxis, labels];
 }
 
-//Also change selector to allow for 2 multidimension checkboxes, instead of 1
