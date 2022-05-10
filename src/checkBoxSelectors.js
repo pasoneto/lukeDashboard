@@ -88,15 +88,22 @@ function onlyOne(category, checkedValues, categories){
 //Checks number of selected boxes per category. If one category has more than 1 checks, 
 //applies onlyOne to all except that category.
 function onlyOneEnforcer(categories, checkedValues){
+  var multipleCheckCategories = []
   for(k in categories){
     var nCheckedByCategory = checkedValues[categories[k]].length
-    if(nCheckedByCategory > 1){
-      document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
-      for(l in categories){
-        if(categories[l] != categories[k]){
-          document.getElementById(categories[l] + 'Label').innerHTML = categories[l] + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
-          onlyOne(categories[l], checkedValues, categories)
-        }
+    if((nCheckedByCategory > 1) && (multipleCheckCategories.indexOf(categories[k]) == -1)){
+      multipleCheckCategories.push(categories[k])
+    }
+  }
+  console.log(multipleCheckCategories)
+  if(multipleCheckCategories.length == 2){ //If there are two multiple checks
+    for(k in categories){
+        //document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+        var notMultiple = multipleCheckCategories.indexOf(categories[k]) !== -1
+        console.log("Category " + categories[k] + "single selector" + notMultiple)
+        if(!notMultiple){
+          document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+          onlyOne(categories[k], checkedValues, categories)
       }
     }
   }
@@ -104,13 +111,15 @@ function onlyOneEnforcer(categories, checkedValues){
 
 //Function returns true if ALL categories have up to 1 checkbox selected
 function allOK(categories, checkedValues){
-  var nChecked = []
+  var categoriesWithMultiple = []
   for(k in categories){
-    var nCheckedByCategory = checkedValues[categories[k]].length
-    nChecked.push(nCheckedByCategory) 
+    var multipleCategoryMarked = categoriesWithMultiple.indexOf(categories[k]) !== -1 
+    var multipleCategory = checkedValues[categories[k]].length > 1
+    if( (!multipleCategoryMarked) && ( multipleCategory ) ){
+      categoriesWithMultiple.push(categories[k]) 
+    }
   }
-  var notManyChecked = nChecked.every(function(e) {return e <= 1} )
-  //console.log(notManyChecked)
+  var notManyChecked = categoriesWithMultiple.length < 2
   return(notManyChecked)
 }
 
