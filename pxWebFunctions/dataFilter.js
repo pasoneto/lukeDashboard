@@ -23,3 +23,13 @@ function separateDataInGroups(filteredData, groupSelected, checkedValues){
   return [yAxis, labels];
 }
 
+//Selects only categories which received 2 or more checks in checkboxes
+function pickMultiClassCategories(checkedValues, categories){
+  window.dropdownCategories = []
+  for(k in categories){
+    var nChecks = window.checkedValues[categories[k]].length
+    if(nChecks > 1){
+      window.dropdownCategories.push(categories[k])
+    }
+  }
+}
