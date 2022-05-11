@@ -16,7 +16,7 @@ function dataGenerator(yAxis, labels){
 }
 
 //Generates graph and appends to given element by ID
-function graphCustom(xAxis, yAxis, labels, id, type, title){
+function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true){
   var dataConstructor = dataGenerator(yAxis, labels)
   new Chart(id, {
     type: type,
@@ -25,7 +25,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title){
       datasets: dataConstructor },
     options: {
       legend: {
-        display: true,
+        display: showLegend,
         position: 'bottom',
       },
       title: {
@@ -65,7 +65,7 @@ function graphCustomPie(xAxis, yAxis, id, type, title){
     },
     options: {
       legend: {
-        display: true,
+        display: false,
         position: 'bottom',
       },
       title: {
