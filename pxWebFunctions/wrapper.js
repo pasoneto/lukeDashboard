@@ -32,7 +32,8 @@ dataBaseSelector.addEventListener('change', async function() {
   //Extracting categories and options
   var categories = baseData['variables'].map(i => i.code);
   var options = baseData['variables'].map(i => i.values)
-  
+  console.log(categories)  
+  console.log(options)  
   //Generate checkbox inside box
   generateCheckBoxes(categories, options, 'boxTop')
   

@@ -1,6 +1,6 @@
-var classifiers = ["vuosi_", "maakunta", "tuotantosuuntaso"]
-var data = JSON.parse(data)
-console.log(data)
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
 
 function reshapeJSON(data, classifiers){
   var additionalClassifiers = Object.keys(data[0]).filter(i => classifiers.indexOf(i) == -1)
@@ -18,7 +18,3 @@ function reshapeJSON(data, classifiers){
   }
   return(reshaped)
 }
-
-var data = reshapeJSON(data, classifiers)
-console.log(data)
-
