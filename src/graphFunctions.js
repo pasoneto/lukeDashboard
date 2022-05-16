@@ -1,14 +1,23 @@
 //Generates data object to feed into graph
-function dataGenerator(yAxis, labels){
-  var dataConstructor = [];
+function colorGenerator(yAxis){
+  var randomColors = [];
   for (var i=0; i<yAxis.length; i++) {
       var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+      randomColors.push(randomColor)
+  }
+  return randomColors
+}
+
+function dataGenerator(yAxis, labels, randomColors){
+  console.log(randomColors)
+  var dataConstructor = [];
+  for (var i=0; i<yAxis.length; i++) {
       var label = labels[i]
       dataConstructor[i] = {
           label: label,
           data: yAxis[i],
-          borderColor: randomColor,
-          backgroundColor: randomColor,
+          borderColor: randomColors[i],
+          backgroundColor: randomColors[i],
           fill: false 
       };
   }
@@ -16,8 +25,9 @@ function dataGenerator(yAxis, labels){
 }
 
 //Generates graph and appends to given element by ID
-function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true){
-  var dataConstructor = dataGenerator(yAxis, labels)
+function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true){
+  console.log(randomColors)
+  var dataConstructor = dataGenerator(yAxis, labels, randomColors)
   new Chart(id, {
     type: type,
     data: {
@@ -48,18 +58,13 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true){
 };
 
 //Pie chart
-function graphCustomPie(xAxis, yAxis, id, type, title){
-  var barColors = [];
-  for (var i=0; i<yAxis.length; i++) {
-    var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-    barColors.push(randomColor)
-  }
+function graphCustomPie(xAxis, yAxis, id, type, title, randomColors){
   new Chart(id, {
     type: type,
     data: {
       labels: xAxis,
       datasets: [{
-        backgroundColor: barColors,
+        backgroundColor: randomColors,
         data: yAxis
       }]
     },

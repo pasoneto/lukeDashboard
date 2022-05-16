@@ -1,11 +1,11 @@
 //Adding event listener for database selector
-var classifiers = ["vuosi_", "maakunta", "tuotantosuuntaso"]
-var data = JSON.parse(data)
+var classifiers = ["vuosi_", "maakunta", "tuotantosuuntaso", "luomu_"]
+//var data = JSON.parse(data)
 var data = reshapeJSON(data, classifiers)
+
 //Extracting categories and options
 var categories = Object.keys(data[0])
 var categories = categories.filter(i => i !== 'value')
-console.log(categories)
 
 var options = []
 for(k in categories){
@@ -13,7 +13,7 @@ for(k in categories){
   var a = a.filter(onlyUnique)
   options.push(a)
 }
-console.log(options)
+//console.log(options)
 
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop')
@@ -46,11 +46,14 @@ document.getElementById("buttonRender").onclick = function(){
   pickMultiClassCategories(checkedValues, categories) 
   
   function filterDataByCheckBoxSelector(categories, data, checkedValues){
+    var filteredData = structuredClone(data)
     for(k in categories){
       var selectedCategories = window.checkedValues[categories[k]]
-      var data = data.filter(i => selectedCategories.indexOf(i[categories[k]]) !== -1)
+      // console.log(selectedCategories)
+      filteredData = filteredData.filter(i => selectedCategories.indexOf(i[categories[k]].toString()) !== -1)
+      // console.log(filteredData)
     }
-    return(data)
+    return(filteredData)
   }
   
   var group1 = window.dropdownCategories[0]
@@ -59,9 +62,12 @@ document.getElementById("buttonRender").onclick = function(){
   var xAxisName1 = window.dropdownCategories[1]
   var xAxisName2 = window.dropdownCategories[0]
 
-  var [yAxis1, labels1] = separateDataInGroups(data, group1, checkedValues)
-  var [yAxis2, labels2] = separateDataInGroups(data, group2, checkedValues)
-  console.log(yAxis1)
+  //Problem is here
+  var filteredData = filterDataByCheckBoxSelector(categories, data, window.checkedValues)
+
+  var [yAxis1, labels1] = separateDataInGroups(filteredData, group1, checkedValues)
+  var [yAxis2, labels2] = separateDataInGroups(filteredData, group2, checkedValues)
+
   var xAxis1 = window.checkedValues[xAxisName1]
   var xAxis2 = window.checkedValues[xAxisName2]
 
@@ -76,13 +82,16 @@ document.getElementById("buttonRender").onclick = function(){
   box3.innerHTML = '<canvas id="myChart3"></canvas>'
   box4.innerHTML = '<canvas id="myChart4"></canvas>'
 
-  graphCustom(xAxis1, yAxis1, labels1, "myChart", 'line', "Comparing by " + group1)
-  graphCustom(xAxis2, yAxis2, labels2, "myChart1", 'bar', "Comparing by " + group2, showLegend = true)
+  var randomColors1 = colorGenerator(yAxis1);
+  var randomColors2 = colorGenerator(yAxis2);
 
-  graphCustomPie(xAxis1, yAxis1[0], "myChart2", "pie", labels1[0])
-  graphCustomPie(xAxis1, yAxis1[1], "myChart3", "pie", labels1[1])
-  graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2])
+  graphCustom(xAxis1, yAxis1, labels1, "myChart", 'line', "Comparing by " + group1, randomColors1)
+  graphCustom(xAxis2, yAxis2, labels2, "myChart1", 'bar', "Comparing by " + group2, randomColors2, showLegend = true)
 
+  var pieColors = colorGenerator(xAxis1)
+  graphCustomPie(xAxis1, yAxis1[0], "myChart2", "pie", labels1[0], pieColors)
+  graphCustomPie(xAxis1, yAxis1[1], "myChart3", "pie", labels1[1], pieColors)
+  graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2], pieColors)
 
   //document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
 }

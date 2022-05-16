@@ -95,12 +95,12 @@ function onlyOneEnforcer(categories, checkedValues){
       multipleCheckCategories.push(categories[k])
     }
   }
-  console.log(multipleCheckCategories)
+  //console.log(multipleCheckCategories)
   if(multipleCheckCategories.length == 2){ //If there are two multiple checks
     for(k in categories){
         //document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
         var notMultiple = multipleCheckCategories.indexOf(categories[k]) !== -1
-        console.log("Category " + categories[k] + "single selector" + notMultiple)
+        //console.log("Category " + categories[k] + "single selector" + notMultiple)
         if(!notMultiple){
           document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
           onlyOne(categories[k], checkedValues, categories)
