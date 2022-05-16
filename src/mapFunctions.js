@@ -16,3 +16,20 @@ function showMap(regionIDS){
       paths[regionIDS[k]].classList.add('areaAvailable')
     }
 }
+
+//Filters data
+function filterHoverMap(region, filteredData){
+  var mapCheckedValues = window.checkedValues
+  mapCheckedValues["maakunta"] = [region]
+
+  var group1 = window.dropdownCategories[1]
+  var xAxisName1 = window.dropdownCategories[0]
+
+  var [yAxis1, labels1] = separateDataInGroups(filteredDataForMap.filter(i=>i['maakunta'] == region), group1, mapCheckedValues)
+  var xAxis1 = mapCheckedValues[xAxisName1]
+
+  var box4 = document.getElementById("box4")
+  box4.innerHTML = '<canvas id="myChart4"></canvas>'
+  graphCustom(xAxis1, yAxis1, labels1, "myChart4", 'line', labels1[0], "red", showLegend = false)
+
+}

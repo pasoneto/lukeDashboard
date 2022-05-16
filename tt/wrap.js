@@ -38,6 +38,7 @@ var allCheckBoxes = document.querySelectorAll('input');
 //Establishes checkbox verification system. Multiple or single selection
 establishInitial(allCheckBoxes, categories, checkedValues) //Value is written inside the global variable checkedValues
 
+var filteredDataForMap;
 //Add function to render graph button. Function shows what variables were selected.
 document.getElementById("buttonRender").onclick = function(){
 
@@ -62,8 +63,8 @@ document.getElementById("buttonRender").onclick = function(){
   var xAxisName1 = window.dropdownCategories[1]
   var xAxisName2 = window.dropdownCategories[0]
 
-  //Problem is here
   var filteredData = filterDataByCheckBoxSelector(categories, data, window.checkedValues)
+  window.filteredDataForMap = filterDataByCheckBoxSelector(categories, data, window.checkedValues)
 
   var [yAxis1, labels1] = separateDataInGroups(filteredData, group1, checkedValues)
   var [yAxis2, labels2] = separateDataInGroups(filteredData, group2, checkedValues)
@@ -75,7 +76,6 @@ document.getElementById("buttonRender").onclick = function(){
   var box1 = document.getElementById("box1")
   var box2 = document.getElementById("box2")
   var box3 = document.getElementById("box3")
-  var box4 = document.getElementById("box4")
   box.innerHTML = '<canvas id="myChart"></canvas>'
   box1.innerHTML = '<canvas id="myChart1"></canvas>'
   box2.innerHTML = '<canvas id="myChart2"></canvas>'
@@ -91,21 +91,33 @@ document.getElementById("buttonRender").onclick = function(){
   var pieColors = colorGenerator(xAxis1)
   graphCustomPie(xAxis1, yAxis1[0], "myChart2", "pie", labels1[0], pieColors)
   graphCustomPie(xAxis1, yAxis1[1], "myChart3", "pie", labels1[1], pieColors)
-  graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2], pieColors)
+  //graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2], pieColors)
+  
+  var mapRegionsCode = filteredDataForMap.map(i => i['maakunta']).filter(onlyUnique)
+
+  clickableMap(mapRegionsCode, alert)
+  showMap(mapRegionsCode)
+
+  //Apply loop here
+  document.getElementById("01").onmouseover = function(){
+    filterHoverMap(mapRegionsCode[0], filteredDataForMap)
+  }
+  document.getElementById("02").onmouseover = function(){
+    filterHoverMap(mapRegionsCode[1], filteredDataForMap)
+  }
+  document.getElementById("03").onmouseover = function(){
+    filterHoverMap(mapRegionsCode[2], filteredDataForMap)
+  }
+  //Apply loop here
 
   //document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
 }
 
+//Initiate map
+
+
 var boxSelector = document.getElementById("boxTop")
 var headerSelector = document.getElementById("categorySelectorHeader")
 dragElement(boxSelector, headerSelector);
-
-//Initiate map
-var mapRegionsCode = ['01' , '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16']
-clickableMap(mapRegionsCode, alert)
-showMap(mapRegionsCode)
-
-
-
 
 

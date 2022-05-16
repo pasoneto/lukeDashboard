@@ -18,3 +18,15 @@ function reshapeJSON(data, classifiers){
   }
   return(reshaped)
 }
+
+//Filter values from reshapedJSON output to match only checked values from checkboxes
+function filterDataByCheckBoxSelector(categories, data, checkedValues){
+  var filteredData = structuredClone(data)
+  for(k in categories){
+    var selectedCategories = window.checkedValues[categories[k]]
+    // console.log(selectedCategories)
+    filteredData = filteredData.filter(i => selectedCategories.indexOf(i[categories[k]].toString()) !== -1)
+    // console.log(filteredData)
+  }
+  return(filteredData)
+}

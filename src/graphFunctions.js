@@ -9,7 +9,6 @@ function colorGenerator(yAxis){
 }
 
 function dataGenerator(yAxis, labels, randomColors){
-  console.log(randomColors)
   var dataConstructor = [];
   for (var i=0; i<yAxis.length; i++) {
       var label = labels[i]
@@ -26,7 +25,6 @@ function dataGenerator(yAxis, labels, randomColors){
 
 //Generates graph and appends to given element by ID
 function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true){
-  console.log(randomColors)
   var dataConstructor = dataGenerator(yAxis, labels, randomColors)
   new Chart(id, {
     type: type,
