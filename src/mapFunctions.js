@@ -34,3 +34,14 @@ function filterHoverMap(region, filteredData){
   graphCustom(xAxis1, yAxis1, labels1, "myChart5", 'line', labels1[0], ["#0E6251"], showLegend = false)
 
 }
+
+function changePositionBasedOnMouse(elementID, whereApply){
+  var el = document.getElementById(elementID)
+  var hiddenDiv = document.getElementById(whereApply)
+  el.addEventListener('mousemove', e => {
+    x = e.clientX;
+    y = e.clientY;
+    hiddenDiv.style.left = x + 10 + 'px'
+    hiddenDiv.style.top = y + 10 + 'px'
+  });
+}

@@ -95,15 +95,16 @@ document.getElementById("buttonRender").onclick = function(){
       mrc.push(mapRegionsCode[k].toString())
     }
   }
-  console.log(mrc)
+  //console.log(mrc)
   showMap(mrc)
 
   const mapAreaDiv = document.getElementById('map-chart');
   const pathRegions = mapAreaDiv.getElementsByTagName('path');
 
-  function applyFunctionMap(i, mapRegionsCode, filteredDataForMap){
+  function applyFunctionMap(i, mapRegionsCode, filteredDataForMap, whereShow){
     if(mapRegionsCode.indexOf(i.id) !== -1){
       i.onmouseover = function(){
+        changePositionBasedOnMouse(i.id, whereShow)
         showBoxSelector("boxTopMap")
         filterHoverMap(Number(i.id), filteredDataForMap)
       }
@@ -112,7 +113,7 @@ document.getElementById("buttonRender").onclick = function(){
       }
     }
   }
-  Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap) )
+  Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap, "boxTopMap") )
   
 }
 
