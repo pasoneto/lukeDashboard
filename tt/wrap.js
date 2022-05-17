@@ -45,26 +45,15 @@ document.getElementById("buttonRender").onclick = function(){
   //Selects categories which will be used as group and xAxis  
   var dropdownCategories;
   pickMultiClassCategories(checkedValues, categories) 
-  
-  function filterDataByCheckBoxSelector(categories, data, checkedValues){
-    var filteredData = structuredClone(data)
-    for(k in categories){
-      var selectedCategories = window.checkedValues[categories[k]]
-      // console.log(selectedCategories)
-      filteredData = filteredData.filter(i => selectedCategories.indexOf(i[categories[k]].toString()) !== -1)
-      // console.log(filteredData)
-    }
-    return(filteredData)
-  }
-  
+   
   var group1 = window.dropdownCategories[0]
   var group2 = window.dropdownCategories[1]
 
   var xAxisName1 = window.dropdownCategories[1]
   var xAxisName2 = window.dropdownCategories[0]
 
-  var filteredData = filterDataByCheckBoxSelector(categories, data, window.checkedValues)
-  window.filteredDataForMap = filterDataByCheckBoxSelector(categories, data, window.checkedValues)
+  var filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+  window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
 
   var [yAxis1, labels1] = separateDataInGroups(filteredData, group1, checkedValues)
   var [yAxis2, labels2] = separateDataInGroups(filteredData, group2, checkedValues)
@@ -76,6 +65,7 @@ document.getElementById("buttonRender").onclick = function(){
   var box1 = document.getElementById("box1")
   var box2 = document.getElementById("box2")
   var box3 = document.getElementById("box3")
+  var box4 = document.getElementById("box4")
   box.innerHTML = '<canvas id="myChart"></canvas>'
   box1.innerHTML = '<canvas id="myChart1"></canvas>'
   box2.innerHTML = '<canvas id="myChart2"></canvas>'
@@ -91,31 +81,46 @@ document.getElementById("buttonRender").onclick = function(){
   var pieColors = colorGenerator(xAxis1)
   graphCustomPie(xAxis1, yAxis1[0], "myChart2", "pie", labels1[0], pieColors)
   graphCustomPie(xAxis1, yAxis1[1], "myChart3", "pie", labels1[1], pieColors)
-  //graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2], pieColors)
-  
+  graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2], pieColors)
+
+  //Extracting map regions that exist in data
   var mapRegionsCode = filteredDataForMap.map(i => i['maakunta']).filter(onlyUnique)
 
-  clickableMap(mapRegionsCode, alert)
-  showMap(mapRegionsCode)
+  //Reformat them to match with maping codes
+  mrc = []
+  for(k in mapRegionsCode){
+    if(mapRegionsCode[k] < 10){
+      mrc.push("0" + mapRegionsCode[k].toString())
+    } else {
+      mrc.push(mapRegionsCode[k].toString())
+    }
+  }
+  console.log(mrc)
+  showMap(mrc)
 
-  //Apply loop here
-  document.getElementById("01").onmouseover = function(){
-    filterHoverMap(mapRegionsCode[0], filteredDataForMap)
-  }
-  document.getElementById("02").onmouseover = function(){
-    filterHoverMap(mapRegionsCode[1], filteredDataForMap)
-  }
-  document.getElementById("03").onmouseover = function(){
-    filterHoverMap(mapRegionsCode[2], filteredDataForMap)
-  }
-  //Apply loop here
+  const mapAreaDiv = document.getElementById('map-chart');
+  const pathRegions = mapAreaDiv.getElementsByTagName('path');
 
-  //document.getElementById("box").innerHTML = JSON.stringify(window.checkedValues);
+  function applyFunctionMap(i, mapRegionsCode, filteredDataForMap){
+    if(mapRegionsCode.indexOf(i.id) !== -1){
+      i.onmouseover = function(){
+        showBoxSelector("boxTopMap")
+        filterHoverMap(Number(i.id), filteredDataForMap)
+      }
+      i.onmouseout = function(){
+        showBoxSelector("boxTopMap")
+      }
+    }
+  }
+  Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap) )
+  
 }
 
+//document.getElementById(mc[0]).onmouseover = function(){
+  //filterHoverMap(dc[0], filteredDataForMap)
+  //}
+
 //Initiate map
-
-
 var boxSelector = document.getElementById("boxTop")
 var headerSelector = document.getElementById("categorySelectorHeader")
 dragElement(boxSelector, headerSelector);

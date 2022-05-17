@@ -26,10 +26,11 @@ function filterHoverMap(region, filteredData){
   var xAxisName1 = window.dropdownCategories[0]
 
   var [yAxis1, labels1] = separateDataInGroups(filteredDataForMap.filter(i=>i['maakunta'] == region), group1, mapCheckedValues)
+  console.log(labels1)
   var xAxis1 = mapCheckedValues[xAxisName1]
 
-  var box4 = document.getElementById("box4")
-  box4.innerHTML = '<canvas id="myChart4"></canvas>'
-  graphCustom(xAxis1, yAxis1, labels1, "myChart4", 'line', labels1[0], "red", showLegend = false)
+  var box5 = document.getElementById("box5")
+  box5.innerHTML = '<canvas id="myChart5"></canvas>'
+  graphCustom(xAxis1, yAxis1, labels1, "myChart5", 'line', labels1[0], ["#0E6251"], showLegend = false)
 
 }
