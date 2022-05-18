@@ -8,7 +8,7 @@ function colorGenerator(yAxis){
   return randomColors
 }
 
-function dataGenerator(yAxis, labels, randomColors){
+function dataGenerator(yAxis, labels, randomColors, fill){
   var dataConstructor = [];
   for (var i=0; i<yAxis.length; i++) {
       var label = labels[i]
@@ -17,15 +17,15 @@ function dataGenerator(yAxis, labels, randomColors){
           data: yAxis[i],
           borderColor: randomColors[i],
           backgroundColor: randomColors[i],
-          fill: false 
+          fill: fill 
       };
   }
   return dataConstructor
 }
 
 //Generates graph and appends to given element by ID
-function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true){
-  var dataConstructor = dataGenerator(yAxis, labels, randomColors)
+function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false){
+  var dataConstructor = dataGenerator(yAxis, labels, randomColors, fill)
   new Chart(id, {
     type: type,
     data: {

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<style>
+</style>
+</head>
+
+<body>
+</body>
+
+<script src="./tt/data.js"></script>
+<script src="./tt/dataProcess.js"></script>
+<script src="./pxWebFunctions/fetchData.js"></script>
+<script src="./pxWebFunctions/dataFilter.js"></script>
+<script src="./src/graphFunctions.js"></script>
+<script src="./src/mapFunctions.js"></script>
+<script src="./src/dropdownSelection.js"></script> <!-- Renders database selector -->
+<script src="./src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
+
+<script>
+
+function downloadObjectAsJson(exportObj, exportName){
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+  var downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href",     dataStr);
+  downloadAnchorNode.setAttribute("download", exportName + ".json");
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
+async function a(){
+  var url = "https://pxweb2.stat.fi:443/PxWeb/api/v1/en/StatFin/asvu/statfin_asvu_pxt_11x5.px"
+  var baseData = await baseURL(url);
+  //Prepare POST request to get all data
+  var queryBody = await queryBodyMaker(baseData)
+  //Fetch all data from given report
+  var allData = await fetch(url, queryBody);
+  var allData = await allData.json();
+  //var allData = await restructureData(baseData, allData)
+  downloadObjectAsJson(allData, "a")
+}
+
+
+</script>
+
+
+</html>

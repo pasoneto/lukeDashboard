@@ -17,7 +17,7 @@ function showMap(regionIDS){
     }
 }
 
-//Filters data
+//Filters data. Change function to make it more abstract
 function filterHoverMap(region, filteredData){
   var mapCheckedValues = window.checkedValues
   mapCheckedValues["maakunta"] = [region]
@@ -31,7 +31,7 @@ function filterHoverMap(region, filteredData){
 
   var box5 = document.getElementById("box5")
   box5.innerHTML = '<canvas id="myChart5"></canvas>'
-  graphCustom(xAxis1, yAxis1, labels1, "myChart5", 'line', labels1[0], ["#0E6251"], showLegend = false)
+  graphCustom(xAxis1, yAxis1, labels1, "myChart5", 'line', labels1[0], ["#00ff0080"], showLegend = false, fill = true)
 
 }
 
@@ -42,6 +42,6 @@ function changePositionBasedOnMouse(elementID, whereApply){
     x = e.clientX;
     y = e.clientY;
     hiddenDiv.style.left = x + 10 + 'px'
-    hiddenDiv.style.top = y + 10 + 'px'
+    hiddenDiv.style.top = y - 150 + 'px'
   });
 }
