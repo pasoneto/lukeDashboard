@@ -45,3 +45,18 @@ function changePositionBasedOnMouse(elementID, whereApply){
     hiddenDiv.style.top = y - 150 + 'px'
   });
 }
+
+//Function applies filter hover to list of map regions and shows map box on hover
+//i is the element gotten from getElementById, or getElementByTagName 
+function applyFunctionMap(i, mapRegionsCode, filteredDataForMap, whereShow){
+  if(mapRegionsCode.indexOf(i.id) !== -1){
+    i.onmouseover = function(){
+      changePositionBasedOnMouse(i.id, whereShow)
+      showBoxSelector("boxTopMap")
+      filterHoverMap(Number(i.id), filteredDataForMap)
+    }
+    i.onmouseout = function(){
+      showBoxSelector("boxTopMap")
+    }
+  }
+}

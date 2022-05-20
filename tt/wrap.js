@@ -75,8 +75,8 @@ document.getElementById("buttonRender").onclick = function(){
   var randomColors1 = colorGenerator(yAxis1);
   var randomColors2 = colorGenerator(yAxis2);
 
-  graphCustom(xAxis1, yAxis1, labels1, "myChart", 'line', "Comparing by " + group1, randomColors1)
-  graphCustom(xAxis2, yAxis2, labels2, "myChart1", 'bar', "Comparing by " + group2, randomColors2, showLegend = true)
+  graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+  graphCustom(xAxis2, yAxis2, labels2, "myChart1", 'line', "Comparing by " + group2, randomColors2, showLegend = true)
 
   var pieColors = colorGenerator(xAxis1)
   graphCustomPie(xAxis1, yAxis1[0], "myChart2", "pie", labels1[0], pieColors)
@@ -86,7 +86,7 @@ document.getElementById("buttonRender").onclick = function(){
   //Extracting map regions that exist in data
   var mapRegionsCode = filteredDataForMap.map(i => i['maakunta']).filter(onlyUnique)
 
-  //Reformat them to match with maping codes
+  //Reformat region codes to match with maping codes
   mrc = []
   for(k in mapRegionsCode){
     if(mapRegionsCode[k] < 10){
@@ -95,24 +95,13 @@ document.getElementById("buttonRender").onclick = function(){
       mrc.push(mapRegionsCode[k].toString())
     }
   }
-  //console.log(mrc)
+  
+  //Highlight available map regions
   showMap(mrc)
 
   const mapAreaDiv = document.getElementById('map-chart');
   const pathRegions = mapAreaDiv.getElementsByTagName('path');
 
-  function applyFunctionMap(i, mapRegionsCode, filteredDataForMap, whereShow){
-    if(mapRegionsCode.indexOf(i.id) !== -1){
-      i.onmouseover = function(){
-        changePositionBasedOnMouse(i.id, whereShow)
-        showBoxSelector("boxTopMap")
-        filterHoverMap(Number(i.id), filteredDataForMap)
-      }
-      i.onmouseout = function(){
-        showBoxSelector("boxTopMap")
-      }
-    }
-  }
   Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap, "boxTopMap") )
   
 }
