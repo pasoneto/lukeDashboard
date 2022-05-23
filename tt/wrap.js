@@ -30,7 +30,6 @@ document.getElementById("buttonDimensionSelector").onclick = function(){
   document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
 }
 
-
 //Creates empty object with category keys
 var checkedValues = checkedValuesObjectGenerator(categories)
 var allCheckBoxes = document.querySelectorAll('input');
@@ -39,6 +38,7 @@ var allCheckBoxes = document.querySelectorAll('input');
 establishInitial(allCheckBoxes, categories, checkedValues) //Value is written inside the global variable checkedValues
 
 var filteredDataForMap;
+var filteredData;
 //Add function to render graph button. Function shows what variables were selected.
 document.getElementById("buttonRender").onclick = function(){
 
@@ -52,15 +52,23 @@ document.getElementById("buttonRender").onclick = function(){
   var xAxisName1 = window.dropdownCategories[1]
   var xAxisName2 = window.dropdownCategories[0]
 
-  var filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+  //var filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
   window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
 
-  var [yAxis1, labels1] = separateDataInGroups(filteredData, group1, checkedValues)
-  var [yAxis2, labels2] = separateDataInGroups(filteredData, group2, checkedValues)
+  var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
+  var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
 
   var xAxis1 = window.checkedValues[xAxisName1]
   var xAxis2 = window.checkedValues[xAxisName2]
 
+  //Filtering null and missing values
+  var [yAxis1, labels1] = filterNull(yAxis1, labels1)
+  var [yAxis2, labels2] = filterNull(yAxis2, labels2)
+
+  var [yAXis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+  var [yAXis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
+  //End of filtering null and missing values
+  
   var box = document.getElementById("box")
   var box1 = document.getElementById("box1")
   var box2 = document.getElementById("box2")

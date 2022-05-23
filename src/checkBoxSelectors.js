@@ -80,7 +80,8 @@ function onlyOne(category, checkedValues, categories){
     b[j].onclick = function(){
       removeChecksExceptCurrent(b, this)
       checkedValues = mergeVerifyCheckedBoxes(categories)
-      //console.log(checkedValues)
+      //Filters data on every click
+      window.filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
     }
   }
 }
@@ -135,7 +136,10 @@ function establishInitial(allCheckBoxes, categories, checkedValues){
         checkedValues = mergeVerifyCheckedBoxes(categories)
         onlyOneEnforcer(categories, checkedValues)
         establishInitial(allCheckBoxes, categories, checkedValues)
-        //console.log(checkedValues)
+        
+        //Filters data on every click
+        window.filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+
       }
     }
   }
