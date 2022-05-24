@@ -65,8 +65,9 @@ document.getElementById("buttonRender").onclick = function(){
   var [yAxis1, labels1] = filterNull(yAxis1, labels1)
   var [yAxis2, labels2] = filterNull(yAxis2, labels2)
 
-  var [yAXis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
-  var [yAXis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
+  var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+  var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
+  
   //End of filtering null and missing values
   
   var box = document.getElementById("box")
