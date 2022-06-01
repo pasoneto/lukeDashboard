@@ -94,6 +94,14 @@ document.getElementById("buttonRender").onclick = function(){
     var randomColors1 = colorGenerator(yAxis1);
     var randomColors2 = colorGenerator(yAxis2);
 
+    //Translates variables given the label. Change this to more general function
+    if(group1 == 'dependentVariable'){
+      var labels1 = labels1.map(i => labels[0][group1][i])
+    }
+    if(group2 == 'dependentVariable'){
+      var labels2 = labels2.map(i => labels[0][group2][i])
+    }
+
     graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1, randomColors1)
     graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2, randomColors2, showLegend = true)
 
