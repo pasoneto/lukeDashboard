@@ -10,8 +10,8 @@ var data = reshapeJSON(data, classifiers)
 
 //Concatenating labels for checkboxes
 //var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
+var labels = [{"dependentVariable": labels[0]}]
 
-console.log(labels)
 //Extracting categories and options
 var categories = Object.keys(data[0])
 var categories = categories.filter(i => i !== 'value')
