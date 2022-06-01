@@ -1,8 +1,17 @@
 //Adding event listener for database selector
 var classifiers = ["vuosi_", "maakunta", "tuotantosuuntaso", "luomu_"]
 //var data = JSON.parse(data)
+
 var data = reshapeJSON(data, classifiers)
 
+//var maakunta = [{"maakunta": {"1": "Lapland", "2": "Uusima", "3": "Keski-suomi", "4":"Satakunta", "5":"Karjala", "6":"Savo", "7":"Pirkanmaa","8":"Varsinais-Suomi", "9":"Kaakkois-Suomi", "10":"Häme", "11":"Pirkanmaa"}}]
+//var production = [{"tuotantosuuntaso": {"1": "Cereal farms", "2": "Mixed production", "3": "Dairy farms", "4":"Pig farms", "5":"Cattle farms", "6":"Poultry farms", "7":"", "8":"", "9":"", "10":""}}]
+//var vuosi = [{"vuosi_": {"18": "2018", "19": "2019", "20": "2020", "21":"2021", "22":"2022"}}]
+
+//Concatenating labels for checkboxes
+//var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
+
+console.log(labels)
 //Extracting categories and options
 var categories = Object.keys(data[0])
 var categories = categories.filter(i => i !== 'value')
@@ -16,7 +25,7 @@ for(k in categories){
 //console.log(options)
 
 //Generate checkbox inside box
-generateCheckBoxes(categories, options, 'boxTop')
+generateCheckBoxes(categories, options, 'boxTop', labels)
 
 //Add function to show checkboxes div
 document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
@@ -44,53 +53,131 @@ document.getElementById("buttonRender").onclick = function(){
 
   //Selects categories which will be used as group and xAxis  
   var dropdownCategories;
-  pickMultiClassCategories(checkedValues, categories) 
-   
-  var group1 = window.dropdownCategories[0]
-  var group2 = window.dropdownCategories[1]
+  pickMultiClassCategories(checkedValues, categories, dropdownCategories)
 
-  var xAxisName1 = window.dropdownCategories[1]
-  var xAxisName2 = window.dropdownCategories[0]
+  var nMulticlassClassifiers = window.dropdownCategories.length
 
-  //var filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
-  window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
 
-  var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
-  var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
+  //For when there are 2 milticlass classifier
+  if(nMulticlassClassifiers == 2){
 
-  var xAxis1 = window.checkedValues[xAxisName1]
-  var xAxis2 = window.checkedValues[xAxisName2]
+    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
 
-  //Filtering null and missing values
-  var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-  var [yAxis2, labels2] = filterNull(yAxis2, labels2)
+    var group1 = window.dropdownCategories[1]
+    var group2 = window.dropdownCategories[0]
 
-  var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
-  var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
+    var xAxisName1 = window.dropdownCategories[0]
+    var xAxisName2 = window.dropdownCategories[1]
+
+    window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+
+    var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
+    var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
+
+    var xAxis1 = window.checkedValues[xAxisName1]
+    var xAxis2 = window.checkedValues[xAxisName2]
+
+    //Filtering null and missing values
+    var [yAxis1, labels1] = filterNull(yAxis1, labels1)
+    var [yAxis2, labels2] = filterNull(yAxis2, labels2)
+
+    var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+    var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
+    
+    //End of filtering null and missing values
+
+    var box = document.getElementById("box")
+    var box1 = document.getElementById("box1")
+    box.innerHTML = '<canvas id="myChart"></canvas>'
+    box1.innerHTML = '<canvas id="myChart1"></canvas>'
+
+    var randomColors1 = colorGenerator(yAxis1);
+    var randomColors2 = colorGenerator(yAxis2);
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1, randomColors1)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2, randomColors2, showLegend = true)
+
+
+    //Rendering up to 3 pieCharts
+    var pieColors = colorGenerator(xAxis1)
+    var htmlPieCharts = '';
+
+    var nPieCharts = Math.min(yAxis1.length, 3)
+    for (var i = 2; i < nPieCharts+2; i++){
+      if(nPieCharts == 3){
+        var dimensionGraph = '32.6%'
+      }
+      if(nPieCharts == 2){
+        var dimensionGraph = '49%'
+      }
+      htmlPieCharts += '<div class="column graphBox3" style="width:' + dimensionGraph + '" id="box' + i + '">'+
+                       '<canvas id="myChart' + i + '"></canvas>'+
+                       '</div>'
+    }
+    document.getElementById("pieChartsContainer").innerHTML = htmlPieCharts
+
+    for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
+      graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
+    }
+
+  } 
   
-  //End of filtering null and missing values
-  
-  var box = document.getElementById("box")
-  var box1 = document.getElementById("box1")
-  var box2 = document.getElementById("box2")
-  var box3 = document.getElementById("box3")
-  var box4 = document.getElementById("box4")
-  box.innerHTML = '<canvas id="myChart"></canvas>'
-  box1.innerHTML = '<canvas id="myChart1"></canvas>'
-  box2.innerHTML = '<canvas id="myChart2"></canvas>'
-  box3.innerHTML = '<canvas id="myChart3"></canvas>'
-  box4.innerHTML = '<canvas id="myChart4"></canvas>'
+  ///////For when there is only 1 milticlass classifier
+  if(nMulticlassClassifiers == 1) {
 
-  var randomColors1 = colorGenerator(yAxis1);
-  var randomColors2 = colorGenerator(yAxis2);
+    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
 
-  graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
-  graphCustom(xAxis2, yAxis2, labels2, "myChart1", 'line', "Comparing by " + group2, randomColors2, showLegend = true)
+    var group1 = window.dropdownCategories[0]
+    var xAxisName1 = categories.filter(i=>i !== group1)[0]
 
-  var pieColors = colorGenerator(xAxis1)
-  graphCustomPie(xAxis1, yAxis1[0], "myChart2", "pie", labels1[0], pieColors)
-  graphCustomPie(xAxis1, yAxis1[1], "myChart3", "pie", labels1[1], pieColors)
-  graphCustomPie(xAxis1, yAxis1[2], "myChart4", "pie", labels1[2], pieColors)
+    window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+
+    var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
+
+    var xAxis1 = window.checkedValues[xAxisName1]
+
+    //Filtering null and missing values
+    var [yAxis1, labels1] = filterNull(yAxis1, labels1)
+
+    var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+
+    //End of filtering null and missing values
+
+    var box = document.getElementById("box")
+    box.innerHTML = '<canvas id="myChart"></canvas>'
+
+    var randomColors1 = colorGenerator(yAxis1);
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+
+  } if(nMulticlassClassifiers < 1) {
+    
+    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
+
+    var group1 = categories[0]
+    var xAxisName1 = categories[1]
+
+    window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+
+    var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
+
+    var xAxis1 = window.checkedValues[xAxisName1]
+
+    //Filtering null and missing values
+    var [yAxis1, labels1] = filterNull(yAxis1, labels1)
+
+    var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+
+    //End of filtering null and missing values
+
+    var box = document.getElementById("box")
+    box.innerHTML = '<canvas id="myChart"></canvas>'
+
+    var randomColors1 = colorGenerator(yAxis1);
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+
+  }
 
   //Extracting map regions that exist in data
   var mapRegionsCode = filteredDataForMap.map(i => i['maakunta']).filter(onlyUnique)

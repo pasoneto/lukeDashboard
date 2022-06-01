@@ -80,3 +80,36 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors){
     }
   })
 }
+
+//nMulticlassClassifiers is the length of the output from function pickMultiClassCategories
+//Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
+function renderGraphBoxes(whereToAppend, nMulticlassClassifiers){
+  if(nMulticlassClassifiers == 2){
+    html = 'Graphs'+
+           '<div class="row">'+
+            '<div class="column graphBox" id="box"></div>'+
+            '<div class="column graphBox" id="box1"></div>'+
+           '</div>'+
+           '<div class="row" id="pieChartsContainer">'+
+             '<div class="column graphBox3" id="box2"></div>'+
+             '<div class="column graphBox3" id="box3"></div>'+
+             '<div class="column graphBox3" id="box4"></div>'+
+           '</div>'+
+           '</div>'
+  } else {
+    html = 'Graphs'+ 
+           '<div class="row">'+
+             '<div class="graphSingleBox" id="box"></div>'+
+           '</div>'
+  }
+  document.getElementById(whereToAppend).innerHTML = html
+}
+
+//If x axis is year, graph type is line. Bar otherwise.
+function typegraph(groupName){
+  if(groupName !== 'vuosi_'){
+    return("line")
+  } else {
+    return("bar")
+  }
+}

@@ -77,3 +77,13 @@ function removeNullColumns(yAxis, xAxis, labels){
   return [yAxis, xAxis, labels]
 }
 
+//Selects only categories which received 2 or more checks in checkboxes
+function pickMultiClassCategories(checkedValues, categories, whereStore){
+  window.dropdownCategories = []
+  for(k in categories){
+    var nChecks = window.checkedValues[categories[k]].length
+    if(nChecks > 1){
+      window.whereStore.push(categories[k])
+    }
+  }
+}

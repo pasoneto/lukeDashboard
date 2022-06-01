@@ -1,5 +1,5 @@
 //Generates checkbox for classifier selection
-function generateCheckBoxes(categories, options, whereAppend){
+function generateCheckBoxes(categories, options, whereAppend, labels = null){
   html = '';
   html += '<div id="categorySelectorHeader">Category selector</div>'; //Header of category selector
   html += '<div id="checkBoxListContainer">';
@@ -7,9 +7,24 @@ function generateCheckBoxes(categories, options, whereAppend){
     html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '</label>'
     html += '<ul id="' + categories[category] + '">'
     for(option in options[category]){
-      //console.log(options[category][option])
       html += '<li><input type="checkbox" id="'
-      html += options[category][option] + '">' + options[category][option] + '</li>'
+      //if labels are provided, rendered checkbox will show their names
+      if(labels){
+        var catItem = options[category][option].toString()
+        if(labels[0][categories[category]]){
+          var allCats = Object.keys(labels[0][categories[category]])
+          var allCats = allCats.map(i=> i.toString())
+        } else {
+          var allCats = [{}];
+        }
+        if(allCats.includes(catItem)){ 
+            html += options[category][option] + '">' + labels[0][categories[category]][options[category][option]] + '</li>'
+        } else {
+            html += options[category][option] + '">' + options[category][option] + '</li>'
+        }
+      } else {
+            html += options[category][option] + '">' + options[category][option] + '</li>'
+      }
     }
     html += '</ul>'
   }

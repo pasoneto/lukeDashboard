@@ -6,7 +6,16 @@
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+.graphSingleBox {
+  background: snow;
+  margin: 1px;
+  width: 100%;
+  height: 65vh;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
 
+/* Pie charts */
 .graphBox3 {
   background: snow;
   height: 32vh;
@@ -15,6 +24,7 @@
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+/* End of pie charts */
 
 .graphBox.mainGraph {
   width: 98%;
