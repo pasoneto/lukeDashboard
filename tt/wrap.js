@@ -22,7 +22,7 @@ for(k in categories){
   var a = a.filter(onlyUnique)
   options.push(a)
 }
-//console.log(options)
+console.log(options)
 
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop', labels)
