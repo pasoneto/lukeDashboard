@@ -10,6 +10,7 @@ function generateCheckBoxes(categories, options, whereAppend, labels = null){
       html += '<li><input type="checkbox" id="'
       //if labels are provided, rendered checkbox will show their names
       if(labels){
+        console.log(options[category][option])
         var catItem = options[category][option].toString()
         if(labels[0][categories[category]]){
           var allCats = Object.keys(labels[0][categories[category]])
