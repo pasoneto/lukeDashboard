@@ -44,7 +44,7 @@ var checkedValues = checkedValuesObjectGenerator(categories)
 var allCheckBoxes = document.querySelectorAll('input');
 
 //Establishes checkbox verification system. Multiple or single selection
-establishInitial(allCheckBoxes, categories, checkedValues) //Value is written inside the global variable checkedValues
+establishInitial(allCheckBoxes, categories, checkedValues, exception = "dependentVariable") //Value is written inside the global variable checkedValues
 
 var filteredDataForMap;
 var filteredData;

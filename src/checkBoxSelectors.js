@@ -140,17 +140,23 @@ function allOK(categories, checkedValues){
 }
 
 //If no category has more than 1 check, initial function state is established (multiple selection allowed)
-function establishInitial(allCheckBoxes, categories, checkedValues){
+function establishInitial(allCheckBoxes, categories, checkedValues, exception){
+
+  //Establishes that exception category will only be single selector
+  onlyOne("dependentVariable", checkedValues, categories)
+  document.getElementById('dependentVariable' + 'Label').innerHTML = 'dependentVariable' + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+
   var notMany = allOK(categories, checkedValues)
   if(notMany){ //Removes OnlyOne
     for(k in categories){
+      if(categories[k] !== exception)
       document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
     }
     for(j in allCheckBoxes){
       allCheckBoxes[j].onclick = function(){
         checkedValues = mergeVerifyCheckedBoxes(categories)
         onlyOneEnforcer(categories, checkedValues)
-        establishInitial(allCheckBoxes, categories, checkedValues)
+        establishInitial(allCheckBoxes, categories, checkedValues, exception)
         
         //Filters data on every click
         window.filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
@@ -158,6 +164,7 @@ function establishInitial(allCheckBoxes, categories, checkedValues){
       }
     }
   }
+  onlyOne("dependentVariable", checkedValues, categories) //Puts back the single check in a particular category
 };
 
 function dragElement(elmnt, headerElmnt) {
