@@ -14,6 +14,7 @@ function dataGenerator(yAxis, labels, randomColors, fill){
       var label = labels[i]
       dataConstructor[i] = {
           label: label,
+          tension: 0,
           data: yAxis[i],
           borderColor: randomColors[i],
           backgroundColor: randomColors[i],
