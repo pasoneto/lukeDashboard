@@ -1,5 +1,5 @@
 //Adding event listener for database selector
-var classifiers = ["vuosi_", "maakunta", "tuotantosuuntaso", "luomu_"]
+var classifiers = Object.keys(classifierLabels[0])
 //var data = JSON.parse(data)
 
 var data = reshapeJSON(data, classifiers)
@@ -10,7 +10,8 @@ var data = reshapeJSON(data, classifiers)
 
 //Concatenating labels for checkboxes
 //var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
-var labels = [{"dependentVariable": labels[0]}]
+//var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
+var labels = [{"dependentVariable": labels[0], "classifiers": classifierLabels[0]}]
 
 //Extracting categories and options
 var categories = Object.keys(data[0])

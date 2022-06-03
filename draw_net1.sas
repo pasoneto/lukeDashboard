@@ -6,9 +6,14 @@ proc json out="/data/taloustohtoritulosteet/rap/json.txt" pretty;
 	export graf_data_pedro / nosastags;
 run;
 
-/*labels*/
+/*labels for subclass of classifiers*/
 proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" pretty;
 	export graf_label_pedro1 / nosastags;
+run;
+
+/*labels for names of classifiers (e.g. vuosi_ -> Vuosi)*/
+proc json out="/data/taloustohtoritulosteet/rap/json_classlab.txt" pretty;
+	export graf_classlabel_pedro1 / nosastags;
 run;
 
 /* Creates first half of HTML page */
@@ -107,15 +112,21 @@ data _null_;
 	put _infile_;
 run;
 
-/* Add here the classifiers used to generate the report */
-
-/* Adds the classifiers which were used to generate the report */
-/* now they are fixed, but if you have the classifiers in a SAS variable,*/
-/* just substitute vuosi_, maakunta, and tuotantosuuntaso with the variables*/
+/* Adding classifier label translator */
 data _null_;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var classifiers = ["vuosi_", "maakunta", "tuotantosuuntaso", "luomu_"]';
+	put 'var classifierLabels =';
+run;
+
+/* Inserts the classlabels in json format into the HTML page */
+data _null_;
+  /* change directory here */
+  infile "/data/taloustohtoritulosteet/rap/json_classlab.txt";
+	input;
+  /* change directory here */
+	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+	put _infile_;
 run;
 
 /* Generates the second half of the HTML page */

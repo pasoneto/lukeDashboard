@@ -4,7 +4,12 @@ function generateCheckBoxes(categories, options, whereAppend, labels = null){
   html += '<div id="categorySelectorHeader">Category selector</div>'; //Header of category selector
   html += '<div id="checkBoxListContainer">';
   for(category in categories){
-    html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '</label>'
+    if(labels && categories[category] !== "dependentVariable"){
+      console.log(labels[0]['classifiers'][categories[category]])
+      html += '<label id = ' + categories[category] + 'Label' + '>' + labels[0]['classifiers'][categories[category]] + '<div id="' + categories[category] + 'Label' + 'SingleMultiple"></div></label>'
+    } else {
+      html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '<div id="' + categories[category] + 'Label' + 'SingleMultiple"></div></label>'
+    }
     html += '<ul id="' + categories[category] + '">'
     for(option in options[category]){
       html += '<li><input type="checkbox" id="'
@@ -114,11 +119,11 @@ function onlyOneEnforcer(categories, checkedValues){
   //console.log(multipleCheckCategories)
   if(multipleCheckCategories.length == 2){ //If there are two multiple checks
     for(k in categories){
-        //document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+        //document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
         var notMultiple = multipleCheckCategories.indexOf(categories[k]) !== -1
         //console.log("Category " + categories[k] + "single selector" + notMultiple)
         if(!notMultiple){
-          document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+          document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
           onlyOne(categories[k], checkedValues, categories)
       }
     }
@@ -144,13 +149,14 @@ function establishInitial(allCheckBoxes, categories, checkedValues, exception){
 
   //Establishes that exception category will only be single selector
   onlyOne("dependentVariable", checkedValues, categories)
-  document.getElementById('dependentVariable' + 'Label').innerHTML = 'dependentVariable' + '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+  document.getElementById('dependentVariable' + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
 
   var notMany = allOK(categories, checkedValues)
   if(notMany){ //Removes OnlyOne
     for(k in categories){
-      if(categories[k] !== exception)
-      document.getElementById(categories[k] + 'Label').innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+      if(categories[k] !== exception){
+        document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+      }
     }
     for(j in allCheckBoxes){
       allCheckBoxes[j].onclick = function(){
