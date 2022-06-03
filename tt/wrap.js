@@ -129,6 +129,9 @@ document.getElementById("buttonRender").onclick = function(){
       graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
     }
 
+    //Display single variable names
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    displeySelectedSingleVariables(singleLabels)
   } 
   
   ///////For when there is only 1 milticlass classifier
@@ -158,6 +161,10 @@ document.getElementById("buttonRender").onclick = function(){
     var randomColors1 = colorGenerator(yAxis1);
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+    
+    //Display single variable names
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    displeySelectedSingleVariables(singleLabels)
 
   } if(nMulticlassClassifiers < 1) {
     
@@ -185,6 +192,10 @@ document.getElementById("buttonRender").onclick = function(){
     var randomColors1 = colorGenerator(yAxis1);
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+    
+    //Display single variable names
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    displeySelectedSingleVariables(singleLabels)
 
   }
 

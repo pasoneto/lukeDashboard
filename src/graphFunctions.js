@@ -86,19 +86,19 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors){
 //Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
 function renderGraphBoxes(whereToAppend, nMulticlassClassifiers){
   if(nMulticlassClassifiers == 2){
-    html = 'Graphs'+
+    html = '<div id="selectedVariables"></div>'+
            '<div class="row">'+
-            '<div class="column graphBox" id="box"></div>'+
-            '<div class="column graphBox" id="box1"></div>'+
-           '</div>'+
-           '<div class="row" id="pieChartsContainer">'+
-             '<div class="column graphBox3" id="box2"></div>'+
-             '<div class="column graphBox3" id="box3"></div>'+
-             '<div class="column graphBox3" id="box4"></div>'+
-           '</div>'+
-           '</div>'
+                 '<div class="column graphBox" id="box"></div>'+
+                 '<div class="column graphBox" id="box1"></div>'+
+                 '</div>'+
+                 '<div class="row" id="pieChartsContainer">'+
+                   '<div class="column graphBox3" id="box2"></div>'+
+                   '<div class="column graphBox3" id="box3"></div>'+
+                   '<div class="column graphBox3" id="box4"></div>'+
+                 '</div>'+
+                 '</div>'
   } else {
-    html = 'Graphs'+ 
+    html = '<div id="selectedVariables"></div>'+
            '<div class="row">'+
              '<div class="graphSingleBox" id="box"></div>'+
            '</div>'
@@ -113,4 +113,25 @@ function typegraph(groupName){
   } else {
     return("bar")
   }
+}
+
+function singleLabelExtractor(checkedValues, labels){
+  var selectedCats = Object.values(checkedValues)
+  var selectedValues = Object.keys(checkedValues)
+  json = ""
+  for(k in selectedCats){
+    if(selectedCats[k].length == 1){
+      //Except dependent variable, which doesn't have a translator. Create more general function for this
+      if(selectedValues[k] != "dependentVariable"){
+        json += "<strong>" + labels[0]['classifiers'][selectedValues[k]] + "</strong>" + ": " + selectedCats[k] + ";  "
+      } else {
+        json += "<strong>" + selectedValues[k] + "</strong>" + ": " + labels[0]["dependentVariable"][selectedCats[k]] + ";  "
+      }
+    }
+  }
+  return(json)
+}
+
+function displeySelectedSingleVariables(checkedValues){
+  document.getElementById("selectedVariables").innerHTML = checkedValues
 }
