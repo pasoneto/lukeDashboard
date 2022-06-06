@@ -26,7 +26,7 @@ for(k in categories){
 var options = options.filter(i=> i[0] !== undefined)
 
 //Generate checkbox inside box
-generateCheckBoxes(categories, options, 'boxTop', labels)
+generateCheckBoxes(categories, options, 'boxTop', data, labels)
 
 //Add function to show checkboxes div
 document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
@@ -45,7 +45,7 @@ var checkedValues = checkedValuesObjectGenerator(categories)
 var allCheckBoxes = document.querySelectorAll('input');
 
 //Establishes checkbox verification system. Multiple or single selection
-establishInitial(allCheckBoxes, categories, checkedValues, exception = "dependentVariable") //Value is written inside the global variable checkedValues
+establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "dependentVariable") //Value is written inside the global variable checkedValues
 
 var filteredDataForMap;
 var filteredData;

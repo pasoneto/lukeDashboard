@@ -1,11 +1,10 @@
 //Generates checkbox for classifier selection
-function generateCheckBoxes(categories, options, whereAppend, labels = null){
+function generateCheckBoxes(categories, options, whereAppend, data, labels = null){
   html = '';
   html += '<div id="categorySelectorHeader">Category selector</div>'; //Header of category selector
   html += '<div id="checkBoxListContainer">';
   for(category in categories){
     if(labels && categories[category] !== "dependentVariable"){
-      console.log(labels[0]['classifiers'][categories[category]])
       html += '<label id = ' + categories[category] + 'Label' + '>' + labels[0]['classifiers'][categories[category]] + '<div id="' + categories[category] + 'Label' + 'SingleMultiple"></div></label>'
     } else {
       html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '<div id="' + categories[category] + 'Label' + 'SingleMultiple"></div></label>'
@@ -93,7 +92,7 @@ function removeChecksExceptCurrent(checkBoxes, current) {
 }
 
 //Functions applies the onlyOne function to all elements of a category ID
-function onlyOne(category, checkedValues, categories){
+function onlyOne(category, checkedValues, categories, data, filterFunction){
   var a = document.getElementById(category)
   var b = a.getElementsByTagName('input')
   for(j in b){
@@ -101,14 +100,14 @@ function onlyOne(category, checkedValues, categories){
       removeChecksExceptCurrent(b, this)
       checkedValues = mergeVerifyCheckedBoxes(categories)
       //Filters data on every click
-      window.filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+      window.filteredData = filterFunction(categories, data, window.checkedValues)
     }
   }
 }
 
 //Checks number of selected boxes per category. If one category has more than 1 checks, 
 //applies onlyOne to all except that category.
-function onlyOneEnforcer(categories, checkedValues){
+function onlyOneEnforcer(categories, checkedValues, data, filterFunction){
   var multipleCheckCategories = []
   for(k in categories){
     var nCheckedByCategory = checkedValues[categories[k]].length
@@ -124,7 +123,7 @@ function onlyOneEnforcer(categories, checkedValues){
         //console.log("Category " + categories[k] + "single selector" + notMultiple)
         if(!notMultiple){
           document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
-          onlyOne(categories[k], checkedValues, categories)
+          onlyOne(categories[k], checkedValues, categories, data, filterFunction)
       }
     }
   }
@@ -145,11 +144,13 @@ function allOK(categories, checkedValues){
 }
 
 //If no category has more than 1 check, initial function state is established (multiple selection allowed)
-function establishInitial(allCheckBoxes, categories, checkedValues, exception){
+function establishInitial(allCheckBoxes, categories, checkedValues, data, filterFunction, exception = null){
 
-  //Establishes that exception category will only be single selector
-  onlyOne("dependentVariable", checkedValues, categories)
-  document.getElementById('dependentVariable' + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+  if(exception){
+    onlyOne("dependentVariable", checkedValues, categories, data, filterFunction)
+    //Establishes that exception category will only be single selector
+    document.getElementById('dependentVariable' + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+  }
 
   var notMany = allOK(categories, checkedValues)
   if(notMany){ //Removes OnlyOne
@@ -161,16 +162,18 @@ function establishInitial(allCheckBoxes, categories, checkedValues, exception){
     for(j in allCheckBoxes){
       allCheckBoxes[j].onclick = function(){
         checkedValues = mergeVerifyCheckedBoxes(categories)
-        onlyOneEnforcer(categories, checkedValues)
-        establishInitial(allCheckBoxes, categories, checkedValues, exception)
+        onlyOneEnforcer(categories, checkedValues, data, filterFunction)
+        establishInitial(allCheckBoxes, categories, checkedValues, data, filterFunction, exception)
         
         //Filters data on every click
-        window.filteredData = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+        window.filteredData = filterFunction(categories, data, window.checkedValues)
 
       }
     }
   }
-  onlyOne("dependentVariable", checkedValues, categories) //Puts back the single check in a particular category
+  if(exception){
+    onlyOne("dependentVariable", checkedValues, categories, data, filterFunction) //Puts back the single check in a particular category
+  }
 };
 
 function dragElement(elmnt, headerElmnt) {
