@@ -19,11 +19,10 @@ document.head.appendChild(script);
 document.head.appendChild(script2);
 document.head.appendChild(script3);
 
-
-//<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-//<script src="https://cdn.rawgit.com/aparshin/leaflet-boundary-canvas/f00b4d35/src/BoundaryCanvas.js"></script>
-
-
+document.getElementsByTagName("head")[0].insertAdjacentHTML(
+  'beforeend',
+  '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />',
+);
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
