@@ -28,8 +28,9 @@
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border-radius: 5px;
 }
-.info h4 {
+.h4 {
     color: #777;
+    line-height: 0px;
 }
 
 

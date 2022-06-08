@@ -48,8 +48,8 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
       var regionHovered = e.target.feature.properties['name'] //Getting current hovered region code
       var stat = e.target.feature.properties['population'] //Getting current hovered region code
       console.log(e.target.feature.properties)
-      document.getElementById("mapInfo").innerHTML = '<h4>'+regionHovered+'</h4>' +
-          '<br>Population:' + stat
+      document.getElementById("mapInfo").innerHTML = '<br><b>' + regionHovered + '</b><br>' +
+                                                     '<b>Population:</b>  ' + stat
       //End of updating external box on hover
 
       var available = regionsIn.indexOf(regionHovered) != -1;
