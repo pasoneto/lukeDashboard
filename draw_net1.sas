@@ -33,6 +33,12 @@ data _null_;
     put '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';
     put '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesSelectors.css">';
     put '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesBoxSelector.css">';
+
+    put '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />';
+    put '<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>';
+    put '<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet-src.js"></script>';
+    put '<script src="https://cdn.rawgit.com/aparshin/leaflet-boundary-canvas/f00b4d35/src/BoundaryCanvas.js"></script>';
+
     put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
     put '<style>';
     put '</style>';

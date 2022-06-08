@@ -30,7 +30,6 @@ function filterDataByCheckBoxSelectorTT(categories, data, checkedValues){
   }
   return(filteredData)
 }
-
   
 //Selects only categories which received 2 or more checks in checkboxes
 function pickMultiClassCategories(checkedValues, categories, whereStore){
@@ -41,4 +40,20 @@ function pickMultiClassCategories(checkedValues, categories, whereStore){
       window.whereStore.push(categories[k])
     }
   }
+}
+
+//Renames map regions
+function renameMapRegions(fData){
+  //Extracting map regions that exist in data
+  var mapRegionsCode = fData.map(i => i['maakunta']).filter(onlyUnique)
+  //Reformat region codes to match with maping codes
+  mrc = []
+  for(k in mapRegionsCode){
+    if(mapRegionsCode[k] < 10){
+      mrc.push("0" + mapRegionsCode[k].toString())
+    } else {
+      mrc.push(mapRegionsCode[k].toString())
+    }
+  }
+  return mrc
 }

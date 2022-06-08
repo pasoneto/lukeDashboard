@@ -58,7 +58,6 @@ document.getElementById("buttonRender").onclick = function(){
 
   var nMulticlassClassifiers = window.dropdownCategories.length
 
-
   //For when there are 2 milticlass classifier
   if(nMulticlassClassifiers == 2){
 
@@ -199,19 +198,10 @@ document.getElementById("buttonRender").onclick = function(){
 
   }
 
-  //Extracting map regions that exist in data
-  var mapRegionsCode = filteredDataForMap.map(i => i['maakunta']).filter(onlyUnique)
-  //Reformat region codes to match with maping codes
-  mrc = []
-  for(k in mapRegionsCode){
-    if(mapRegionsCode[k] < 10){
-      mrc.push("0" + mapRegionsCode[k].toString())
-    } else {
-      mrc.push(mapRegionsCode[k].toString())
-    }
-  }
-   
+  //Getting only region codes that exist in data
+  var mrc = renameMapRegions(filteredDataForMap);
   var statistics = { "01" : 10, "02" : 20, "03" : 5, "04" : 3, "05" : 4, "06" : 7, "07" : 2, "08" : 8, "09" : 3, "10" : 2, "11" : 5, "12" : 5, "13" : 6, "14" : 0, "15" : 10, "16" : 7, }
+  
   drawMap(ely, 'ely', mrc, statistics)
 
   //const mapAreaDiv = document.getElementById('map-chart');

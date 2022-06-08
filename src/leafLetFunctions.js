@@ -1,3 +1,28 @@
+const script = document.createElement('script');
+const script2 = document.createElement('script');
+const script3 = document.createElement('script');
+
+script.setAttribute(
+  'src',
+  'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js',
+);
+script2.setAttribute(
+  'src',
+  'https://cdn.rawgit.com/aparshin/leaflet-boundary-canvas/f00b4d35/src/BoundaryCanvas.js">',
+);
+script3.setAttribute(
+  'src',
+  "https://cdn.rawgit.com/aparshin/leaflet-boundary-canvas/f00b4d35/src/BoundaryCanvas.js",
+);
+
+document.head.appendChild(script);
+document.head.appendChild(script2);
+document.head.appendChild(script3);
+
+
+//<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+//<script src="https://cdn.rawgit.com/aparshin/leaflet-boundary-canvas/f00b4d35/src/BoundaryCanvas.js"></script>
+  
 function styleGen(feature, codesIn, regionDivision){
     var regionCode = feature.properties[regionDivision]
     var available = codesIn.indexOf(regionCode) == -1;
