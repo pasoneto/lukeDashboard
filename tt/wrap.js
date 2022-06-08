@@ -83,7 +83,6 @@ document.getElementById("buttonRender").onclick = function(){
 
     var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
     var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
-    
     //End of filtering null and missing values
 
     var box = document.getElementById("box")
@@ -102,8 +101,8 @@ document.getElementById("buttonRender").onclick = function(){
       var labels2 = labels2.map(i => labels[0][group2][i])
     }
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1, randomColors1)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2, randomColors2, showLegend = true)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + labels[0]['classifiers'][group1], randomColors1)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + labels[0]['classifiers'][group2], randomColors2, showLegend = true)
 
 
     //Rendering up to 3 pieCharts
@@ -189,8 +188,8 @@ document.getElementById("buttonRender").onclick = function(){
     box.innerHTML = '<canvas id="myChart"></canvas>'
 
     var randomColors1 = colorGenerator(yAxis1);
-
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+    console.log(labels1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + labels[0]['classifiers'][group1], randomColors1)
     
     //Display single variable names
     var singleLabels = singleLabelExtractor(window.checkedValues, labels)
