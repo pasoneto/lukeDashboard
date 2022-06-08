@@ -77,7 +77,7 @@ document.getElementById("buttonRender").onclick = function(){
 
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
-
+    
     //Filtering null and missing values
     var [yAxis1, labels1] = filterNull(yAxis1, labels1)
     var [yAxis2, labels2] = filterNull(yAxis2, labels2)
@@ -201,7 +201,6 @@ document.getElementById("buttonRender").onclick = function(){
 
   //Extracting map regions that exist in data
   var mapRegionsCode = filteredDataForMap.map(i => i['maakunta']).filter(onlyUnique)
-
   //Reformat region codes to match with maping codes
   mrc = []
   for(k in mapRegionsCode){
@@ -211,14 +210,14 @@ document.getElementById("buttonRender").onclick = function(){
       mrc.push(mapRegionsCode[k].toString())
     }
   }
-  
-  //Highlight available map regions
-  showMap(mrc)
+   
+  var statistics = { "01" : 10, "02" : 20, "03" : 5, "04" : 3, "05" : 4, "06" : 7, "07" : 2, "08" : 8, "09" : 3, "10" : 2, "11" : 5, "12" : 5, "13" : 6, "14" : 0, "15" : 10, "16" : 7, }
+  drawMap(ely, 'ely', mrc, statistics)
 
-  const mapAreaDiv = document.getElementById('map-chart');
-  const pathRegions = mapAreaDiv.getElementsByTagName('path');
+  //const mapAreaDiv = document.getElementById('map-chart');
+  //const pathRegions = mapAreaDiv.getElementsByTagName('path');
 
-  Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap, "boxTopMap") )
+  //Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap, "boxTopMap") )
   
 }
 

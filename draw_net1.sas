@@ -58,20 +58,19 @@ data _null_;
 
     put '<div class="row">';
     put '  <div class="column statisticsSelector" id="statisticsSelector" style="background-color:#aaa;">';
-    put '    Database selector';
+    put '    Map Control';
+    put '    <div id="selector-map"></div>';
+    put '    <div id="mapInfo"></div>';
     put '  </div>';
-
 
     put '<div class="column dimensionSelector" id="dimensionSelector" style="background-color:#bbb;">';
-    put '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
-    put '<button id="buttonRender">Render graphs</button>';
+    put ' Graph Control<br>';
+    put ' <button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
+    put ' <button id="buttonRender">Render graphs</button>';
     put '</div>';
 
-    put '  <div class="column mapBox" style="background-color:#ccc;">';
-    put '    Map selector';
-    put '    <div id="map-chart">';
-    put '    </div>';
-    put '  </div>';
+    put '<div class="column mapBox" id="mapBox" style="background-color:#ccc;">';
+    put '</div>';
 
     put '  <div class="column graphsBox" id="graphsContainer" style="background-color:#ddd;">';
     put '    Graphs';
@@ -136,9 +135,10 @@ data _null_;
 	  put '</script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/fetchData.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataProcessUtils.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/graphFunctions.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/map.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/mapFunctions.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/dropdownSelection.js"></script> <!-- Renders database selector -->';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script> <!-- Renders database selector -->';

@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="./styles/stylesMobile.css">
 <link rel="stylesheet" href="./styles/stylesSelectors.css">
 <link rel="stylesheet" href="./styles/stylesBoxSelector.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet-src.js"></script>
+<script src="https://cdn.rawgit.com/aparshin/leaflet-boundary-canvas/f00b4d35/src/BoundaryCanvas.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <style>
 </style>
@@ -36,18 +40,18 @@
 
 <div class="row">
   <div class="column statisticsSelector" id="statisticsSelector" style="background-color:#aaa;">
-    Database selector
+   Map Control 
+  <div id="selector-map"></div>
+  <div id="mapInfo"></div>
   </div>
 
   <div class="column dimensionSelector" id="dimensionSelector" style="background-color:#bbb;">
+    Graph Control<br>
     <button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>
     <button id="buttonRender">Render graphs</button>
   </div>
 
-  <div class="column mapBox" style="background-color:#ccc;">
-    Map selector
-    <div id="map-chart">
-    </div>
+  <div class="column mapBox" id="mapBox" style="background-color:#ccc;">
   </div>
 
   <div class="column graphsBox" id="graphsContainer" style="background-color:#ddd;">
@@ -63,7 +67,7 @@
 <script src="./pxWebFunctions/fetchData.js"></script>
 <script src="./pxWebFunctions/dataFilter.js"></script>
 <script src="./src/graphFunctions.js"></script>
-<script src="./src/map.js"></script>
+<script src="./src/leafLetFunctions.js"></script>
 <script src="./src/mapFunctions.js"></script>
 <script src="./src/dropdownSelection.js"></script> <!-- Renders database selector -->
 <script src="./src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
