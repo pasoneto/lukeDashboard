@@ -216,3 +216,44 @@ function dragElement(elmnt, headerElmnt) {
     document.onmousemove = null;
   }
 }
+
+//Simulate checkbox selection and automates generation of dashboard
+function multiCheck(categoryName){
+  var a = document.getElementById(categoryName)
+  var a = Array.from(a.getElementsByTagName("input"))
+
+  for(k in a){
+    a[k].click()
+  }
+}
+
+function singleCheck(categoryName){
+  var a = document.getElementById(categoryName)
+  var a = Array.from(a.getElementsByTagName("input"))
+  var randomIndex = Math.floor(Math.random() * a.length);
+  a[randomIndex].click()
+}
+
+function simulateSelection(multi, single){
+  while (true) {
+    multi.map(i => multiCheck(i))
+    single.map(i => singleCheck(i))
+    
+    var allNull = filteredData.filter(i=> i.value !== null)
+
+    if(allNull.length <= 5){
+      var allCheckBoxes = Array.from(document.querySelectorAll('input[type="checkbox"]'))
+      for(i in allCheckBoxes){
+        if(allCheckBoxes[i].checked === true){
+          allCheckBoxes[i].click()
+        }
+      }
+    }
+
+    if(allNull.length > 5){            
+        completeWrap()
+        break;
+    } 
+  }
+}
+

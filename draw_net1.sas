@@ -59,22 +59,22 @@ data _null_;
     put '<!-- Box on top of everything. Shows graph based on map hover -->';
 
     put '<div class="row">';
-    put '  <div class="column statisticsSelector" id="statisticsSelector" style="background-color:#aaa;">';
+    put '  <div class="column statisticsSelector" id="statisticsSelector">';
     put '    Map Control';
     put '    <div id="selector-map"></div>';
     put '    <div id="mapInfo"></div>';
     put '  </div>';
 
-    put '<div class="column dimensionSelector" id="dimensionSelector" style="background-color:#bbb;">';
+    put '<div class="column dimensionSelector" id="dimensionSelector">';
     put ' Graph Control<br>';
     put ' <button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
     put ' <button id="buttonRender">Render graphs</button>';
     put '</div>';
 
-    put '<div class="column mapBox" id="mapBox" style="background-color:#ccc;">';
+    put '<div class="column mapBox" id="mapBox">';
     put '</div>';
 
-    put '  <div class="column graphsBox" id="graphsContainer" style="background-color:#ddd;">';
+    put '  <div class="column graphsBox" id="graphsContainer">';
     put '    Graphs';
     put '  </div>';
 

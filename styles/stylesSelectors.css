@@ -1,14 +1,21 @@
 /*Dimension selectors*/
-.dimensionSelector {
+.dimensionSelector{
   height: 15vh;
-  width: 80%
+  width: 80%;
+  margin: 1px;
+  background-color: #bbb;
+  border-radius: 10px;
 }
 
-.statisticsSelector {
-  height: 15vh;
-  width: 20%
+/*Statistics selector box*/
+#statisticsSelector{
+ margin: 1px;
+ height: 15vh;
+ width: 20%;
+ background-color: #bbb;
+ width: 19.5%;
+ border-radius: 10px;
 }
-
 
 /*Dropdown buttons*/
 .dropdown-btn {

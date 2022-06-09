@@ -17,9 +17,10 @@ h3 {
 
 .header {
   padding: 1px;
-  height: 9vh;
+  height: 7vh;
   text-align: left;
   background: #1abc9c;
+  border-radius: 10px;
   color: white;
   font-size: 15px;
 }

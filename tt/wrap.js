@@ -16,7 +16,6 @@ var labels = [{"dependentVariable": labels[0], "classifiers": classifierLabels[0
 //Extracting categories and options
 var categories = Object.keys(data[0])
 var categories = categories.filter(i => i !== 'value')
-
 var options = []
 for(k in categories){
   var a = data.map(i=>i[categories[k]])
@@ -25,6 +24,12 @@ for(k in categories){
 }
 var options = options.filter(i=> i[0] !== undefined)
 
+var categoriesAndOptions = {}
+for(k in categories){
+  var a = data.map(i=>i[categories[k]])
+  var a = a.filter(onlyUnique)
+  categoriesAndOptions[categories[k]] = a
+}
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop', data, labels)
 
@@ -49,9 +54,9 @@ establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByChe
 
 var filteredDataForMap;
 var filteredData;
-//Add function to render graph button. Function shows what variables were selected.
-document.getElementById("buttonRender").onclick = function(){
 
+function completeWrap(){
+  //
   //Selects categories which will be used as group and xAxis  
   var dropdownCategories;
   pickMultiClassCategories(checkedValues, categories, dropdownCategories)
@@ -202,21 +207,25 @@ document.getElementById("buttonRender").onclick = function(){
   var statistics = { "01" : 10, "02" : 20, "03" : 5, "04" : 3, "05" : 4, "06" : 7, "07" : 2, "08" : 8, "09" : 3, "10" : 2, "11" : 5, "12" : 5, "13" : 6, "14" : 0, "15" : 10, "16" : 7, }
   
   drawMap(ely, 'ely', mrc, statistics)
-
-  //const mapAreaDiv = document.getElementById('map-chart');
-  //const pathRegions = mapAreaDiv.getElementsByTagName('path');
-
-  //Array.from(pathRegions).map(i => applyFunctionMap(i, mrc, filteredDataForMap, "boxTopMap") )
   
 }
 
-//document.getElementById(mc[0]).onmouseover = function(){
-  //filterHoverMap(dc[0], filteredDataForMap)
-  //}
+//Add function to render graph button. Function shows what variables were selected.
+document.getElementById("buttonRender").onclick = function(){completeWrap()}
 
 //Initiate map
 var boxSelector = document.getElementById("boxTop")
 var headerSelector = document.getElementById("categorySelectorHeader")
 dragElement(boxSelector, headerSelector);
 
+//Selecting two multiclass classifiers
+var multi = ["vuosi_"];
+var categoriesNoVuosi = categories.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
+var randomElement = categoriesNoVuosi[Math.floor(Math.random() * categoriesNoVuosi.length)];
+multi.push(randomElement)
 
+//Establishing the single classifiers
+var single = categories.filter(i => multi.includes(i) == false)
+
+//Running click simulation
+simulateSelection(multi, single)

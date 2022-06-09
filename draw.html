@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Dashboard</title>
+<title>Luke - Economy doctor dashboard</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -21,7 +21,7 @@
 <body>
 
 <div class="header">
-  <h1>Dashboard</h1>
+  <h1>Luke - Economy doctor dashboard</h1>
   <h3 id="title"></h3>
 </div>
 
@@ -37,22 +37,22 @@
 <!-- Box on top of everything. Shows graph based on map hover -->
 
 <div class="row">
-  <div class="column statisticsSelector" id="statisticsSelector" style="background-color:#aaa;">
-   Map Control 
-  <div id="selector-map"></div>
-  <div id="mapInfo"></div>
+  <div class="column statisticsSelector" id="statisticsSelector">
+     Map Control 
+    <div id="selector-map"></div>
+    <div id="mapInfo"></div>
   </div>
 
-  <div class="column dimensionSelector" id="dimensionSelector" style="background-color:#bbb;">
+  <div class="column dimensionSelector" id="dimensionSelector">
     Graph Control<br>
     <button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>
     <button id="buttonRender">Render graphs</button>
   </div>
 
-  <div class="column mapBox" id="mapBox" style="background-color:#ccc;">
+  <div class="column mapBox" id="mapBox">
   </div>
 
-  <div class="column graphsBox" id="graphsContainer" style="background-color:#ddd;">
+  <div class="column graphsBox" id="graphsContainer">
     Graphs
   </div>
 </div>

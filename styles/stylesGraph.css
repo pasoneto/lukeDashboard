@@ -1,6 +1,10 @@
+#graphsContainer{
+  background-color:#ddd;
+}
+
 .graphBox {
   background: snow;
-  height: 32vh;
+  height: 35vh;
   margin: 1px;
   width: 49%;
   border-radius: 15px;
@@ -18,7 +22,7 @@
 /* Pie charts */
 .graphBox3 {
   background: snow;
-  height: 32vh;
+  height: 35vh;
   margin: 1px;
   width: 32.6%;
   border-radius: 15px;
@@ -31,7 +35,10 @@
 }
 
 .graphsBox { 
-  width: 80%
+  width: 80%;
+  margin: 1px;
+  border-radius: 10px;
+  margin-bottom: 2px;
 }
 
 #boxTopMap {

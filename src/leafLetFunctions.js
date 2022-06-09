@@ -10,7 +10,6 @@ function styleGen(feature, codesIn, regionDivision){
 async function loadArea(url) {
   const response = await fetch(url);
   const names = await response.json();
-  console.log(names)
   return(names); 
 } 
 
