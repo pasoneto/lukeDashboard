@@ -23,7 +23,7 @@ data _null_;
     put '<!DOCTYPE html>';
     put '<html lang="en">';
     put '<head>';
-    put '<title>Dashboard</title>';
+    put '<title>Economy doctor dashboard</title>';
     put '<meta charset="UTF-8">';
     put '<meta name="viewport" content="width=device-width, initial-scale=1">';
     put '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">';
@@ -43,7 +43,7 @@ data _null_;
     put '<body>';
 
     put '<div class="header">';
-    put '<h1>Dashboard</h1>';
+    put '<h1>Economy doctor dashboard</h1>';
     put '<h3 id="title"></h3>';
     put '</div>';
 
@@ -54,7 +54,9 @@ data _null_;
 
     put '<!-- Box on top of everything. Shows graph based on map hover -->';
     put '<div id="boxTopMap">';
-    put '<div id="box5"></div>';
+    put '</div>';
+    put '<div id="tip-container">';
+    put '<div id="popup-tip"></div>';
     put '</div>';
     put '<!-- Box on top of everything. Shows graph based on map hover -->';
 
