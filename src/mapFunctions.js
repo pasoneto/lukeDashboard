@@ -36,7 +36,7 @@ function filterHoverMap(region, filteredData){
 }
 
 function changePositionBasedOnMouse(elementID, whereApply){
-  var el = document.getElementById(elementID)
+  var el = document.querySelector(elementID)
   var hiddenDiv = document.getElementById(whereApply)
   el.addEventListener('mousemove', e => {
     x = e.clientX;
@@ -53,7 +53,7 @@ function applyFunctionMap(i, mapRegionsCode, filteredDataForMap, whereShow){
     i.onmouseover = function(){
       changePositionBasedOnMouse(i.id, whereShow)
       showBoxSelector("boxTopMap")
-      filterHoverMap(Number(i.id), filteredDataForMap)
+      //filterHoverMap(Number(i.id), filteredDataForMap)
     }
     i.onmouseout = function(){
       showBoxSelector("boxTopMap")

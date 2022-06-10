@@ -122,6 +122,9 @@ function completeWrap(){
       if(nPieCharts == 2){
         var dimensionGraph = '49%'
       }
+      if(nPieCharts == 1){
+        var dimensionGraph = '95%'
+      }
       htmlPieCharts += '<div class="column graphBox3" style="width:' + dimensionGraph + '" id="box' + i + '">'+
                        '<canvas id="myChart' + i + '"></canvas>'+
                        '</div>'
@@ -204,9 +207,7 @@ function completeWrap(){
 
   //Getting only region codes that exist in data
   var mrc = renameMapRegions(filteredDataForMap);
-  var statistics = { "01" : 10, "02" : 20, "03" : 5, "04" : 3, "05" : 4, "06" : 7, "07" : 2, "08" : 8, "09" : 3, "10" : 2, "11" : 5, "12" : 5, "13" : 6, "14" : 0, "15" : 10, "16" : 7, }
-  
-  drawMap(ely, 'ely', mrc, statistics)
+  drawMap(ely, 'ely', mrc, filteredDataForMap)
   
 }
 
