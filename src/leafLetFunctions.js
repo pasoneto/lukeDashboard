@@ -34,7 +34,7 @@ function showUnderliningMap(baseTile){
 map.options.minZoom = 4;
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
 var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
-
+var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
 
 async function drawMap(url, regionDivision, regionsIn, statistics){
 
@@ -148,10 +148,6 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
         onEachFeature: onEachFeature
       }).addTo(map);
 }
-
-//var statistics = {"148": 1000, "698": 2000 }
-//var regionsIn = ["148", "698"]
-//drawMap(municipality, 'kunta', regionsIn, statistics)
 
 //Removing Leaflet credits
 var a = document.querySelector(".leaflet-control-container")

@@ -69,8 +69,9 @@ data _null_;
 
     put '<div class="column dimensionSelector" id="dimensionSelector">';
     put ' Graph Control<br>';
-    put ' <button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
-    put ' <button id="buttonRender">Render graphs</button>';
+    put '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
+    put '<button id="previousDependent">< Previous dependent variable</button>';
+    put '<button id="nextDependent">Next dependent variable > </button>';
     put '</div>';
 
     put '<div class="column mapBox" id="mapBox">';

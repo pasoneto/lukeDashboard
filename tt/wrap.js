@@ -40,7 +40,7 @@ document.getElementById("selectDimensionButton").onclick = function(){showBoxSel
 document.getElementById("buttonDimensionSelector").onclick = function(){
 
   showBoxSelector("boxTop") //Hide box with checkboxes
-  
+  completeWrap() 
   //Add back function to show checkboxes div
   document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
 }
@@ -123,7 +123,7 @@ function completeWrap(){
         var dimensionGraph = '49%'
       }
       if(nPieCharts == 1){
-        var dimensionGraph = '95%'
+        var dimensionGraph = '98%'
       }
       htmlPieCharts += '<div class="column graphBox3" style="width:' + dimensionGraph + '" id="box' + i + '">'+
                        '<canvas id="myChart' + i + '"></canvas>'+
@@ -207,12 +207,12 @@ function completeWrap(){
 
   //Getting only region codes that exist in data
   var mrc = renameMapRegions(filteredDataForMap);
-  drawMap(ely, 'ely', mrc, filteredDataForMap)
-  
+  console.log(mrc) 
+  drawMap(maakunta, 'maakunta', mrc, filteredDataForMap)
 }
 
 //Add function to render graph button. Function shows what variables were selected.
-document.getElementById("buttonRender").onclick = function(){completeWrap()}
+//document.getElementById("buttonRender").onclick = function(){completeWrap()}
 
 //Initiate map
 var boxSelector = document.getElementById("boxTop")
@@ -230,3 +230,41 @@ var single = categories.filter(i => multi.includes(i) == false)
 
 //Running click simulation
 simulateSelection(multi, single)
+
+var dependentIndex = 0;
+function nextDependent(categoriesAndOptions, plus, dependentIndex){
+  Number.prototype.mod = function (n) {
+    return ((this % n) + n) % n;
+  };
+  if(plus){
+    var dependentOptions = categoriesAndOptions['dependentVariable']
+    window.dependentIndex = dependentIndex + 1
+    var ticks = document.getElementById("dependentVariable")
+    var ticks = ticks.getElementsByTagName("input")
+    ticks[dependentIndex.mod(dependentOptions.length)].click()
+  } else {
+    var dependentOptions = categoriesAndOptions['dependentVariable']
+    window.dependentIndex = dependentIndex - 1
+    var ticks = document.getElementById("dependentVariable")
+    var ticks = ticks.getElementsByTagName("input")
+    ticks[dependentIndex.mod(dependentOptions.length)].click()
+  }
+}
+
+document.getElementById("nextDependent").onclick = function(){
+  nextDependent(categoriesAndOptions, true, window.dependentIndex)
+  completeWrap()
+}
+document.getElementById("previousDependent").onclick = function(){
+  nextDependent(categoriesAndOptions, false, window.dependentIndex)
+  completeWrap()
+}
+
+
+
+
+
+
+
+
+
