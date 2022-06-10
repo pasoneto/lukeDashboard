@@ -1,6 +1,5 @@
 #graphsContainer{
-  background-color:#ddd;
-}
+  background-color:#ddd; }
 
 .graphBox {
   background: snow;
@@ -47,7 +46,7 @@
   padding: 10px;
   z-index: 1000;
   width: 60%;
-  height: 20%;
+  height: 35%;
   position: absolute;
   top:20%;
   bottom: 0;

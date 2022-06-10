@@ -38,7 +38,7 @@ var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&r
 
 async function drawMap(url, regionDivision, regionsIn, statistics){
 
-  function highlightFeature(e) {
+  function hoverBox(e) { //Function generates box over each hovered region
 
       var hiddenDiv = document.getElementById("boxTopMap")
 
@@ -56,7 +56,28 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
         console.log("I am valid")
         showBoxSelector("boxTopMap")
         showBoxSelector("tip-container")
-        hiddenDiv.innerHTML = stat
+        //hiddenDiv.innerHTML = stat
+
+        var group1 = window.dropdownCategories[1]
+        var xAxisName1 = window.dropdownCategories[0]
+
+        var [yAxis1, labels1] = separateDataInGroups(currentTarget, group1, checkedValues)
+        var xAxis1 = window.checkedValues[xAxisName1]
+
+        var [yAxis1, labels1] = filterNull(yAxis1, labels1)
+        var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+        
+        var randomColors1 = colorGenerator(yAxis1);
+        console.log(xAxis1)
+        console.log(yAxis1)
+        console.log(labels1)
+        hiddenDiv.innerHTML = '<canvas id="box5"></canvas>'
+        if(yAxis1[0].length <= 2){
+          graphCustom(xAxis1, yAxis1, labels1, "box5", "bar", "Showing " + labels[0]['classifiers'][group1] + " for " + regionHovered, randomColors1)
+        } else {
+          graphCustom(xAxis1, yAxis1, labels1, "box5", "line", "Showing " + labels[0]['classifiers'][group1] + " for " + regionHovered, randomColors1)
+        }
+
       }
       document.getElementById("mapInfo").innerHTML = '<br><b>' + regionHovered + '</b>'
       //End of updating external box on hover
@@ -68,8 +89,8 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
     if(e.target.feature.properties.data){
       x = e.containerPoint['x']
       y = e.containerPoint['y']
-      hiddenDiv.style.left = x - 10 + 'px'
-      hiddenDiv.style.top = y + 'px'
+      hiddenDiv.style.left = x - 8 + 'px'
+      hiddenDiv.style.top = y - 118 + 'px'
 
       tip.style.left = x + 10 + 'px'
       tip.style.top = y + 158 + 'px'
@@ -88,7 +109,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
 
   function onEachFeature(feature, layer) {
       layer.on({
-        mouseover: highlightFeature,
+        mouseover: hoverBox,
         mouseout: resetHighlight,
         mousemove: applyMousePositionToBox,
       });
