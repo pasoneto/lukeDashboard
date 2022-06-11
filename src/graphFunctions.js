@@ -1,13 +1,27 @@
-//Generates data object to feed into graph
+//Choose color to fill in graph
+function randomNoRepeats(array) {
+  var copy = array.slice(0);
+  return function() {
+    if (copy.length < 1) { copy = array.slice(0); }
+    var index = Math.floor(Math.random() * copy.length);
+    var item = copy[index];
+    copy.splice(index, 1);
+    return item;
+  };
+}
 function colorGenerator(yAxis){
+  var choices = ['#F806CC', '#A91079', '#570A57', '#F73D93', '#16003B', '#413F42', '#7F8487', '#EEEEEE', '#8B9A46', '#541212', '#3E065F', '#700B97', '#8E05C2', '#916BBF', '#A12568']
+  var choices = ['#E63E6D', '#FEC260', '#DA0037', '#1597BB', '#8FD6E1', '#F05454', '#892CDC', '#BC6FF1', '#000000', '#F2A07B', '#C62A88', '#ED6663', '#FA7D09', '#FF4301', '#29C7AC', '#46B5D1', '#C400C6', '#EAE7AF']
   var randomColors = [];
   for (var i=0; i<yAxis.length; i++) {
-      var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-      randomColors.push(randomColor)
+      var randomColor = randomNoRepeats(choices);
+      randomColors.push(randomColor())
   }
+  console.log(randomColors)
   return randomColors
 }
 
+//Generates data object to feed into graph
 function dataGenerator(yAxis, labels, randomColors, fill){
   var dataConstructor = [];
   for (var i=0; i<yAxis.length; i++) {
@@ -18,12 +32,13 @@ function dataGenerator(yAxis, labels, randomColors, fill){
           data: yAxis[i],
           borderColor: randomColors[i],
           backgroundColor: randomColors[i],
-          fill: fill 
+          fill: fill,
+          borderWidth: 1,
       };
   }
   return dataConstructor
 }
-
+Chart.defaults.global.defaultFontColor = "black";
 //Generates graph and appends to given element by ID
 function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false){
   var dataConstructor = dataGenerator(yAxis, labels, randomColors, fill)
@@ -49,8 +64,16 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
         ticks: {
           autoSkip: false,
           minRotation: 90,
-        }
-      }]
+        },
+        gridLines: {
+          display: false,
+        },
+      }],
+      yAxes: [{
+        gridLines: {
+          display: false,
+        },
+      }],
       }
     }
   });
@@ -86,8 +109,7 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors){
 //Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
 function renderGraphBoxes(whereToAppend, nMulticlassClassifiers){
   if(nMulticlassClassifiers == 2){
-    html = '<div id="selectedVariables"></div>'+
-           '<div class="row">'+
+    html = '<div class="row">'+
                  '<div class="column graphBox" id="box"></div>'+
                  '<div class="column graphBox" id="box1"></div>'+
                  '</div>'+
@@ -98,8 +120,7 @@ function renderGraphBoxes(whereToAppend, nMulticlassClassifiers){
                  '</div>'+
                  '</div>'
   } else {
-    html = '<div id="selectedVariables"></div>'+
-           '<div class="row">'+
+    html = '<div class="row">'+
              '<div class="graphSingleBox" id="box"></div>'+
            '</div>'
   }

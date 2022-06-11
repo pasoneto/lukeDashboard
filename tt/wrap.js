@@ -117,7 +117,7 @@ function completeWrap(){
     var nPieCharts = Math.min(yAxis1.length, 3)
     for (var i = 2; i < nPieCharts+2; i++){
       if(nPieCharts == 3){
-        var dimensionGraph = '32.6%'
+        var dimensionGraph = '32.35%'
       }
       if(nPieCharts == 2){
         var dimensionGraph = '49%'

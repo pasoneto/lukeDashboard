@@ -79,7 +79,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
         }
 
       }
-      document.getElementById("mapInfo").innerHTML = '<br><b>' + regionHovered + '</b>'
+      document.getElementById("mapInfo").innerHTML = regionHovered
       //End of updating external box on hover
   }
   

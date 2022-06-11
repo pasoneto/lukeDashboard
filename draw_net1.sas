@@ -44,7 +44,7 @@ data _null_;
 
     put '<div class="header">';
     put '<h1>Economy doctor dashboard</h1>';
-    put '<h3 id="title"></h3>';
+    put '<div id="title"></div>';
     put '</div>';
 
     put '<!-- Box on top of everything. Selects classifiers -->';
@@ -72,6 +72,7 @@ data _null_;
     put '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
     put '<button id="previousDependent">< Previous dependent variable</button>';
     put '<button id="nextDependent">Next dependent variable > </button>';
+    put '<div id="selectedVariables"></div>';
     put '</div>';
 
     put '<div class="column mapBox" id="mapBox">';
