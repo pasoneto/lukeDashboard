@@ -61,8 +61,7 @@ dataBaseSelector.addEventListener('change', async function() {
   establishInitial(allCheckBoxes, categories, checkedValues, allData, filterDataByCheckBoxSelector) //Value is written inside the global variable checkedValues
 
   //Add function to render graph button. Function shows what variables were selected.
-  document.getElementById("buttonRender").onclick = function(){
-
+  document.getElementById("buttonDimensionSelector").onclick = function(){
 
     //Selects categories which will be used as group and xAxis  
     var dropdownCategories;
@@ -142,10 +141,14 @@ dataBaseSelector.addEventListener('change', async function() {
       }
 
       //Display single variable names
-      if(labels){
-        var singleLabels = singleLabelExtractor(window.checkedValues, labels)
-        displeySelectedSingleVariables(singleLabels)
-      }
+      //var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+      //displeySelectedSingleVariables(singleLabels)
+      
+      console.log(filteredDataForMap) 
+      var mrc = filteredDataForMap.map(i=>i['ELY-keskus']).filter(onlyUnique)
+      console.log(mrc)
+      drawMap(ely, 'ely', mrc, filteredDataForMap)
+      showBoxSelector("boxTop") //Hide box with checkboxes
     } 
     
     ///////For when there is only 1 milticlass classifier
@@ -177,8 +180,8 @@ dataBaseSelector.addEventListener('change', async function() {
       graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
       
       //Display single variable names
-      var singleLabels = singleLabelExtractor(window.checkedValues, labels)
-      displeySelectedSingleVariables(singleLabels)
+      //var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+      //displeySelectedSingleVariables(singleLabels)
 
     } if(nMulticlassClassifiers < 1) {
       
@@ -208,8 +211,8 @@ dataBaseSelector.addEventListener('change', async function() {
       graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
       
       //Display single variable names
-      var singleLabels = singleLabelExtractor(window.checkedValues, labels)
-      displeySelectedSingleVariables(singleLabels)
+      //var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+      //displeySelectedSingleVariables(singleLabels)
 
       }
 
@@ -220,10 +223,6 @@ dataBaseSelector.addEventListener('change', async function() {
   var headerSelector = document.getElementById("categorySelectorHeader")
   dragElement(boxSelector, headerSelector);
   
-  //Initiate map
-  var mapRegionsCode = ['01' , '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16']
-  clickableMap(mapRegionsCode, alert)
-  showMap(mapRegionsCode)
 
 });
 
