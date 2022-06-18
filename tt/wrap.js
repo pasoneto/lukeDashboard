@@ -232,39 +232,32 @@ var single = categories.filter(i => multi.includes(i) == false)
 simulateSelection(multi, single)
 
 var dependentIndex = 0;
-function nextDependent(categoriesAndOptions, plus, dependentIndex){
+function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName){
   Number.prototype.mod = function (n) {
     return ((this % n) + n) % n;
   };
   if(plus){
-    var dependentOptions = categoriesAndOptions['dependentVariable']
+    var dependentOptions = categoriesAndOptions[dependentName]
     window.dependentIndex = dependentIndex + 1
-    var ticks = document.getElementById("dependentVariable")
+    var ticks = document.getElementById(dependentName)
     var ticks = ticks.getElementsByTagName("input")
     ticks[dependentIndex.mod(dependentOptions.length)].click()
   } else {
-    var dependentOptions = categoriesAndOptions['dependentVariable']
+    var dependentOptions = categoriesAndOptions[dependentName]
     window.dependentIndex = dependentIndex - 1
-    var ticks = document.getElementById("dependentVariable")
+    var ticks = document.getElementById(dependentName)
     var ticks = ticks.getElementsByTagName("input")
     ticks[dependentIndex.mod(dependentOptions.length)].click()
   }
 }
 
-document.getElementById("nextDependent").onclick = function(){
-  nextDependent(categoriesAndOptions, true, window.dependentIndex)
-  completeWrap()
-}
-document.getElementById("previousDependent").onclick = function(){
-  nextDependent(categoriesAndOptions, false, window.dependentIndex)
-  completeWrap()
-}
-
-
-
-
-
-
-
-
-
+if(categories.indexOf("Municipality")){
+  document.getElementById("nextDependent").onclick = function(){
+    nextDependent(categoriesAndOptions, true, window.dependentIndex)
+    completeWrap()
+  }
+  document.getElementById("previousDependent").onclick = function(){
+    nextDependent(categoriesAndOptions, false, window.dependentIndex)
+    completeWrap()
+  }
+} else if

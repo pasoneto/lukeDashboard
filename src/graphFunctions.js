@@ -73,6 +73,9 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
         gridLines: {
           display: false,
         },
+        ticks: {
+          suggestedMin: 0,
+        }
       }],
       }
     }

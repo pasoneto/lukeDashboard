@@ -1,8 +1,8 @@
 #graphsContainer{
-  background-color:#ddd; }
-
+  background-color: white;
+}
 .graphBox {
-  background: snow;
+  background: #EDF6FC;
   height: 35vh;
   margin: 1px;
   width: 49%;
@@ -10,7 +10,7 @@
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 .graphSingleBox {
-  background: snow;
+  background: #EDF6FC;
   margin: 1px;
   width: 100%;
   height: 65vh;
@@ -20,7 +20,7 @@
 
 /* Pie charts */
 .graphBox3 {
-  background: snow;
+  background: #EDF6FC;
   height: 35vh;
   margin: 1px;
   width: 32.6%;

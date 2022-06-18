@@ -8,6 +8,7 @@
   width: 49%;
   opacity: 1;
   background: rgb(42, 49, 67);
+  background: rgb(98, 110, 212, 0.5);
   stroke: rgb(55, 110, 179);
   stroke-width: 0;
   pointer-events: all;
@@ -19,6 +20,8 @@
   height: 65vh;
   opacity: 1;
   background: rgb(42, 49, 67);
+  background: rgb(98, 110, 212, 0.5);
+  stroke: rgb(55, 110, 179);
   stroke: rgb(55, 110, 179);
   stroke-width: 0;
   pointer-events: all;
@@ -32,6 +35,8 @@
   width: 32%;
   opacity: 1;
   background: rgb(42, 49, 67);
+  background: rgb(98, 110, 212, 0.5);
+  stroke: rgb(55, 110, 179);
   stroke: rgb(55, 110, 179);
   stroke-width: 0;
   pointer-events: all;
@@ -50,6 +55,8 @@
   margin-bottom: 2px;
   opacity: 1;
   background: rgb(42, 49, 67);
+  background: rgb(98, 110, 212, 0.5);
+  stroke: rgb(55, 110, 179);
   stroke: rgb(55, 110, 179);
   stroke-width: 0;
   pointer-events: all;
@@ -68,7 +75,10 @@
   overflow:auto;
   opacity: 1;
   background: rgb(42, 49, 67);
+  background: rgb(98, 110, 212);
+  stroke: rgb(55, 110, 179);
   stroke: rgb(55, 110, 179);
   stroke-width: 0;
   pointer-events: all;
+  border-radius: 25px;
 }

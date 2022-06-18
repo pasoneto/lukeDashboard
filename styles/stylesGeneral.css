@@ -17,12 +17,15 @@ h3 {
 
 .header {
   padding: 1px;
-  height: 7vh;
+  height: 12vh;
   text-align: left;
   background: #1abc9c;
-  border-radius: 10px;
+  background: white;
   color: white;
   font-size: 15px;
+  background: #0088A9;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 /* Create four equal columns that floats next to each other */
@@ -32,4 +35,42 @@ h3 {
   padding: 10px;
   height: 76vh;
 }
+#logo{
+  margin: 0;
+  margin-top: 0px;
+  margin-left: 0px;
+  width: 134px;
+}
+button {
+  position: relative;
+  background: #0088A9;
+  border: none;
+  font-size: 15px;
+  color: #FFFFFF;
+  padding: 5px;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  margin-top: 10px;
+}
+button:after {
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
 
+button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
