@@ -40,7 +40,7 @@ function dataGenerator(yAxis, labels, randomColors, fill){
 }
 Chart.defaults.global.defaultFontColor = "black";
 //Generates graph and appends to given element by ID
-function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false){
+function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false, suggestedMin = null){
   var dataConstructor = dataGenerator(yAxis, labels, randomColors, fill)
   new Chart(id, {
     type: type,
@@ -74,7 +74,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
           display: false,
         },
         ticks: {
-          suggestedMin: 0,
+          suggestedMin: suggestedMin,
         }
       }],
       }
