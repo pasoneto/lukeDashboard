@@ -253,11 +253,13 @@ function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName
 
 if(categories.indexOf("Municipality")){
   document.getElementById("nextDependent").onclick = function(){
-    nextDependent(categoriesAndOptions, true, window.dependentIndex)
+    nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
     completeWrap()
   }
   document.getElementById("previousDependent").onclick = function(){
-    nextDependent(categoriesAndOptions, false, window.dependentIndex)
+    nextDependent(categoriesAndOptions, false, window.dependentIndex, "dependentVariable")
     completeWrap()
   }
-} else if
+}
+
+
