@@ -41,6 +41,8 @@ document.getElementById("buttonDimensionSelector").onclick = function(){
 
   showBoxSelector("boxTop") //Hide box with checkboxes
   completeWrap() 
+
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
   //Add back function to show checkboxes div
   document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
 }
@@ -196,7 +198,6 @@ function completeWrap(){
     box.innerHTML = '<canvas id="myChart"></canvas>'
 
     var randomColors1 = colorGenerator(yAxis1);
-    console.log(labels1)
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + labels[0]['classifiers'][group1], randomColors1)
     
     //Display single variable names
@@ -207,7 +208,6 @@ function completeWrap(){
 
   //Getting only region codes that exist in data
   var mrc = renameMapRegions(filteredDataForMap);
-  console.log(mrc) 
   drawMap(maakunta, 'maakunta', mrc, filteredDataForMap)
 }
 
@@ -251,15 +251,15 @@ function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName
   }
 }
 
-if(categories.indexOf("Municipality")){
-  document.getElementById("nextDependent").onclick = function(){
-    nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
-    completeWrap()
-  }
-  document.getElementById("previousDependent").onclick = function(){
-    nextDependent(categoriesAndOptions, false, window.dependentIndex, "dependentVariable")
-    completeWrap()
-  }
+document.getElementById("nextDependent").onclick = function(){
+  nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
+  completeWrap()
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
+}
+document.getElementById("previousDependent").onclick = function(){
+  nextDependent(categoriesAndOptions, false, window.dependentIndex, "dependentVariable")
+  completeWrap()
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 }
 
 

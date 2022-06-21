@@ -17,7 +17,6 @@ function colorGenerator(yAxis){
       var randomColor = randomNoRepeats(choices);
       randomColors.push(randomColor())
   }
-  console.log(randomColors)
   return randomColors
 }
 
@@ -159,3 +158,21 @@ function singleLabelExtractor(checkedValues, labels){
 function displeySelectedSingleVariables(checkedValues){
   document.getElementById("selectedVariables").innerHTML = checkedValues
 }
+
+function displayNonGraphs(filteredData, whereToAppend){
+  var noDisplay = Object.values(filteredData).every(i => i.value === 0 || i.value === null)
+  if(noDisplay){
+    document.getElementById(whereToAppend).innerHTML = "<div id='noGraph'>Sorry, there is no data for this selection.<br>Please, try a different combination of variables</div>"
+  }
+}
+
+
+
+
+
+
+
+
+
+
+

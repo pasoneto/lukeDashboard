@@ -3,17 +3,17 @@
 /* Generates json file */
 /* change directory here */
 proc json out="/data/taloustohtoritulosteet/rap/json.txt" pretty;
-	export graf_data_pedro / nosastags;
-run;
-
-/*labels for subclass of classifiers*/
-proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" pretty;
-	export graf_label_pedro1 / nosastags;
+	export graf_data_ / nosastags;
 run;
 
 /*labels for names of classifiers (e.g. vuosi_ -> Vuosi)*/
+proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" pretty;
+	export graf_label_ / nosastags;
+run;
+
+/*labels for subclass of classifiers. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
 proc json out="/data/taloustohtoritulosteet/rap/json_classlab.txt" pretty;
-	export graf_classlabel_pedro1 / nosastags;
+	export graf_classlabel_ / nosastags;
 run;
 
 /* Creates first half of HTML page */
@@ -44,7 +44,7 @@ data _null_;
 
     put '<div class="header">';
     put '<h1>Economy doctor dashboard</h1>';
-    put '<div id="title"></div>';
+    put '<h3 id="title"></h3>';
     put '</div>';
 
     put '<!-- Box on top of everything. Selects classifiers -->';
@@ -72,7 +72,6 @@ data _null_;
     put '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
     put '<button id="previousDependent">< Previous dependent variable</button>';
     put '<button id="nextDependent">Next dependent variable > </button>';
-    put '<div id="selectedVariables"></div>';
     put '</div>';
 
     put '<div class="column mapBox" id="mapBox">';

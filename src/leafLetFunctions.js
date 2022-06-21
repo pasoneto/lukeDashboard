@@ -68,9 +68,6 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
         var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
         
         var randomColors1 = colorGenerator(yAxis1);
-        console.log(xAxis1)
-        console.log(yAxis1)
-        console.log(labels1)
         hiddenDiv.innerHTML = '<canvas id="box5"></canvas>'
         if(yAxis1[0].length <= 2){
           graphCustom(xAxis1, yAxis1, labels1, "box5", "bar", "Showing " + labels[0]['classifiers'][group1] + " for " + regionHovered, randomColors1)
@@ -128,7 +125,6 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
   function assignValueToGeoJsonObject(geoJSONObject, filteredDataForMap, regionDivision){
     for(i in mrc){
       var value = Object.values(filteredDataForMap).filter(k=> renameOne(k['maakunta']) == mrc[i])
-      console.log(value)
       for(k in Object.values(geoJSONObject.features)){
         var regionMatches = geoJSONObject.features[k].properties[regionDivision] == mrc[i]
         if(regionMatches){ //Assign statistics value
@@ -136,7 +132,6 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
         }
       }
     }
-    console.log(geoJSONObject)
     return(geoJSONObject)
   }
 
