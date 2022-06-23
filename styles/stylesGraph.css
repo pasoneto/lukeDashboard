@@ -56,13 +56,38 @@
   overflow:auto;
   border: 1px solid black;
 }
-
-#noGraph{
+#noGraphContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 100%;
+}
+#noGraph{
+  margin: 0px;
+  vertical-align: middle;
+  position: relative;
   text-align: center;
   background: #EDF6FC;
   border-radius: 10px;
-  margin-bottom: 2px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 35px;
   box-shadow: rgba(0, 0, 0, 0.30) 3px 2.2px 2.9px;
-  height: 65vh;
+  height: 30vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
+#textNoGraph{
+  font-size: 25px;
+}
+#textNoGraph2{
+  font-size: 15px;
+}
+

@@ -33,6 +33,19 @@ for(k in categories){
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop', data, labels)
 
+
+//Initiate base map
+var map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
+
+var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+})
+
+var baseTilePresent = false;
+map.options.minZoom = 4;
+
+document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
+
 //Add function to show checkboxes div
 document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
 

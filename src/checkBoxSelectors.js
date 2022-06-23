@@ -147,9 +147,9 @@ function allOK(categories, checkedValues){
 function establishInitial(allCheckBoxes, categories, checkedValues, data, filterFunction, exception = null){
 
   if(exception){
-    onlyOne("dependentVariable", checkedValues, categories, data, filterFunction)
+    onlyOne(exception, checkedValues, categories, data, filterFunction)
     //Establishes that exception category will only be single selector
-    document.getElementById('dependentVariable' + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+    document.getElementById(exception + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
   }
 
   var notMany = allOK(categories, checkedValues)
@@ -172,7 +172,7 @@ function establishInitial(allCheckBoxes, categories, checkedValues, data, filter
     }
   }
   if(exception){
-    onlyOne("dependentVariable", checkedValues, categories, data, filterFunction) //Puts back the single check in a particular category
+    onlyOne(exception, checkedValues, categories, data, filterFunction) //Puts back the single check in a particular category
   }
 };
 

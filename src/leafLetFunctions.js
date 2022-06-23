@@ -12,14 +12,6 @@ async function loadArea(url) {
   return(names); 
 } 
 
-var map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
-
-var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-})
-
-var baseTilePresent = false;
-document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
 function showUnderliningMap(baseTile){
   if(baseTilePresent == false){
     baseTile.addTo(map);
@@ -31,7 +23,6 @@ function showUnderliningMap(baseTile){
   window.baseTilePresent = baseTilePresent == false  
 }
 
-map.options.minZoom = 4;
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
 var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
 var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
@@ -144,6 +135,3 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
       }).addTo(map);
 }
 
-//Removing Leaflet credits
-var a = document.querySelector(".leaflet-control-container")
-a.querySelector(".leaflet-control-attribution.leaflet-control").innerHTML = ""

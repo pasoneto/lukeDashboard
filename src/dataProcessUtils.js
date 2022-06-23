@@ -58,3 +58,7 @@ function removeNullColumns(yAxis, xAxis, labels){
   return [yAxis, xAxis, labels]
 }
 
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+

@@ -37,7 +37,7 @@ function dataGenerator(yAxis, labels, randomColors, fill){
   }
   return dataConstructor
 }
-Chart.defaults.global.defaultFontColor = "black";
+// Chart.defaults.global.defaultFontColor = "black";
 //Generates graph and appends to given element by ID
 function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false, suggestedMin = null){
   var dataConstructor = dataGenerator(yAxis, labels, randomColors, fill)
@@ -162,17 +162,6 @@ function displeySelectedSingleVariables(checkedValues){
 function displayNonGraphs(filteredData, whereToAppend){
   var noDisplay = Object.values(filteredData).every(i => i.value === 0 || i.value === null)
   if(noDisplay){
-    document.getElementById(whereToAppend).innerHTML = "<div id='noGraph'>Sorry, there is no data for this selection.<br>Please, try a different combination of variables</div>"
+    document.getElementById(whereToAppend).innerHTML = "<div id='noGraphContainer'><div id='noGraph'><div id='textNoGraph'><p><i class='fa fa-info-circle' aria-hidden='true'></i></i>  Sorry, there is no data for this selection</p><p id='textNoGraph2'>Please, try a different combination of variables</div></p></div></div>"
   }
 }
-
-
-
-
-
-
-
-
-
-
-
