@@ -137,18 +137,33 @@ function typegraph(groupName){
     return("bar")
   }
 }
-
-function singleLabelExtractor(checkedValues, labels){
+//
+// 1.24
+//
+function singleLabelExtractor(checkedValues, exception = null, labels = null){
   var selectedCats = Object.values(checkedValues)
   var selectedValues = Object.keys(checkedValues)
   json = ""
-  for(k in selectedCats){
-    if(selectedCats[k].length == 1){
-      //Except dependent variable, which doesn't have a translator. Create more general function for this
-      if(selectedValues[k] != "dependentVariable"){
-        json += "<strong>" + labels[0]['classifiers'][selectedValues[k]] + "</strong>" + ": " + selectedCats[k] + ";  "
-      } else {
-        json += "<strong>" + selectedValues[k] + "</strong>" + ": " + labels[0]["dependentVariable"][selectedCats[k]] + ";  "
+  if(labels){
+    for(k in selectedCats){
+      if(selectedCats[k].length == 1){
+        //Except dependent variable, which doesn't have a translator. Create more general function for this
+        if(selectedValues[k] != exception){
+          json += "<strong>" + labels[0]['classifiers'][selectedValues[k]] + "</strong>" + ": " + selectedCats[k] + ";  "
+        } else {
+          json += "<strong>" + selectedValues[k] + "</strong>" + ": " + labels[0]["dependentVariable"][selectedCats[k]] + ";  "
+        }
+      }
+    }
+  } else {
+    for(k in selectedCats){
+      if(selectedCats[k].length == 1){
+        //Except dependent variable, which doesn't have a translator. Create more general function for this
+        if(selectedValues[k] != exception){
+          json += "<strong>" + selectedValues[k] + "</strong>" + ": " + selectedCats[k] + ";  "
+        } else {
+          json += "<strong>" + selectedValues[k] + "</strong>" + ": " + selectedCats[k] + ";  "
+        }
       }
     }
   }

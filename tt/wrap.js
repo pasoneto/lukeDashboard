@@ -11,7 +11,9 @@ var data = reshapeJSON(data, classifiers)
 //Concatenating labels for checkboxes
 //var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
 //var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
-var labels = [{"dependentVariable": labels[0], "classifiers": classifierLabels[0]}]
+//var labels = [{"dependentVariable": labels[0], "classifiers": classifierLabels[0]}]
+
+var labels = null
 
 //Extracting categories and options
 var categories = Object.keys(data[0])
@@ -32,7 +34,6 @@ for(k in categories){
 }
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop', data, labels)
-
 
 //Initiate base map
 var map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
@@ -114,15 +115,15 @@ function completeWrap(){
     var randomColors2 = colorGenerator(yAxis2);
 
     //Translates variables given the label. Change this to more general function
-    if(group1 == 'dependentVariable'){
-      var labels1 = labels1.map(i => labels[0][group1][i])
-    }
-    if(group2 == 'dependentVariable'){
-      var labels2 = labels2.map(i => labels[0][group2][i])
-    }
+    //if(group1 == 'dependentVariable'){
+      //var labels1 = labels1.map(i => labels[0][group1][i])
+      //}
+    //if(group2 == 'dependentVariable'){
+      //var labels2 = labels2.map(i => labels[0][group2][i])
+      //}
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + labels[0]['classifiers'][group1], randomColors1)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + labels[0]['classifiers'][group2], randomColors2, showLegend = true)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1, randomColors1)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2, randomColors2, showLegend = true)
 
 
     //Rendering up to 3 pieCharts
@@ -211,7 +212,7 @@ function completeWrap(){
     box.innerHTML = '<canvas id="myChart"></canvas>'
 
     var randomColors1 = colorGenerator(yAxis1);
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + labels[0]['classifiers'][group1], randomColors1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
     
     //Display single variable names
     var singleLabels = singleLabelExtractor(window.checkedValues, labels)
