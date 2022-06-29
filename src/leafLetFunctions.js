@@ -61,9 +61,9 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
         var randomColors1 = colorGenerator(yAxis1);
         hiddenDiv.innerHTML = '<canvas id="box5"></canvas>'
         if(yAxis1[0].length <= 2){
-          graphCustom(xAxis1, yAxis1, labels1, "box5", "bar", "Showing " + labels[0]['classifiers'][group1] + " for " + regionHovered, randomColors1)
+          graphCustom(xAxis1, yAxis1, labels1, "box5", "bar", "Showing " + group1 + " for " + regionHovered, randomColors1)
         } else {
-          graphCustom(xAxis1, yAxis1, labels1, "box5", "line", "Showing " + labels[0]['classifiers'][group1] + " for " + regionHovered, randomColors1)
+          graphCustom(xAxis1, yAxis1, labels1, "box5", "line", "Showing " + group1 + " for " + regionHovered, randomColors1)
         }
 
       }
