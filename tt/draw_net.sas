@@ -6,15 +6,22 @@ proc json out="/data/taloustohtoritulosteet/rap/json.txt" pretty;
 	export graf_data_ / nosastags;
 run;
 
-/*labels for names of classifiers (e.g. vuosi_ -> Vuosi)*/
+/*labels for names of classifiers (e.g. vuosi_ -> Vuosi, Tuotantosuuntaso -> Tuotantosuunta)*/
 proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" pretty;
 	export graf_label_ / nosastags;
 run;
 
-/*labels for subclass of classifiers. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
-proc json out="/data/taloustohtoritulosteet/rap/json_classlab.txt" pretty;
+
+/*labels for variables. Tulvarastonmuutos -> Varaston muutos  */
+proc json out="/data/taloustohtoritulosteet/rap/json_varLabs.txt" pretty;
 	export graf_classlabel_ / nosastags;
 run;
+
+/*labels for subclass of classifiers. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
+proc json out="/data/taloustohtoritulosteet/rap/json_classlab.txt" pretty;
+	export graf_subclasslabel_ / nosastags;
+run;
+
 
 /* Creates first half of HTML page */
 data _null_;
@@ -132,6 +139,25 @@ data _null_;
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
 	put _infile_;
 run;
+
+
+/* Adding classifier label translator */
+data _null_;
+  /* change directory here */
+	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+	put 'var varLabs =';
+run;
+
+/* Inserts the classlabels in json format into the HTML page */
+data _null_;
+  /* change directory here */
+  infile "/data/taloustohtoritulosteet/rap/json_varLabs.txt";
+	input;
+  /* change directory here */
+	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+	put _infile_;
+run;
+
 
 /* Generates the second half of the HTML page */
 data _null_;
