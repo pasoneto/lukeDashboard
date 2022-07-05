@@ -51,7 +51,7 @@
             <div class="container">
                 <div id="doc-header" class="doc-header text-center">
                     <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Quick Start</h1>
-                    <div class="meta"><i class="far fa-clock"></i> Last updated: June 13th, 2022</div>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: July 4th, 2022</div>
                 </div><!--//doc-header-->
                 <div class="doc-body row">
                     <div class="doc-content col-md-9 col-12 order-1">
@@ -65,6 +65,10 @@
                             
                             <section id="code-section" class="doc-section">
                                 <h2 class="section-title">Start html framework</h2>
+                                    <div class="section-block">
+                                    <p>
+                                        This tutorial assumes that you create an HTML file inside the /documentation folder. In case you choose to work from a different directory, remember to change the paths when calling JavaScript scripts.
+                                    </p>
                                     <p>
                                         All content of your dashboard needs to be placed inside 'boxes' within a webpage. This initiates a pre-defined layout that comes with the package. You can, of course, change this layout to fit with any ideas that you have. The colors, sizes and positions of each element in the dasbhard can also be determined by you. Here, we use a pre-defined version of the styling, which you can consult and edit throughout <a href="https://github.com/pasoneto/lukeDashboard/tree/master/styles" target="_blank">these</a> CSS files.
                                     </p>
@@ -85,7 +89,6 @@
 initiateDashboard()
 
 &lt;/script&gt;
-
 &lt;/html&gt;
 
 </code></pre>
@@ -96,16 +99,16 @@ initiateDashboard()
                                     </p>
 
 <div class="code-block">
-<pre><code class="language-javascript">
-renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
+<pre><code class="language-javascript">renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
 </code></pre>
 </div><!--//code-block-->
 </section><!--//doc-section-->
 
                             <section id="data-handling-section" class="doc-section">
                                 <h2 class="section-title">Data handling</h2>
+                                <div class="section-block">
                                 <p>
-                                    To populate the dashboard, we need to have data. This system works with JSON format, and you can input any type of data as long as it is in the following displayed below. As you can see, there 4 classifiers (statistic, year, region, and size), and each one of these classifiers can be associated with any number of categorical variables (e.g. year can be 2018, 2019, 2020, etc...)
+                                    To populate the dashboard, we need to have data. This system works with JSON format, and you can input any type of data as long as it is in the following displayed below. As you can see, there 4 classifiers (statistic, year, region, and size), and each one of these classifiers can be associated with any number of categorical variables (e.g. year can be 2018, 2019, 2020, etc...).
                                 </p>
 <div class="code-block">
 <pre><code class="language-javascript">var data = [{
@@ -127,50 +130,59 @@ renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
 </code></pre>
 </div><!--//code-block-->
                                 <p>
+                                    Importantly, the system assumes that you have full factorial data. This means that there is data -null or not- for all the combinations between levels of classifying factors. For instance, if you have year (2018 vs 2019) and size (big vs small) as classifying factors, there should be one value for each possible combination of these variables (e.g., 2018/Big, 2018/Small; 2019/Big, 2019/Small).
+                                </p>
+
+                                <p>
+                                    For the purpose of this tutorial, we have already created a ficticious dataset, which you can import by adding the script figData.js to the header of your HTML page, as shown below.
+                                </p>
+
+<pre><code class="language-markup">&lt;header&gt;
+    ...
+    &lt;script src="./ficData.js"&gt;&lt;/script&gt;
+    ...
+&lt;/header&gt;
+</code></pre>
+</div><!--//code-block-->
+
+
+                                <p>
                                     The idea of the dashboard is to enable users to make selections of the data, and combine different classifiers between each other. For instance, the user can choose to see only mean statistics for year 2021 and regions 10 and 11. Or he could choose to compare mean values of years 2020 and 2021 for region 10.
                                 </p>
                                 <p>
                                     In order to enable such choices, we need to know which classifiers are available, and what are the values associated with each one of them. This is what we are doing in the code below. notice that we need to add the ./src/dataUtil.js plugin to the header of the page.
                                 </p>
-
 <div class="code-block">
-<pre><code class="language-javascript">&lt;header&gt;
+<pre><code class="language-markup">&lt;header&gt;
     ...
     &lt;script src="../src/dataProcessUtils.js"&gt;&lt;/script&gt;
     ...
 &lt;/header&gt;
 
-var categories = Object.keys(data[0]) //Extract classifier names (e.g., year, size, etc...)
-var categories = categories.filter(i => i !== 'value') //Remove value, which is what we want to plot
+&lt;script&gt;
+//Extract classifiers (e.g., year, size, etc...) and options (e.g., 2021, 2022, big, smal, etc...).
+var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
 
-//Extract classifier levels (e.g., 2021, 2022, big, smal, etc...)
-var options = []
-for(k in categories){
-  var a = data.map(i=>i[categories[k]])
-  var a = a.filter(onlyUnique)
-  options.push(a)
-}
-var options = options.filter(i=> i[0] !== undefined)
+&lt;/script&gt;
 </code></pre>
 </div><!--//code-block-->
 
                                 <p>
-                                    If you console.log(categories) and console.log(options), you should see all categories, as well as all levels associated with each one of them.
-                                </p>
-                                <p>
-                                    Now we can use these variables as input to the function which will enable users to choose classifiers which will appera in their dashboard
+                                    If you console.log categories and options, you should see all categories, as well as all levels associated with each one of them. Now we can use these variables as input to the function which will enable users to choose classifiers which will appera in their dashboard
                                 </p>
 
 
 <div class="code-block">
-<pre><code class="language-javascript">&lt;header&gt;
+<pre><code class="language-markup">&lt;header&gt;
     ...
     &lt;script src="../src/checkBoxSelectors.js"&gt;&lt;/script&gt;
     ...
 &lt;/header&gt;
 
+&lt;script&gt;
 var whereToApend = 'boxTop' //Where to show checkbox selections
 generateCheckBoxes(categories, options, whereToAppend, data)
+&lt;/script&gt;
 
 </code></pre>
 </div><!--//code-block-->
@@ -181,8 +193,7 @@ generateCheckBoxes(categories, options, whereToAppend, data)
 
 
 <div class="code-block">
-<pre><code class="language-javascript">
-document.getElementById("buttonDimensionSelector").onclick = function(){
+<pre><code class="language-javascript">document.getElementById("buttonDimensionSelector").onclick = function(){
     showBoxSelector("boxTop") //Shows or hides box with checkboxes
 }
 document.getElementById("selectDimensionButton").onclick = function(){
@@ -190,7 +201,6 @@ document.getElementById("selectDimensionButton").onclick = function(){
 }
 </code></pre>
 </div><!--//code-block-->
-
 
 <p>
     Now, if you click the button "Select dimensions", you should see a box with checkboxes, where the user can select any category and level associated with a given dataset.
@@ -204,19 +214,15 @@ document.getElementById("selectDimensionButton").onclick = function(){
 </p>
 
 <div class="code-block">
-<pre><code class="language-javascript">
-
-var checkedValues = checkedValuesObjectGenerator(categories) //Creates empty object which receives boxes that can be checked.
+<pre><code class="language-javascript">var checkedValues = checkedValuesObjectGenerator(categories) //Creates empty object which receives boxes that can be checked.
 var allCheckBoxes = document.querySelectorAll('input');
 
 var exception = "statistic" //Any category that you wish to keep as single-selector. Here we chose statistic as an ilustration, and in this case, the user will only be able to select mean or median.
 
 //Establishes checkbox verification system. Multiple or single selection
 establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = exception)
-
 </code></pre>
 </div><!--//code-block-->
-
 
 <p>
     Now we are able to explain what we said in the beginning of the tutorial, about the renderGraphBoxes function. There you can determine how many multi-level classifiers your system will allow. We have deliberatelly chosen to enable either 1 or 2, due to the problem of multidimensionality. So, depending on the number of multiclasses that your system allows, pass that variable accordingly.
@@ -227,14 +233,108 @@ establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByChe
                                 <h2 class="section-title">Graphing</h2>
                                 <div class="section-block">
                                     <p>
-                                        With the filtered data accessible as a global variable (filteredData object), we can start plotting the graphs. For this, we are using Chart.js library. 
+                                        With the filtered data accessible as a global variable (filteredData object), we can start plotting the graphs. For this, we are using Chart.js library. Add the library to your header. Now we need to process the data to feed it to the graphing system. The functions we need are also added to the headers below.
                                     </p>
-                                </div><!--//section-block-->
-                                
+<div class="code-block">
+<pre><code class="language-markup">&lt;header&gt;
+    ...
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js">&lt;/script&gt;
+    &lt;script src="../pxWebFunctions/dataFilter.js">&lt;/script&gt;
+    ...
+&lt;/header&gt;
+</code></pre>
+
+</div><!--//code-block-->
+                                    <p>
+                                        Now that we have the selected values and filtered data, we use the function wrapGraph() to call out the graphs in our system. This function wraps up many other graph-related functions, and there are many possibilities of customizing your graph (graph-type, where to display each graph, how many selections should be allowed, etc...). In this tutorial we show one -default- possibility.
+                                        We add the wrapGraph function to the button inside the checkbox selector, so that when the user makes a selection, the gbraphs will be displayed.
+                                    </p>
+
+<div class="code-block">
+<pre><code class="language-markup">&lt;script&gt;
+    ...
+    document.getElementById("buttonDimensionSelector").onclick = function(){
+        showBoxSelector("boxTop") //Shows or hides box with checkboxes
+        wrapGraph(checkedValues, categories, filteredData)
+    }
+&lt;/script&gt;
+</code></pre>
+                                    <p>
+                                        When the user makes a selection of the checkboxes, the system should now show the graphs. Depending on how many multi-class classifiers have been selected, a different number of graph boxes will appear. This is defined in our generic wrapGraph function. You can check the source code and the documentation to see how it works.
+                                    </p>
+                                </div><!--//section-block-->                                
                             </section><!--//doc-section-->
-                            
-                            </section><!--//doc-section-->
+
+                            <section id="missing-handling-section" class="doc-section">
+                                <h2 class="section-title">Handle missing data</h2>
+                                <div class="section-block">
+                                    <p>
+                                        Sometimes the user can make a selection of variables which lead to missing data. The function displayNonGraph() verifies if the selection leads only to missing values and, if yes, renders a message on the screen. The function runs every time the user clicks "Done" inside the checkbox selector, as shown below.
+                                    </p> 
+<div class="code-block">
+<pre><code class="language-markup">&lt;script&gt;
+    ...
+    document.getElementById("buttonDimensionSelector").onclick = function(){
+        showBoxSelector("boxTop") //Shows or hides box with checkboxes
+        wrapGraph(checkedValues, categories, filteredData)
+        /*-->*/displayNonGraphs(filteredData, whereToAppend = "graphsContainer") //graphsContainer is the id of the div where the message will be displayed.
+    }
+&lt;/script&gt;
+</code></pre>
+<p>
+    In the case of this dataset, there is no mean values any region with size small and year 18. If you select these variables in the checkboxes, you should be able to see the message displayed on the screen.
+</p>
+                            </section>
                         </div><!--//content-inner-->
+                            <section id="complete-code-section" class="doc-section">
+                                <h2 class="section-title">Complete code</h2>
+                                <div class="section-block">
+
+<div class="code-block">
+<pre><code class="language-markup">&lt;!DOCTYPE html&gt;
+    &lt;head&gt;
+        &lt;!-- change directories here if you're not working within the /documentation folder --&gt;
+        &lt;script src="../src/graphFunctions.js"&gt;&lt;/script&gt;
+        &lt;script src="../src/generateHTMLstructure.js"&gt;&lt;/script&gt;
+        &lt;script src="../src/dataProcessUtils.js"&gt;&lt;/script&gt;
+        &lt;script src="../src/checkBoxSelectors.js"&gt;&lt;/script&gt;
+        &lt;script src="./ficData.js"&gt;&lt;/script&gt;
+        &lt;script src="../pxWebFunctions/dataFilter.js"&gt;&lt;/script&gt;
+        &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+    &lt;/body&gt;
+    
+    &lt;script&gt;
+        initiateDashboard()
+        
+        renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
+        
+        var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
+        generateCheckBoxes(categories, options, 'boxTop', data)
+        
+        document.getElementById("buttonDimensionSelector").onclick = function(){
+            showBoxSelector("boxTop")
+            wrapGraph(checkedValues, categories, filteredData)
+            displayNonGraphs(filteredData, whereToAppend = "graphsContainer")
+        }
+        document.getElementById("selectDimensionButton").onclick = function(){
+            showBoxSelector("boxTop")
+        }
+        
+        var checkedValues = checkedValuesObjectGenerator(categories)
+        var allCheckBoxes = document.querySelectorAll('input');
+        
+        establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "statistic")
+    &lt;/script&gt;
+    
+    &lt;/html&gt;
+</code></pre>
+
+                                </div>
+                            </section>
+
                     </div><!--//doc-content-->
                     <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
                         <div id="doc-nav" class="doc-nav">
@@ -251,6 +351,12 @@ establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByChe
                                     </li>
                                     <li class="nav-item">
 	                                      <a class="nav-link scrollto" href="#graphing-section">Graphing</a>
+                                    </li>
+                                    <li class="nav-item">
+	                                      <a class="nav-link scrollto" href="#missing-handling-section">Handle missing data</a>
+                                    </li>
+                                    <li class="nav-item">
+	                                      <a class="nav-link scrollto" href="#complete-code-section">Complete code</a>
                                     </li>
 	                            </nav><!--//doc-menu-->
 	                        

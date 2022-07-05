@@ -6,6 +6,13 @@
 <script src="../src/leafLetFunctions.js"></script>
 <script src="../src/dataProcessUtils.js"></script>
 <script src="../src/checkBoxSelectors.js"></script>
+<script src="./ficData.js"></script>
+
+<!-- New packages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="../pxWebFunctions/dataFilter.js"></script>
+<!-- End of new packages -->
+
 </head>
 
 <body>
@@ -17,266 +24,17 @@
 initiateDashboard()
 
 renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
-var data = [
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 18,
-        "region": 10,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 18,
-        "region": 10,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": 712801.817065,
-        "year": 18,
-        "region": 10,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 18,
-        "region": 10,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": 0,
-        "year": 18,
-        "region": 10,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 18,
-        "region": 10,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 19,
-        "region": 10,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": 0,
-        "year": 19,
-        "region": 10,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": 823519.182,
-        "year": 19,
-        "region": 10,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 19,
-        "region": 10,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": 0,
-        "year": 19,
-        "region": 10,
-        "size": "small",   
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 19,
-        "region": 10,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": null,
-        "year": 20,
-        "region": 10,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "mean",
-        "value": 0,
-        "year": 20,
-        "region": 10,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 699404.551724,
-        "year": 20,
-        "region": 10,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 20,
-        "region": 11,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 0,
-        "year": 20,
-        "region": 11,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 1000,
-        "year": 20,
-        "region": 11,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 5000,
-        "year": 21,
-        "region": 11,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 0,
-        "year": 21,
-        "region": 11,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 21,
-        "region": 11,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 21,
-        "region": 11,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 0,
-        "year": 21,
-        "region": 11,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 21,
-        "region": 11,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 22,
-        "region": 11,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 0,
-        "year": 22,
-        "region": 11,
-        "size": "big",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 22,
-        "region": 11,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 22,
-        "region": 11,
-        "size": "medium",
-        
-    },
-    {
-        "statistic": "median",
-        "value": 0,
-        "year": 22,
-        "region": 11,
-        "size": "small",
-        
-    },
-    {
-        "statistic": "median",
-        "value": null,
-        "year": 22,
-        "region": 11,
-        "size": "big",
-        
-    }
-]
 
-var categories = Object.keys(data[0]) //Extract classifier names (e.g., year, size, etc...)
-var categories = categories.filter(i => i !== 'value') //Remove value, which is what we want to plot
-
-//Extract classifier levels (e.g., 2021, 2022, big, smal, etc...)
-var options = []
-for(k in categories){
-  var a = data.map(i=>i[categories[k]])
-  var a = a.filter(onlyUnique)
-  options.push(a)
-}
-var options = options.filter(i=> i[0] !== undefined)
-
+var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
 
 generateCheckBoxes(categories, options, 'boxTop', data)
 
 document.getElementById("buttonDimensionSelector").onclick = function(){
     showBoxSelector("boxTop") //Shows or hides box with checkboxes
+    wrapGraph(checkedValues, categories, filteredData)
+    displayNonGraphs(filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 }
+
 document.getElementById("selectDimensionButton").onclick = function(){
     showBoxSelector("boxTop") //Hides box with checkboxes
 }
@@ -287,6 +45,10 @@ var allCheckBoxes = document.querySelectorAll('input');
 //Establishes checkbox verification system. Multiple or single selection
 establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "statistic") //Value is written inside the global variable checkedValues 
 
+//Make random selection
+var multi = ["year", "region"]
+var single = ["size", "statistic"]
+simulateSelection(multi, single)
 </script>
 
 </html>

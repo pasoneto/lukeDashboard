@@ -1,5 +1,5 @@
 //Adding event listener for database selector
-var classifiers = Object.keys(classifierLabels[0])
+var classifiers = Object.keys(varLabs[0])
 //var data = JSON.parse(data)
 
 var data = reshapeJSON(data, classifiers)
@@ -11,9 +11,7 @@ var data = reshapeJSON(data, classifiers)
 //Concatenating labels for checkboxes
 //var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
 //var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
-//var labels = [{"dependentVariable": labels[0], "classifiers": classifierLabels[0]}]
-
-var labels = null
+var labels = [{"dependentVariable": labels[0], "classifiers": classifierLabels[0]}]
 
 //Extracting categories and options
 var categories = Object.keys(data[0])
@@ -244,26 +242,9 @@ var single = categories.filter(i => multi.includes(i) == false)
 
 //Running click simulation
 simulateSelection(multi, single)
+completeWrap()
 
 var dependentIndex = 0;
-function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName){
-  Number.prototype.mod = function (n) {
-    return ((this % n) + n) % n;
-  };
-  if(plus){
-    var dependentOptions = categoriesAndOptions[dependentName]
-    window.dependentIndex = dependentIndex + 1
-    var ticks = document.getElementById(dependentName)
-    var ticks = ticks.getElementsByTagName("input")
-    ticks[dependentIndex.mod(dependentOptions.length)].click()
-  } else {
-    var dependentOptions = categoriesAndOptions[dependentName]
-    window.dependentIndex = dependentIndex - 1
-    var ticks = document.getElementById(dependentName)
-    var ticks = ticks.getElementsByTagName("input")
-    ticks[dependentIndex.mod(dependentOptions.length)].click()
-  }
-}
 
 document.getElementById("nextDependent").onclick = function(){
   nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
@@ -276,4 +257,5 @@ document.getElementById("previousDependent").onclick = function(){
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 }
 
-
+//Variables from SAS:
+//data; labels; classifierLabels; varLabs

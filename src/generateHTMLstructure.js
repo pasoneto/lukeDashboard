@@ -6,7 +6,7 @@ function documentAppender(element, html){
 	}
 }
 
-function initiateDashboard(){
+function initiateDashboard(renderMap = false){
 	var headHTML = '<title>Example dashboard</title>'+
 				'<meta charset="UTF-8">'+
 				'<meta name="viewport" content="width=device-width, initial-scale=1">'+
@@ -29,49 +29,50 @@ function initiateDashboard(){
 
 				'<!-- Box on top of everything. Selects classifiers -->'+
 				'<div id="boxTop">'+
-				'</div>'+
+				'</div>'
 
-				'<!-- Box on top of everything. Shows graph based on map hover -->'+
-				'<div id="boxTopMap">'+
-				'</div>'+
-				'<div id="tip-container">'+
-				'<div id="popup-tip"></div>'+
-				'</div>'+
+  if(renderMap){
+    bodyHTML += '<!-- Box on top of everything. Shows graph based on map hover -->'+
+                '<div id="boxTopMap">'+
+                '</div>'+
+                '<div id="tip-container">'+
+                '<div id="popup-tip"></div>'+
+                '</div>'+
 
-				'<div class="row">'+
-				'<div class="column statisticsSelector" id="statisticsSelector">'+
-					'Map Control'+
-				'<div id="selector-map"></div>'+
-				'<div id="mapInfo"></div>'+
-				'</div>'+
+                '<div class="row">'+
+                '<div class="column statisticsSelector" id="statisticsSelector">'+
+                  'Map Control'+
+                '<div id="selector-map"></div>'+
+                '<div id="mapInfo"></div>'+
+                '</div>'
+  }
 
-				'<div class="column dimensionSelector" id="dimensionSelector">'+
-				'Graph Control<br>'+
-				'<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
-				'<button id="previousDependent">< Previous dependent variable</button>'+
-				'<button id="nextDependent">Next dependent variable > </button>'+
-				'<div id="selectedVariables"></div>'+
-				'</div>'+
+  bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
+              'Graph Control<br>'+
+              '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
+              '<div id="selectedVariables"></div>'+
+              '</div>'
 
-				'<div class="column mapBox" id="mapBox">'+
-				'</div>'+
+  if(renderMap){
+    bodyHTML += '<div class="column mapBox" id="mapBox">'+
+                '</div>'
+  }
 
-				'<div class="column graphsBox" id="graphsContainer">'+
-				'Graphs'+
-				'</div>'+
-				'</div>'+
+  bodyHTML += '<div class="column graphsBox" id="graphsContainer">'+
+              'Graphs'+
+              '</div>'+
+              '</div>'+
 
-				{/* <script src="./tt/data.js"></script> */}
-				{/* <script src="./tt/dataProcess.js"></script> */}
-				{/* <script src="./src/dataProcessUtils.js"></script> */}
-				{/* <script src="./pxWebFunctions/fetchData.js"></script> */}
-				{/* <script src="./pxWebFunctions/dataFilter.js"></script> */}
-				'<script src="./src/graphFunctions.js"></script>'+
-				'<script src="./src/leafLetFunctions.js"></script>'+
-				'<script src="./src/mapFunctions.js"></script>'+
-				'<script src="./src/dropdownSelection.js"></script> <!-- Renders database selector -->'+
+              '<script src="./src/graphFunctions.js"></script>'+
+              '<script src="./src/leafLetFunctions.js"></script>'+
+              '<script src="./src/mapFunctions.js"></script>'+
+              '<script src="./src/dropdownSelection.js"></script> <!-- Renders database selector -->'+
 				'<script src="./src/checkBoxSelectors.js"></script> <!-- Renders database selector -->'
 
 	documentAppender(document.head, headHTML)
 	documentAppender(document.body, bodyHTML)
+  if(renderMap === false){
+    document.getElementById("graphsContainer").style.width = '100vw'
+    document.getElementById("dimensionSelector").style.width = '100vw'
+  }
 }

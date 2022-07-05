@@ -14,8 +14,10 @@ function filterDataByCheckBoxSelector(categories, allData, checkedValues){
 function separateDataInGroups(filteredData, groupSelected, checkedValues){
   var yAxis = []
   var labels = []
+  console.log(groupSelected)
   for(k in window.checkedValues[groupSelected]){
     var group = filteredData.filter(i => i[groupSelected] == window.checkedValues[groupSelected][k])
+    console.log(group)
     var y = [group.map(i => Number(i.value))]
     yAxis.push(y[0])
     labels.push(window.checkedValues[groupSelected][k])

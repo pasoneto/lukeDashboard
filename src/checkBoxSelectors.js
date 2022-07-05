@@ -1,3 +1,19 @@
+//Function extracts options associated with each category within the data
+function extractCategoriesAndOptions(data, dependentVariableName){
+
+  var categories = Object.keys(data[0]) //Extract classifier names (e.g., year, size, etc...)
+  var categories = categories.filter(i => i !== dependentVariableName) //Remove value, which is what we want to plot
+
+  var options = []
+  for(k in categories){
+    var a = data.map(i=>i[categories[k]])
+    var a = a.filter(onlyUnique)
+    options.push(a)
+  }
+  var options = options.filter(i=> i[0] !== undefined)
+  return [categories, options]
+}
+
 //Generates checkbox for classifier selection
 function generateCheckBoxes(categories, options, whereAppend, data, labels = null){
   html = '';
@@ -251,7 +267,6 @@ function simulateSelection(multi, single){
     }
 
     if(allNull.length > 5){            
-        completeWrap()
         break;
     } 
   }
