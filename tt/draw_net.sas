@@ -79,6 +79,7 @@ data _null_;
     put '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>';
     put '<button id="previousDependent">< Previous dependent variable</button>';
     put '<button id="nextDependent">Next dependent variable > </button>';
+    put '<div id="selectedVariables"></div>';
     put '</div>';
 
     put '<div class="column mapBox" id="mapBox">';
