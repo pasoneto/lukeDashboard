@@ -110,7 +110,7 @@ run;
 data _null_;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var labels =';
+	put 'var dependentLabels =';
 run;
 
 /* Inserts the labels in json format into the HTML page */
