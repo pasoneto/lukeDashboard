@@ -250,7 +250,7 @@ function singleCheck(categoryName){
   a[randomIndex].click()
 }
 
-function simulateSelection(multi, single){
+async function simulateSelection(multi, single){
   while (true) {
     multi.map(i => multiCheck(i))
     single.map(i => singleCheck(i))

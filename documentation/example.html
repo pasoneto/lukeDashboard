@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <head>
-<script src="../src/graphFunctions.js"></script>
-<script src="../src/generateHTMLstructure.js"></script>
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-<script src="../src/leafLetFunctions.js"></script>
-<script src="../src/dataProcessUtils.js"></script>
-<script src="../src/checkBoxSelectors.js"></script>
-<script src="./ficData.js"></script>
-
-<!-- New packages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script src="../pxWebFunctions/dataFilter.js"></script>
-<!-- End of new packages -->
-
+    <!-- change directories here if you're not working within the /documentation folder -->
+    <script src="../src/graphFunctions.js"></script>
+    <script src="../src/generateHTMLstructure.js"></script>
+    <script src="../src/dataProcessUtils.js"></script>
+    <script src="../src/checkBoxSelectors.js"></script>
+    <script src="./ficData.js"></script>
+    <script src="../pxWebFunctions/dataFilter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 
 <body>
@@ -20,35 +15,27 @@
 
 <script>
 
-//Generating the overall pre-defined framework is easy. We just call the following function.
-initiateDashboard()
+    initiateDashboard()
+    
+    renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
+    
+    var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
+    generateCheckBoxes(categories, options, 'boxTop', data)
+    
+    document.getElementById("buttonDimensionSelector").onclick = function(){
+        showBoxSelector("boxTop")
+        wrapGraph(checkedValues, categories, filteredData)
+        displayNonGraphs(filteredData, whereToAppend = "graphsContainer")
+    }
+    document.getElementById("selectDimensionButton").onclick = function(){
+        showBoxSelector("boxTop")
+    }
+    
+    var checkedValues = checkedValuesObjectGenerator(categories)
+    var allCheckBoxes = document.querySelectorAll('input');
+    
+    establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "statistic")
 
-renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
-
-var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
-
-generateCheckBoxes(categories, options, 'boxTop', data)
-
-document.getElementById("buttonDimensionSelector").onclick = function(){
-    showBoxSelector("boxTop") //Shows or hides box with checkboxes
-    wrapGraph(checkedValues, categories, filteredData)
-    displayNonGraphs(filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
-}
-
-document.getElementById("selectDimensionButton").onclick = function(){
-    showBoxSelector("boxTop") //Hides box with checkboxes
-}
-
-var checkedValues = checkedValuesObjectGenerator(categories) //Creates empty object which receives boxes that can be checked.
-var allCheckBoxes = document.querySelectorAll('input');
-
-//Establishes checkbox verification system. Multiple or single selection
-establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "statistic") //Value is written inside the global variable checkedValues 
-
-//Make random selection
-var multi = ["year", "region"]
-var single = ["size", "statistic"]
-simulateSelection(multi, single)
 </script>
-
+    
 </html>

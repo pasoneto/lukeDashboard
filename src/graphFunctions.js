@@ -189,8 +189,8 @@ function wrapGraph(checkedValues, categories, filteredData){
   pickMultiClassCategories(checkedValues, categories, dropdownCategories)
 
   var nMulticlassClassifiers = window.dropdownCategories.length
-
   renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
+  console.log("Rendered boxes")
 
   //For when there are 2 multiclass classifier
   if(nMulticlassClassifiers == 2){
@@ -251,8 +251,9 @@ function wrapGraph(checkedValues, categories, filteredData){
       graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
     }
 
+  console.log("Rendered graphs")
   } 
-  ///////For when there is only 1 milticlass classifier
+  ///////For when there is only 1 multiclass classifier
   if(nMulticlassClassifiers == 1) {
 
     var group1 = window.dropdownCategories[0]
@@ -270,8 +271,6 @@ function wrapGraph(checkedValues, categories, filteredData){
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
     
   } if(nMulticlassClassifiers < 1) {
-    
-    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
 
     var group1 = categories[0]
     var xAxisName1 = categories[1]

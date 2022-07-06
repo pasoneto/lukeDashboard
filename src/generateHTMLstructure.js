@@ -6,7 +6,7 @@ function documentAppender(element, html){
 	}
 }
 
-function initiateDashboard(renderMap = false){
+async function initiateDashboard(renderMap = false){
 	var headHTML = '<title>Example dashboard</title>'+
 				'<meta charset="UTF-8">'+
 				'<meta name="viewport" content="width=device-width, initial-scale=1">'+
@@ -61,13 +61,7 @@ function initiateDashboard(renderMap = false){
   bodyHTML += '<div class="column graphsBox" id="graphsContainer">'+
               'Graphs'+
               '</div>'+
-              '</div>'+
-
-              '<script src="./src/graphFunctions.js"></script>'+
-              '<script src="./src/leafLetFunctions.js"></script>'+
-              '<script src="./src/mapFunctions.js"></script>'+
-              '<script src="./src/dropdownSelection.js"></script> <!-- Renders database selector -->'+
-				'<script src="./src/checkBoxSelectors.js"></script> <!-- Renders database selector -->'
+              '</div>'
 
 	documentAppender(document.head, headHTML)
 	documentAppender(document.body, bodyHTML)
@@ -75,4 +69,5 @@ function initiateDashboard(renderMap = false){
     document.getElementById("graphsContainer").style.width = '100vw'
     document.getElementById("dimensionSelector").style.width = '100vw'
   }
+  console.log("Rendered all boxes")
 }
