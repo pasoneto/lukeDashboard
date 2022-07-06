@@ -19,8 +19,7 @@ async function initiateDashboard(renderMap = false){
 				'<link rel="stylesheet" href="../styles/stylesBoxSelector.css">'+
 				'<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />'+
 				'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'+
-				'<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>'+
-				'<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>'
+				'<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>'
 
 	var bodyHTML = '<div class="header">'+
 				'<h1>Initial dashboard</h1>'+
@@ -35,10 +34,6 @@ async function initiateDashboard(renderMap = false){
     bodyHTML += '<!-- Box on top of everything. Shows graph based on map hover -->'+
                 '<div id="boxTopMap">'+
                 '</div>'+
-                '<div id="tip-container">'+
-                '<div id="popup-tip"></div>'+
-                '</div>'+
-
                 '<div class="row">'+
                 '<div class="column statisticsSelector" id="statisticsSelector">'+
                   'Map Control'+
@@ -58,9 +53,16 @@ async function initiateDashboard(renderMap = false){
                 '</div>'
   }
 
-  bodyHTML += '<div class="column graphsBox" id="graphsContainer">'+
-              'Graphs'+
-              '</div>'+
+  bodyHTML += '<div class="column graphsBox" id="graphsContainer" onclick=showBoxSelector("boxTop")>'+
+                '<div id="noGraphContainer">'+
+                  '<div id="noGraph">'+
+                  '<div id="textNoGraph">'+
+                    '<p><i class="fa fa-info-circle" style="margin-right: 10px" aria-hidden="true"></i>'+
+                      'Select dimensions to render the graphs</p>'+
+                    '</p>'+
+                  '</div>'+
+                '</div>'+
+                '</div>'+
               '</div>'
 
 	documentAppender(document.head, headHTML)

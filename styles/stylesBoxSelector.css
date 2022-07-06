@@ -9,7 +9,7 @@
   top:20%;
   bottom: 0;
   left: 20%;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.30) 3px 2.2px 2.9px;
   overflow:auto;
   resize: both;
@@ -19,7 +19,8 @@
 
 /*Button submit dimensions selected*/
 #buttonDimensionSelector{
-  margin: 0;
+  margin-top: 25px;
+  margin-bottom: 25px;
   position: absolute;
   left: 50%
 }
@@ -30,6 +31,7 @@
   background-color: snow;
   margin: auto;
   margin-top: 10px;
+  padding: 10px;
   width: 95%;
 }
 /*Container wraping list of classifiers*/

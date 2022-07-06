@@ -1,5 +1,4 @@
 #graphsContainer{
-  background-color: white;
 }
 .graphBox {
   background: #EDF6FC;
@@ -35,9 +34,6 @@
 
 .graphsBox { 
   width: 80%;
-  margin: 1px;
-  border-radius: 10px;
-  margin-bottom: 2px;
 }
 
 #boxTopMap {
@@ -84,10 +80,19 @@
   justify-content: center;
   align-items: center;
 }
+#noGraph:hover {
+  background-color: #0088A9;
+}
 #textNoGraph{
   font-size: 25px;
 }
 #textNoGraph2{
   font-size: 15px;
+}
+#noGraph:hover{
+  color: white;
+}
+#noGraph:hover{
+  color: white;
 }
 

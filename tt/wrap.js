@@ -4,13 +4,34 @@ var classifiers = Object.keys(varLabs[0])
 
 var data = reshapeJSON(data, classifiers)
 
-//var maakunta = [{"maakunta": {"1": "Lapland", "2": "Uusima", "3": "Keski-suomi", "4":"Satakunta", "5":"Karjala", "6":"Savo", "7":"Pirkanmaa","8":"Varsinais-Suomi", "9":"Kaakkois-Suomi", "10":"Häme", "11":"Pirkanmaa"}}]
-//var production = [{"tuotantosuuntaso": {"1": "Cereal farms", "2": "Mixed production", "3": "Dairy farms", "4":"Pig farms", "5":"Cattle farms", "6":"Poultry farms", "7":"", "8":"", "9":"", "10":""}}]
-//var vuosi = [{"vuosi_": {"18": "2018", "19": "2019", "20": "2020", "21":"2021", "22":"2022"}}]
+function renameKeys(object, className, classifierLabel){
+  var oldKeys = Object.keys(object[0])
+  var newKeys = oldKeys.map(i => i.replace('r', ''))
+  for(k in oldKeys){
+    delete Object.assign(object[0], {[newKeys[k]]: object[0][oldKeys[k]] })[oldKeys[k]];
+  }
+  object[0]['code'] = classifierLabel
+  return(object)
+}
 
-//Concatenating labels for checkboxes
-//var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
-//var labels = [{...labels[0], ...maakunta[0], ...production[0], ...vuosi[0] }]
+//Function receives classifier labels (vuosi_: vuosi, etc...)
+//Then it reads, in window, N classLab objects (objects containing labels of each subClassifier. For instance, 1: corn, 2: wheat, etc...)
+//where N is the number of classifiers chosen by user
+//This can be any number of classifiers.
+//Classifier su
+function createLabelsObject(varLabs){
+  var classLabels = Object.keys(varLabs[0])
+  var json = {}
+  for(k in classLabels){
+    var classLabelIndex = Number(k)+1
+    var objLab = window['classlab'+classLabelIndex]
+    json[varLabs[0][classLabels[k]]] = renameKeys(objLab, classLabels[k], varLabs[0][classLabels[k]])
+  }
+  return(json)
+}
+
+console.log(createLabelsObject(varLabs))
+
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": varLabs[0]}]
 
 //Extracting categories and options

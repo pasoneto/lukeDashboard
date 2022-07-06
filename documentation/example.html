@@ -17,8 +17,6 @@
 
     initiateDashboard()
     
-    renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
-    
     var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
     generateCheckBoxes(categories, options, 'boxTop', data)
     
@@ -35,7 +33,12 @@
     var allCheckBoxes = document.querySelectorAll('input');
     
     establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "statistic")
-
-</script>
     
+    var multi = ["year", "region"];//Selecting two multiclass classifiers
+    var single = categories.filter(i => multi.includes(i) == false)//Establishing the single classifiers
+
+    //Running click simulation
+    simulateSelection(multi, single)
+     
+</script>
 </html>
