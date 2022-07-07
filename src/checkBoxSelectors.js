@@ -34,7 +34,6 @@ function generateCheckBoxes(categories, options, whereAppend, data, labels = nul
         if(labels[0]['subLabels'][categories[category]]){
           var allCats = Object.keys(labels[0]['subLabels'][categories[category]])
           var allCats = allCats.map(i=> i.toString())
-          console.log(allCats)
         } else {
           var allCats = [{}];
         }
@@ -132,12 +131,10 @@ function onlyOneEnforcer(categories, checkedValues, data, filterFunction){
       multipleCheckCategories.push(categories[k])
     }
   }
-  //console.log(multipleCheckCategories)
   if(multipleCheckCategories.length == 2){ //If there are two multiple checks
     for(k in categories){
         //document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
         var notMultiple = multipleCheckCategories.indexOf(categories[k]) !== -1
-        //console.log("Category " + categories[k] + "single selector" + notMultiple)
         if(!notMultiple){
           document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
           onlyOne(categories[k], checkedValues, categories, data, filterFunction)

@@ -62,7 +62,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
       xAxes: [{
         ticks: {
           autoSkip: false,
-          minRotation: 90,
+          minRotation: 45,
         },
         gridLines: {
           display: false,
@@ -141,17 +141,20 @@ function typegraph(groupName){
 // 1.24
 //
 function singleLabelExtractor(checkedValues, exception = null, labels = null){
-  var selectedCats = Object.values(checkedValues)
-  var selectedValues = Object.keys(checkedValues)
+  //var singleLabels = singleLabels.map(i => labels[0]['subLabels'][xAxisName1][i])
+  var selectedValues = Object.values(checkedValues)
+  var selectedCats = Object.keys(checkedValues)
   json = ""
   if(labels){
-    for(k in selectedCats){
-      if(selectedCats[k].length == 1){
+    for(k in selectedValues){
+      if(selectedValues[k].length == 1){ //Verify if it is single classifier
         //Except dependent variable, which doesn't have a translator. Create more general function for this
-        if(selectedValues[k] != exception){
-          json += "<strong>" + labels[0]['classifiers'][selectedValues[k]] + "</strong>" + ": " + selectedCats[k] + ";  "
+        console.log(selectedCats[k])
+        console.log(selectedValues[k])
+        if(selectedCats[k] != exception){
+          json += "<strong>" + labels[0]['classifiers'][selectedCats[k]] + "</strong>" + ": " + labels[0]['subLabels'][selectedCats[k]][selectedValues[k]] + ";  "
         } else {
-          json += "<strong>" + selectedValues[k] + "</strong>" + ": " + labels[0]["dependentVariable"][selectedCats[k]] + ";  "
+          json += "<strong>" + selectedCats[k] + "</strong>" + ": " + labels[0]["dependentVariable"][selectedValues[k]] + ";  "
         }
       }
     }

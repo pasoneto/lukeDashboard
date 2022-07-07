@@ -100,11 +100,15 @@ function completeWrap(){
     var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
     //End of filtering null and missing values
 
+    //Translating subClassifier codes to labels
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
     var xAxis2 = xAxis2.map(i => labels[0]['subLabels'][xAxisName2][i])
 
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
     var labels2 = labels2.map(i => labels[0]['subLabels'][group2][i])
+
+    var group1Label = labels[0]['classifiers'][group1]
+    var group2Label = labels[0]['classifiers'][group2]
 
     var box = document.getElementById("box")
     var box1 = document.getElementById("box1")
@@ -114,17 +118,8 @@ function completeWrap(){
     var randomColors1 = colorGenerator(yAxis1);
     var randomColors2 = colorGenerator(yAxis2);
 
-    //Translates variables given the label. Change this to more general function
-    if(group1 == 'dependentVariable'){
-      var labels1 = labels1.map(i => labels[0][group1][i])
-    }
-    if(group2 == 'dependentVariable'){
-      var labels2 = labels2.map(i => labels[0][group2][i])
-    }
-
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1, randomColors1)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2, randomColors2, showLegend = true)
-
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1Label, randomColors1)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2Label, randomColors2, showLegend = true)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)
@@ -152,7 +147,7 @@ function completeWrap(){
     }
 
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleLabels = singleLabelExtractor(window.checkedValues, exception = "dependentVariable", labels)
     displeySelectedSingleVariables(singleLabels)
   } 
   
@@ -172,10 +167,12 @@ function completeWrap(){
 
     //Filtering null and missing values
     var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-
     var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
-
     //End of filtering null and missing values
+    
+    //Translating subClassifier codes to labels
+    var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
+    var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
 
     var box = document.getElementById("box")
     box.innerHTML = '<canvas id="myChart"></canvas>'
@@ -203,26 +200,29 @@ function completeWrap(){
 
     //Filtering null and missing values
     var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-
     var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
-
     //End of filtering null and missing values
+
+    //Translating subClassifier codes to labels
+    var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
+    var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
+    var group1Label = labels[0]['classifiers'][group1]
 
     var box = document.getElementById("box")
     box.innerHTML = '<canvas id="myChart"></canvas>'
 
     var randomColors1 = colorGenerator(yAxis1);
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label, randomColors1)
     
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels) 
     displeySelectedSingleVariables(singleLabels)
 
   }
 
   //Getting only region codes that exist in data
   var mrc = renameMapRegions(filteredDataForMap);
-  drawMap(maakunta, 'maakunta', mrc, filteredDataForMap)
+  drawMap(maakunta, 'maakunta', mrc, filteredDataForMap, labels)
 }
 
 //Add function to render graph button. Function shows what variables were selected.
@@ -245,6 +245,7 @@ var single = categories.filter(i => multi.includes(i) == false)
 //Running click simulation
 simulateSelection(multi, single)
 completeWrap()
+displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 
 var dependentIndex = 0;
 

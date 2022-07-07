@@ -27,7 +27,7 @@ var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=Ge
 var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
 var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
 
-async function drawMap(url, regionDivision, regionsIn, statistics){
+async function drawMap(url, regionDivision, regionsIn, statistics, labels = null){
 
   function hoverBox(e) { //Function generates box over each hovered region
 
@@ -57,13 +57,20 @@ async function drawMap(url, regionDivision, regionsIn, statistics){
 
         var [yAxis1, labels1] = filterNull(yAxis1, labels1)
         var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
-        
+
+        if(labels){
+          var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
+          var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
+          var group1Label = labels[0]['classifiers'][group1]
+        }
+
         var randomColors1 = colorGenerator(yAxis1);
         hiddenDiv.innerHTML = '<canvas id="box5"></canvas>'
+        console.log(yAxis1)
         if(yAxis1[0].length <= 2){
-          graphCustom(xAxis1, yAxis1, labels1, "box5", "bar", "Showing " + group1 + " for " + regionHovered, randomColors1)
+          graphCustom(xAxis1, yAxis1, labels1, "box5", "bar", "Showing " + group1Label + " for " + regionHovered, randomColors1)
         } else {
-          graphCustom(xAxis1, yAxis1, labels1, "box5", "line", "Showing " + group1 + " for " + regionHovered, randomColors1)
+          graphCustom(xAxis1, yAxis1, labels1, "box5", "line", "Showing " + group1Label + " for " + regionHovered, randomColors1)
         }
 
       }
