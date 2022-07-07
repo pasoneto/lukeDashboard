@@ -159,14 +159,6 @@ data _null_;
 	put _infile_;
 run;
 
-/* Add classifier by category */
-data _null_;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var classlab1 =';
-run;
-
-
 /* Generates the second half of the HTML page */
 data _null_;
   /* change directory here */

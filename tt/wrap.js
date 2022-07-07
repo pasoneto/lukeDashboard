@@ -88,10 +88,10 @@ function completeWrap(){
 
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
     var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
-
+    
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
-    
+
     //Filtering null and missing values
     var [yAxis1, labels1] = filterNull(yAxis1, labels1)
     var [yAxis2, labels2] = filterNull(yAxis2, labels2)
@@ -99,6 +99,12 @@ function completeWrap(){
     var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
     var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
     //End of filtering null and missing values
+
+    var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
+    var xAxis2 = xAxis2.map(i => labels[0]['subLabels'][xAxisName2][i])
+
+    var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
+    var labels2 = labels2.map(i => labels[0]['subLabels'][group2][i])
 
     var box = document.getElementById("box")
     var box1 = document.getElementById("box1")
