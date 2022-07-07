@@ -57,3 +57,29 @@ function renameMapRegions(fData){
   }
   return mrc
 }
+
+//Function receives object and changes its key to fit with system keys
+//filters object to keep only keys with value
+//Output is a dictionary of codes and its labels. Used for sub-classifier labels
+function renameKeys(object, classifierLabel){
+  var oldKeys = Object.keys(object)
+  var newKeys = oldKeys.map(i => i.replace('r', ''))
+  for(k in oldKeys){
+    delete Object.assign(object, {[newKeys[k]]: object[oldKeys[k]] })[oldKeys[k]];
+  }
+  object['code'] = classifierLabel
+  var object = Object.entries(object).filter(([key, value]) => value !== "");
+  var object = Object.fromEntries(object);
+  return(object)
+}
+
+//For each classifier, creates a dictionary of sub classifier labels
+function mergeLabelsObject(classifiers, classifierSubLabels){
+  var json = {}
+  for (let k = 0; k < classifiers.length; k++) {
+    var ob = renameKeys(classifierSubLabels[k], classifiers[k])
+    json[classifiers[k]] = ob
+  }
+  return(json)
+}
+

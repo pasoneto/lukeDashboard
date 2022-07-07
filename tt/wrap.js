@@ -1,38 +1,12 @@
 //Adding event listener for database selector
-var classifiers = Object.keys(varLabs[0])
-//var data = JSON.parse(data)
+var classifiers = Object.keys(classifierLabels[0])
 
 var data = reshapeJSON(data, classifiers)
 
-function renameKeys(object, className, classifierLabel){
-  var oldKeys = Object.keys(object[0])
-  var newKeys = oldKeys.map(i => i.replace('r', ''))
-  for(k in oldKeys){
-    delete Object.assign(object[0], {[newKeys[k]]: object[0][oldKeys[k]] })[oldKeys[k]];
-  }
-  object[0]['code'] = classifierLabel
-  return(object)
-}
+var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
+console.log(allLabels)
 
-//Function receives classifier labels (vuosi_: vuosi, etc...)
-//Then it reads, in window, N classLab objects (objects containing labels of each subClassifier. For instance, 1: corn, 2: wheat, etc...)
-//where N is the number of classifiers chosen by user
-//This can be any number of classifiers.
-//Classifier su
-function createLabelsObject(varLabs){
-  var classLabels = Object.keys(varLabs[0])
-  var json = {}
-  for(k in classLabels){
-    var classLabelIndex = Number(k)+1
-    var objLab = window['classlab'+classLabelIndex]
-    json[varLabs[0][classLabels[k]]] = renameKeys(objLab, classLabels[k], varLabs[0][classLabels[k]])
-  }
-  return(json)
-}
-
-console.log(createLabelsObject(varLabs))
-
-var labels = [{"dependentVariable": dependentLabels[0], "classifiers": varLabs[0]}]
+var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0]}]
 
 //Extracting categories and options
 var categories = Object.keys(data[0])

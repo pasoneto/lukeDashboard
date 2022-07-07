@@ -6,40 +6,20 @@ proc json out="/data/taloustohtoritulosteet/rap/json.txt" pretty;
 	export graf_data_ / nosastags;
 run;
 
-/*labels for names of classifiers (e.g. vuosi_ -> Vuosi, Tuotantosuuntaso -> Tuotantosuunta)*/
+/*labels for variables. Tulvarastonmuutos -> Varaston muutos  */
 proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" pretty;
 	export graf_label_ / nosastags;
 run;
 
 
-/*labels for variables. Tulvarastonmuutos -> Varaston muutos  */
-proc json out="/data/taloustohtoritulosteet/rap/json_varLabs.txt" pretty;
+/*labels for names of classifiers (e.g. vuosi_ -> Vuosi, Tuotantosuuntaso -> Tuotantosuunta)*/
+proc json out="/data/taloustohtoritulosteet/rap/json_classifierLabels.txt" pretty;
 	export graf_classlabel_ / nosastags;
 run;
 
 /*labels for subclass of classifiers. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
-proc json out="/data/taloustohtoritulosteet/rap/json_classlab.txt" pretty;
+proc json out="/data/taloustohtoritulosteet/rap/json_classSubLab.txt" pretty;
 	export graf_subclasslabel_ / nosastags;
-run;
-
-/*labels for subclass of classifier 1. So, this is subclass labels, vuosi_  2018, ....*/
-proc json out="/data/taloustohtoritulosteet/rap/json_classlab1.txt" pretty;
-	export graf_subclasslabel_1 / nosastags;
-run;
-
-/*labels for subclass of classifier 2. So, this is subclass labels, tuotantosuuntaso_: lypsykarjatilat...*/
-proc json out="/data/taloustohtoritulosteet/rap/json_classlab2.txt" pretty;
-	export graf_subclasslabel_2 / nosastags;
-run;
-
-/*labels for subclass of classifier 3. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
-proc json out="/data/taloustohtoritulosteet/rap/json_classlab3.txt" pretty;
-	export graf_subclasslabel_3 / nosastags;
-run;
-
-/*labels for subclass of classifier 4. So, this is subclass labels, like with luomu (organic farming)*/
-proc json out="/data/taloustohtoritulosteet/rap/json_classlab4.txt" pretty;
-	export graf_subclasslabel_4 / nosastags;
 run;
 
 
@@ -148,13 +128,13 @@ run;
 data _null_;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var classifierLabels =';
+	put 'var classifierSubLabels =';
 run;
 
 /* Inserts the classlabels in json format into the HTML page */
 data _null_;
   /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_classlab.txt";
+  infile "/data/taloustohtoritulosteet/rap/json_classSubLab.txt";
 	input;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
@@ -166,13 +146,13 @@ run;
 data _null_;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var varLabs =';
+	put 'var classifierLabels =';
 run;
 
 /* Inserts the classlabels in json format into the HTML page */
 data _null_;
   /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_varLabs.txt";
+  infile "/data/taloustohtoritulosteet/rap/json_classifierLabels.txt";
 	input;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
@@ -184,68 +164,6 @@ data _null_;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
 	put 'var classlab1 =';
-run;
-
-/* Inserts the classlabels in json format into the HTML page */
-data _null_;
-  /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_classlab1.txt";
-	input;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put _infile_;
-run;
-
-/* Add classifier by category */
-data _null_;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var classlab2 =';
-run;
-
-/* Inserts the classlabels in json format into the HTML page */
-data _null_;
-  /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_classlab2.txt";
-	input;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put _infile_;
-run;
-
-/* Add classifier by category */
-data _null_;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var classlab3 =';
-run;
-
-/* Inserts the classlabels in json format into the HTML page */
-data _null_;
-  /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_classlab3.txt";
-	input;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put _infile_;
-run;
-
-
-/* Add classifier by category */
-data _null_;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put 'var classlab4 =';
-run;
-
-/* Inserts the classlabels in json format into the HTML page */
-data _null_;
-  /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_classlab4.txt";
-	input;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put _infile_;
 run;
 
 
