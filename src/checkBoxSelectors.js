@@ -31,14 +31,15 @@ function generateCheckBoxes(categories, options, whereAppend, data, labels = nul
       //if labels are provided, rendered checkbox will show their names
       if(labels){
         var catItem = options[category][option].toString()
-        if(labels[0][categories[category]]){
-          var allCats = Object.keys(labels[0][categories[category]])
+        if(labels[0]['subLabels'][categories[category]]){
+          var allCats = Object.keys(labels[0]['subLabels'][categories[category]])
           var allCats = allCats.map(i=> i.toString())
+          console.log(allCats)
         } else {
           var allCats = [{}];
         }
         if(allCats.includes(catItem)){ 
-            html += options[category][option] + '">' + labels[0][categories[category]][options[category][option]] + '</li>'
+            html += options[category][option] + '">' + labels[0]['subLabels'][categories[category]][options[category][option]] + '</li>'
         } else {
             html += options[category][option] + '">' + options[category][option] + '</li>'
         }

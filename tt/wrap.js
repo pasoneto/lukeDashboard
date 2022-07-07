@@ -4,9 +4,10 @@ var classifiers = Object.keys(classifierLabels[0])
 var data = reshapeJSON(data, classifiers)
 
 var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
-console.log(allLabels)
 
-var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0]}]
+allLabels["dependentVariable"] = dependentLabels[0]
+
+var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Extracting categories and options
 var categories = Object.keys(data[0])
