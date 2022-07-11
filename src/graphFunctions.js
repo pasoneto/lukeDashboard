@@ -82,7 +82,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
 };
 
 //Pie chart
-function graphCustomPie(xAxis, yAxis, id, type, title, randomColors){
+function graphCustomPie(xAxis, yAxis, id, type, title, randomColors, legend = false){
   new Chart(id, {
     type: type,
     data: {
@@ -94,7 +94,7 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors){
     },
     options: {
       legend: {
-        display: false,
+        display: legend,
         position: 'bottom',
       },
       title: {
@@ -209,7 +209,7 @@ function wrapGraph(checkedValues, categories, filteredData){
 
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
-    
+
     //Filtering null and missing values
     var [yAxis1, labels1] = filterNull(yAxis1, labels1)
     var [yAxis2, labels2] = filterNull(yAxis2, labels2)
@@ -225,6 +225,11 @@ function wrapGraph(checkedValues, categories, filteredData){
 
     var randomColors1 = colorGenerator(yAxis1);
     var randomColors2 = colorGenerator(yAxis2);
+
+    console.log(xAxis2)
+    console.log(yAxis2)
+    console.log(labels2)
+    console.log(randomColors2)
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1, randomColors1)
     graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2, randomColors2, showLegend = true)
@@ -300,12 +305,12 @@ function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName
     window.dependentIndex = dependentIndex + 1
     var ticks = document.getElementById(dependentName)
     var ticks = ticks.getElementsByTagName("input")
-    ticks[dependentIndex.mod(dependentOptions.length)].click()
+    ticks[window.dependentIndex.mod(dependentOptions.length)].click()
   } else {
     var dependentOptions = categoriesAndOptions[dependentName]
     window.dependentIndex = dependentIndex - 1
     var ticks = document.getElementById(dependentName)
     var ticks = ticks.getElementsByTagName("input")
-    ticks[dependentIndex.mod(dependentOptions.length)].click()
+    ticks[window.dependentIndex.mod(dependentOptions.length)].click()
   }
 }

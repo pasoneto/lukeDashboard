@@ -68,6 +68,7 @@ function renameKeys(object, classifierLabel){
     delete Object.assign(object, {[newKeys[k]]: object[oldKeys[k]] })[oldKeys[k]];
   }
   object['code'] = classifierLabel
+  object['-1'] = 'Keskiarvo' //Add labels that don't extis from ED
   var object = Object.entries(object).filter(([key, value]) => value !== "");
   var object = Object.fromEntries(object);
   return(object)

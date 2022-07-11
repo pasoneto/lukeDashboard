@@ -253,7 +253,7 @@ async function simulateSelection(multi, single){
     multi.map(i => multiCheck(i))
     single.map(i => singleCheck(i))
     
-    var allNull = filteredData.filter(i=> i.value !== null)
+    var allNull = filteredData.filter(i=> i.value !== null && i.value !== 0)
 
     if(allNull.length <= 5){
       var allCheckBoxes = Array.from(document.querySelectorAll('input[type="checkbox"]'))

@@ -46,8 +46,8 @@ async function drawMap(url, regionDivision, regionsIn, statistics, labels = null
         var stat = currentTarget.map(i=>i.value)
         console.log("I am valid")
         showBoxSelector("boxTopMap")
-        //showBoxSelector("tip-container")
-        //hiddenDiv.innerHTML = stat
+        showBoxSelector("tip-container")
+        hiddenDiv.innerHTML = stat
 
         var group1 = window.dropdownCategories[1]
         var xAxisName1 = window.dropdownCategories[0]
@@ -80,15 +80,15 @@ async function drawMap(url, regionDivision, regionsIn, statistics, labels = null
   
   function applyMousePositionToBox(e){
     var hiddenDiv = document.getElementById("boxTopMap")
-    //var tip = document.getElementById("tip-container")
+    var tip = document.getElementById("tip-container")
     if(e.target.feature.properties.data){
       x = e.containerPoint['x']
       y = e.containerPoint['y']
       hiddenDiv.style.left = x - 8 + 'px'
       hiddenDiv.style.top = y - 118 + 'px'
 
-      //tip.style.left = x + 10 + 'px'
-      //tip.style.top = y + 158 + 'px'
+      tip.style.left = x + 10 + 'px'
+      tip.style.top = y + 158 + 'px'
     }
   }
 
@@ -98,7 +98,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, labels = null
       var currentTarget = e.target.feature.properties['data']
       if(currentTarget !== undefined){
         showBoxSelector("boxTopMap")
-        //showBoxSelector("tip-container")
+        showBoxSelector("tip-container")
       }
   }
 

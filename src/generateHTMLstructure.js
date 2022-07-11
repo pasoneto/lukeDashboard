@@ -6,17 +6,29 @@ function documentAppender(element, html){
 	}
 }
 
-async function initiateDashboard(renderMap = false){
+async function initiateDashboard(renderMap = false, directory = null){
 	var headHTML = '<title>Example dashboard</title>'+
 				'<meta charset="UTF-8">'+
 				'<meta name="viewport" content="width=device-width, initial-scale=1">'+
-				'<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'+
-				'<link rel="stylesheet" href="../styles/stylesGeneral.css">'+
+				'<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'
+  
+  //If user chooses to work from a different directory
+  if(directory){
+    headHTML += '<link rel="stylesheet" href="' + directory + '/styles/stylesGeneral.css">'+
+				'<link rel="stylesheet" href="' + directory + '/styles/stylesMap.css">'+
+				'<link rel="stylesheet" href="' + directory + '/styles/stylesGraph.css">'+
+				'<link rel="stylesheet" href="' + directory + '/styles/stylesMobile.css">'+
+				'<link rel="stylesheet" href="' + directory + '/styles/stylesSelectors.css">'+
+				'<link rel="stylesheet" href="' + directory + '/styles/stylesBoxSelector.css">'
+  } else {
+    headHTML += '<link rel="stylesheet" href="../styles/stylesGeneral.css">'+
 				'<link rel="stylesheet" href="../styles/stylesMap.css">'+
 				'<link rel="stylesheet" href="../styles/stylesGraph.css">'+
 				'<link rel="stylesheet" href="../styles/stylesMobile.css">'+
 				'<link rel="stylesheet" href="../styles/stylesSelectors.css">'+
-				'<link rel="stylesheet" href="../styles/stylesBoxSelector.css">'+
+				'<link rel="stylesheet" href="../styles/stylesBoxSelector.css">'
+  }
+  headHTML += 
 				'<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />'+
 				'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'+
 				'<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>'
@@ -53,9 +65,9 @@ async function initiateDashboard(renderMap = false){
                 '</div>'
   }
 
-  bodyHTML += '<div class="column graphsBox" id="graphsContainer" onclick=showBoxSelector("boxTop")>'+
+  bodyHTML += '<div class="column graphsBox" id="graphsContainer">'+
                 '<div id="noGraphContainer">'+
-                  '<div id="noGraph">'+
+                  '<div id="noGraph" onclick=showBoxSelector("boxTop")>'+
                   '<div id="textNoGraph">'+
                     '<p><i class="fa fa-info-circle" style="margin-right: 10px" aria-hidden="true"></i>'+
                       'Select dimensions to render the graphs</p>'+

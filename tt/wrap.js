@@ -9,6 +9,9 @@ allLabels["dependentVariable"] = dependentLabels[0]
 
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
+//Function translates value -1 to its label (because this does not come from ED's backend)
+function averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
+
 //Extracting categories and options
 var categories = Object.keys(data[0])
 var categories = categories.filter(i => i !== 'value')
@@ -16,6 +19,7 @@ var options = []
 for(k in categories){
   var a = data.map(i=>i[categories[k]])
   var a = a.filter(onlyUnique)
+  var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
   options.push(a)
 }
 var options = options.filter(i=> i[0] !== undefined)
@@ -24,8 +28,12 @@ var categoriesAndOptions = {}
 for(k in categories){
   var a = data.map(i=>i[categories[k]])
   var a = a.filter(onlyUnique)
+  var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
   categoriesAndOptions[categories[k]] = a
 }
+
+console.log(categoriesAndOptions)
+
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop', data, labels)
 
@@ -247,7 +255,10 @@ simulateSelection(multi, single)
 completeWrap()
 displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 
-var dependentIndex = 0;
+var currentCheck = checkedValues['dependentVariable']
+console.log(currentCheck)
+var dependentIndex = categoriesAndOptions['dependentVariable'].indexOf(currentCheck[0])
+console.log(dependentIndex)
 
 document.getElementById("nextDependent").onclick = function(){
   nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
