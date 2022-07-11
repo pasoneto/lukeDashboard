@@ -1,6 +1,10 @@
 function styleGen(feature, codesIn, regionDivision){
     var regionCode = feature.properties[regionDivision]
     var available = codesIn.indexOf(regionCode) == -1;
+    if(feature.properties.data === undefined){
+      return {fillColor: "gray",
+              weight: 1}
+    }
     if(available){
       return {fillColor: "#989898",
               weight: 1}
@@ -72,7 +76,6 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
         } else {
           graphCustom(xAxis1, yAxis1, labels1, "box5", "line", "Showing " + group1Label + " for " + regionHovered, randomColors1)
         }
-
       }
       document.getElementById("mapInfo").innerHTML = regionHovered
       //End of updating external box on hover
@@ -126,7 +129,10 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
       for(k in Object.values(geoJSONObject.features)){
         var regionMatches = geoJSONObject.features[k].properties[regionDivision] == mrc[i]
         if(regionMatches){ //Assign statistics value
-          geoJSONObject.features[k].properties['data'] = value
+          var allNull = value.every(i => i.value === null)
+          if(allNull == false){ //Checks if all values are null. If not, region receives data
+            geoJSONObject.features[k].properties['data'] = value
+          }
         }
       }
     }

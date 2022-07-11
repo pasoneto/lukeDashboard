@@ -82,7 +82,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
 };
 
 //Pie chart
-function graphCustomPie(xAxis, yAxis, id, type, title, randomColors, legend = false){
+function graphCustomPie(xAxis, yAxis, id, type, title, randomColors, legend = false, position = 'bottom'){
   new Chart(id, {
     type: type,
     data: {
@@ -95,7 +95,7 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors, legend = fa
     options: {
       legend: {
         display: legend,
-        position: 'bottom',
+        position: position,
       },
       title: {
         display: true,

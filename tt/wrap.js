@@ -64,7 +64,6 @@ var filteredDataForMap;
 var filteredData;
 
 function completeWrap(){
-  //
   //Selects categories which will be used as group and xAxis  
   var dropdownCategories;
   pickMultiClassCategories(checkedValues, categories, dropdownCategories)
@@ -171,13 +170,14 @@ function completeWrap(){
     //Translating subClassifier codes to labels
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
+    var group1Label = labels[0]['classifiers'][group1]
 
     var box = document.getElementById("box")
     box.innerHTML = '<canvas id="myChart"></canvas>'
 
     var randomColors1 = colorGenerator(yAxis1);
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1, randomColors1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label, randomColors1)
     
     //Display single variable names
     var singleLabels = singleLabelExtractor(window.checkedValues, labels)
@@ -204,13 +204,12 @@ function completeWrap(){
     //Translating subClassifier codes to labels
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
-    var group1Label = labels[0]['classifiers'][group1]
 
     var box = document.getElementById("box")
     box.innerHTML = '<canvas id="myChart"></canvas>'
 
     var randomColors1 = colorGenerator(yAxis1);
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label, randomColors1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "", randomColors1)
     
     //Display single variable names
     var singleLabels = singleLabelExtractor(window.checkedValues, labels) 
