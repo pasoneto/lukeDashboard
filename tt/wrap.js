@@ -32,20 +32,10 @@ for(k in categories){
   categoriesAndOptions[categories[k]] = a
 }
 
-console.log(categoriesAndOptions)
+var map;
 
 //Generate checkbox inside box
 generateCheckBoxes(categories, options, 'boxTop', data, labels)
-
-//Initiate base map
-var map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
-
-var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-})
-
-var baseTilePresent = false;
-map.options.minZoom = 4;
 
 document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
 
@@ -230,11 +220,8 @@ function completeWrap(){
 
   //Getting only region codes that exist in data
   var mrc = renameMapRegions(filteredDataForMap);
-  drawMap(maakunta, 'maakunta', mrc, filteredDataForMap, labels)
+  drawMap(maakunta, 'maakunta', mrc, filteredDataForMap, map, labels)
 }
-
-//Add function to render graph button. Function shows what variables were selected.
-//document.getElementById("buttonRender").onclick = function(){completeWrap()}
 
 //Initiate map
 var boxSelector = document.getElementById("boxTop")
@@ -255,10 +242,9 @@ simulateSelection(multi, single)
 completeWrap()
 displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 
+//Establishing initial state of dependentVariable click box
 var currentCheck = checkedValues['dependentVariable']
-console.log(currentCheck)
 var dependentIndex = categoriesAndOptions['dependentVariable'].indexOf(currentCheck[0])
-console.log(dependentIndex)
 
 document.getElementById("nextDependent").onclick = function(){
   nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
@@ -270,6 +256,3 @@ document.getElementById("previousDependent").onclick = function(){
   completeWrap()
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 }
-
-//Variables from SAS:
-//data; labels; classifierLabels; varLabs

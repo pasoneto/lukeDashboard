@@ -27,7 +27,7 @@ var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=Ge
 var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
 var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
 
-async function drawMap(url, regionDivision, regionsIn, statistics, labels = null){
+async function drawMap(url, regionDivision, regionsIn, statistics, map, labels = null){
 
   function hoverBox(e) { //Function generates box over each hovered region
 
@@ -122,7 +122,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, labels = null
 
   function assignValueToGeoJsonObject(geoJSONObject, filteredDataForMap, regionDivision){
     for(i in mrc){
-      var value = Object.values(filteredDataForMap).filter(k=> renameOne(k['maakunta']) == mrc[i])
+      var value = Object.values(filteredDataForMap).filter(k=> renameOne(k[regionDivision]) == mrc[i])
       for(k in Object.values(geoJSONObject.features)){
         var regionMatches = geoJSONObject.features[k].properties[regionDivision] == mrc[i]
         if(regionMatches){ //Assign statistics value
@@ -133,12 +133,46 @@ async function drawMap(url, regionDivision, regionsIn, statistics, labels = null
     return(geoJSONObject)
   }
 
-  var tilesLayer;
-  var geoJSON = await loadArea(url);
-  var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision)
-  var tilesLayer = L.geoJSON(geoJSON, {
-        style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},
-        onEachFeature: onEachFeature
-      }).addTo(map);
+  if(window.map === undefined){
+    console.log("initiating map")
+    //Initiate base map
+    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
+
+    var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    })
+
+    var baseTilePresent = false;
+    window.map.options.minZoom = 4;
+
+    var tilesLayer;
+    var geoJSON = await loadArea(url);
+    var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision)
+    var tilesLayer = L.geoJSON(geoJSON, {
+          style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},
+          onEachFeature: onEachFeature
+        }).addTo(window.map);
+
+  } else {
+    console.log("removing")
+    window.map.remove()
+    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
+
+    var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    })
+
+    var baseTilePresent = false;
+    window.map.options.minZoom = 4;
+
+    var tilesLayer;
+    var geoJSON = await loadArea(url);
+    var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision)
+    var tilesLayer = L.geoJSON(geoJSON, {
+          style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},
+          onEachFeature: onEachFeature
+        }).addTo(window.map);
+  }
+
 }
 
