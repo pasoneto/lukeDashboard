@@ -62,3 +62,16 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 
+//Generates connection data for sankey graphs. dependentName is the name of dependent variable ('dependentVariable'). 
+//LevelsDependent are the subClassifier levels of the dependent varialbe (income, expenditure). Value field is the json key holding the value to be plotted
+//From is the name of the selected classifier (e.g., vuosi_)
+function connectionGenerator(dependentName, levelsDependent, from, valueField)  {
+  var filteredData1 = data.filter(i=> i[levelName] == levels[0])
+  var filteredData1 = filteredData1.map(i=> ({'from': i[from], 'to': i[levelName], 'weight': i[valueField] }))
+  if(levels.length == 2){
+    var filteredData2 = data.filter(i=> i[levelName] == levels[1])
+    var filteredData2 = filteredData2.map(i=> ({'from': levels[0], 'to': i[from], 'weight': i[valueField] }))
+    filteredData1 = filteredData1.concat(filteredData2)
+  }
+  return(filteredData1)
+}

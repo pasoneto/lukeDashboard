@@ -25,7 +25,7 @@
     var classifiers = Object.keys(classifierLabels[0])
 
     var data = reshapeJSON(data, classifiers)
-
+    
     var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
     allLabels["dependentVariable"] = dependentLabels[0]
     var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
