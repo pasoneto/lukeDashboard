@@ -17,7 +17,8 @@ function extractCategoriesAndOptions(data, dependentVariableName){
 //Generates checkbox for classifier selection
 function generateCheckBoxes(categories, options, whereAppend, data, labels = null){
   html = '';
-  html += '<div id="categorySelectorHeader">Category selector</div>'; //Header of category selector
+  html += '<div id="categorySelectorHeader"><p>Category selector</p></div>'; //Header of category selector
+  html += '<button id="buttonDimensionSelector2">Render graphs</button>';
   html += '<div id="checkBoxListContainer">';
   for(category in categories){
     if(labels && categories[category] !== "dependentVariable"){
@@ -48,8 +49,8 @@ function generateCheckBoxes(categories, options, whereAppend, data, labels = nul
     }
     html += '</ul>'
   }
-  html +=  '<button id="buttonDimensionSelector">Done</button>'
   html += '</div>'
+  html += '<button id="buttonDimensionSelector">Render graphs</button>'
   document.getElementById(whereAppend).innerHTML += html
 }
 

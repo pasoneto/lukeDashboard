@@ -9,9 +9,10 @@ function randomNoRepeats(array) {
     return item;
   };
 }
+
+// Used like so
 function colorGenerator(yAxis){
-  var choices = ['#F806CC', '#A91079', '#570A57', '#F73D93', '#16003B', '#413F42', '#7F8487', '#EEEEEE', '#8B9A46', '#541212', '#3E065F', '#700B97', '#8E05C2', '#916BBF', '#A12568']
-  var choices = ['#E63E6D', '#FEC260', '#DA0037', '#1597BB', '#8FD6E1', '#F05454', '#892CDC', '#BC6FF1', '#000000', '#F2A07B', '#C62A88', '#ED6663', '#FA7D09', '#FF4301', '#29C7AC', '#46B5D1', '#C400C6', '#EAE7AF']
+  var choices = ['#B35C00', '#CC0082', '#000000', '#FF8200', '#CCF0FA', '#E3F2D1', '#009FC7', '#54585A', '#E5D9EB', '#CCD6ED', '#528316', '#007B9A', '#FFCCEB', '#7F3F98', 'DEDEDE', '#78BE20', '#E13C98', '#E07400', '#00B5E2', '#65A11B', '#FFE5CC', '#0033A0']
   var randomColors = [];
   for (var i=0; i<yAxis.length; i++) {
       var randomColor = randomNoRepeats(choices);
@@ -39,7 +40,7 @@ function dataGenerator(yAxis, labels, randomColors, fill){
 }
 // Chart.defaults.global.defaultFontColor = "black";
 //Generates graph and appends to given element by ID
-function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false, suggestedMin = null){
+function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLegend = true, fill = false, suggestedMin = null, position = 'bottom'){
   var dataConstructor = dataGenerator(yAxis, labels, randomColors, fill)
   new Chart(id, {
     type: type,
@@ -49,7 +50,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, randomColors, showLe
     options: {
       legend: {
         display: showLegend,
-        position: 'bottom',
+        position: position,
       },
       title: {
         display: true,

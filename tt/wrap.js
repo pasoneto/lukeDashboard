@@ -43,15 +43,19 @@ document.getElementById('selector-map').innerHTML = '<button id="showMap" onclic
 document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
 
 //Once data has been fetched and checkboxes created, Select dimension button will receive the following functions
-document.getElementById("buttonDimensionSelector").onclick = function(){
+var buttonsRenderGraph = document.querySelectorAll(`[id^="buttonDimensionSelector"]`)
+//Applying render function to these buttons
+for(k in buttonsRenderGraph){
+  buttonsRenderGraph[k].onclick = function(){
+    showBoxSelector("boxTop") //Hide box with checkboxes
+    completeWrap() 
 
-  showBoxSelector("boxTop") //Hide box with checkboxes
-  completeWrap() 
-
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
-  //Add back function to show checkboxes div
-  document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
+    displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
+    //Add back function to show checkboxes div
+    document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
+  }
 }
+
 
 //Creates empty object with category keys
 var checkedValues = checkedValuesObjectGenerator(categories)

@@ -14,15 +14,24 @@
   overflow:auto;
   resize: both;
   border: 2px solid black;
+  align-items: center;
 }
 /*Scroll div on top of everything*/
 
 /*Button submit dimensions selected*/
 #buttonDimensionSelector{
-  margin-top: 25px;
-  margin-bottom: 25px;
-  position: absolute;
-  left: 50%
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  left: 38%;
+  box-shadow: rgba(0, 0, 0, 0.30) 1px 1px 1px;
+}
+#buttonDimensionSelector2{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  left: 38%;
+  box-shadow: rgba(0, 0, 0, 0.30) 1px 1px 1px;
 }
 /*Button submit dimensions selected*/
 
@@ -30,7 +39,7 @@
 #checkBoxListContainer{
   background-color: snow;
   margin: auto;
-  margin-top: 10px;
+  margin-top: 0px;
   padding: 10px;
   width: 95%;
 }
@@ -41,7 +50,8 @@
   padding: 10px;
   cursor: move;
   z-index: 10;
-  background-color: #2196F3;
+  /*background-color: #2196F3;*/
+  background: #0088A9;
   color: #fff;
 }
 /*Header of category selector box*/

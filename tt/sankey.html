@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+    <!-- change directories here if you're not working within the /documentation folder -->
+    <script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>
+    <script src="https://pasoneto.github.io/lukeDashboard/src/dataProcessUtils.js"></script>
+    <script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
+    <script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>
+    <script src="./data.js"></script>
+    <script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-sankey.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+</body>
+
+<script>
+
+    initiateDashboard(false, directory = "https://pasoneto.github.io/lukeDashboard/")
+    
+    //Adding event listener for database selector
+    var classifiers = Object.keys(classifierLabels[0])
+
+    var data = reshapeJSON(data, classifiers)
+
+    var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
+    allLabels["dependentVariable"] = dependentLabels[0]
+    var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
+
+    //Extracting categories and options
+    var [categories, options] = extractCategoriesAndOptions(data, dependentVariableName = 'value')
+
+    generateCheckBoxes(categories, options, 'boxTop', data, labels, exception = 'dependentVariable')
+    
+    var checkedValues = checkedValuesObjectGenerator(categories)
+    var allCheckBoxes = document.querySelectorAll('input');
+    
+    //Establishes checkbox verification system. Multiple or single selection
+    establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "dependentVariable") //Value is written inside the global variable checkedValues
+
+    //Selecting two multiclass classifiers
+    var multi = ["maakunta"];
+    var categoriesNoVuosi = categories.filter(i=>i !== "maakunta" && i !== "dependentVariable")
+    var randomElement = categoriesNoVuosi[Math.floor(Math.random() * categoriesNoVuosi.length)];
+    multi.push(randomElement)
+
+    //Establishing the single classifiers
+    var single = categories.filter(i => multi.includes(i) == false)
+
+    //Running click simulation
+    simulateSelection(multi, single)
+
+    document.getElementById("buttonDimensionSelector").onclick = function(){
+        showBoxSelector("boxTop")
+        document.getElementById("graphsContainer").innerHTML = '<div id="container" style="width: 100vw; height: 60vh"></div>'
+        anychart.onDocumentReady(function () {
+    
+          // create a sankey diagram instance
+          let chart = anychart.sankey();
+
+          var selectedDependent = labels[0]['subLabels']['dependentVariable'][checkedValues['dependentVariable'][0]]
+          var orderClassifiers = ['vuosi_', 'maakunta', 'tuotantosuuntaso']
+          var orderClassifiers = shuffle(orderClassifiers)
+           
+          filteredData0 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[0]][i[orderClassifiers[0]]], 'to': labels[0]['subLabels'][orderClassifiers[1]][i[orderClassifiers[1]]], 'weight': i.value }))
+          filteredData1 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[1]][i[orderClassifiers[1]]], 'to': labels[0]['subLabels'][orderClassifiers[2]][i[orderClassifiers[2]]], 'weight': i.value }))
+          filteredData2 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[2]][i[orderClassifiers[2]]], 'to': selectedDependent, 'weight': i.value }))
+
+          filteredData1 = filteredData1.concat(filteredData2)  
+          filteredData1 = filteredData1.concat(filteredData0)  
+
+          // load the data to the sankey diagram instance
+          chart.data(filteredData1);
+
+          // set the chart's padding
+          chart.padding(50, 90);
+    
+          // add a title
+          chart.title('Sankey ' + selectedDependent);
+    
+          // set the chart container id
+          chart.container("container");
+
+          // draw the chart
+          chart.draw();
+      });
+    }
+    document.getElementById("selectDimensionButton").onclick = function(){
+        showBoxSelector("boxTop")
+    }
+    
+
+     
+</script>
+</html>
