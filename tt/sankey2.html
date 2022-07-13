@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <!-- change directories here if you're not working within the /documentation folder --> <script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>
-    <script src="https://pasoneto.github.io/lukeDashboard/src/dataProcessUtils.js"></script>
+    <script src="../src/dataProcessUtils.js"></script>
     <script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
     <script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>
     <script src="./data.js"></script>
@@ -23,12 +23,13 @@
     //Adding event listener for database selector
     var classifierNames = Object.keys(classifierLabels[0])
 
+    var classifiers = Object.keys(classifierLabels[0])
+    var data = reshapeJSON(data, classifiers)
+
     var categories = ['classifiers', 'dependentVariables']
     var options = [classifierNames, Object.keys(dependentLabels[0])]
 
     generateCheckBoxes(categories, options, 'boxTop', data)
-
-    var data = reshapeJSON(data, classifierNames)
     
     var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
     allLabels["dependentVariable"] = dependentLabels[0]
@@ -50,14 +51,14 @@
           // create a sankey diagram instance
           let chart = anychart.sankey();
 
+
           //Setting chosen classifiers
-          var dependentName = 'dependentVariables' //Can only be dependentVariable
-          var levelsDependent = checkedValues['Tipo'] //subDepententVariables chosen
+          var dependentName = 'dependentVariable' //Can only be dependentVariable
+          var levelsDependent = checkedValues['dependentVariables'] //subDepententVariables chosen
           var from = checkedValues['classifiers'][0] //Only one classifier can be selected
-          var valueField = 'Valor' //Field holding value
-          
+          var valueField = 'value' //Field holding value
           //Create connection data
-          var filteredData1 = connectionGenerator(dependentName, levelsDependent, from, valueField)
+          var filteredData1 = connectionGenerator(dependentName, levelsDependent, from, valueField, labels)
 
           // load the data to the sankey diagram instance
           chart.data(filteredData1);
@@ -66,7 +67,7 @@
           chart.padding(50, 90);
     
           // add a title
-          chart.title('Sankey ' + selectedDependent);
+          chart.title('Sankey');
     
           // set the chart container id
           chart.container("container");

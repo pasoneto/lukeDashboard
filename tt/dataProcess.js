@@ -23,7 +23,6 @@ function reshapeJSON(data, classifiers){
 function filterDataByCheckBoxSelectorTT(categories, data, checkedValues){
   var filteredData = data
   for(k in categories){
-    console.log(categories[k])
     var selectedCategories = window.checkedValues[categories[k]]
     if(selectedCategories.length > 0){
       var filteredData = filteredData.filter(i => selectedCategories.indexOf(i[categories[k]].toString()) !== -1)
