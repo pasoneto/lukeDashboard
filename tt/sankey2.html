@@ -5,6 +5,7 @@
     <script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
     <script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>
     <script src="./data.js"></script>
+    <script src="../src/sankeyFunctions.js"></script>
     <script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
@@ -31,6 +32,15 @@
 
     generateCheckBoxes(categories, options, 'boxTop', data)
     
+    //Adding event listener for database selector
+    var classifiers = Object.keys(classifierLabels[0])
+
+    //Variable to hold chosen of sankey node. Values assigned by 
+    var orderClassifiers = classifiers
+
+    //Creates checkboxes for sankey order and assigns function to verify which values were chosen
+    sankeyControls(classifiers)
+
     var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
     allLabels["dependentVariable"] = dependentLabels[0]
     var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
