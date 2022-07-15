@@ -18,14 +18,13 @@
     <link rel="stylesheet" href="assets/plugins/prism/prism.css">
     <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">  
     <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
-
-
+      
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
     
 </head> 
 
-<body class="body-pink">
+<body class="body-green">
     <div class="page-wrapper">
         <!-- ******Header****** -->
         <header id="header" class="header">
@@ -34,14 +33,17 @@
                     <h1 class="logo">
                         <a href="index.html">
                             <span aria-hidden="true" class="icon_documents_alt icon"></span>
-                            <span class="text-highlight">Pretty</span><span class="text-bold">Docs</span>
+                            <span class="text-highlight">ED</span><span class="text-bold">Documentation</span>
                         </a>
                     </h1>
+                    
                 </div><!--//branding-->
+                
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Components</li>
+                    <li class="breadcrumb-item active">Quick Start</li>
                 </ol>
+                
                 <div class="top-search-box">
 	                 <form class="form-inline search-form justify-content-center" action="" method="get">
 	            
@@ -51,298 +53,524 @@
 			            
 			        </form>
                 </div>
+                
             </div><!--//container-->
         </header><!--//header-->
         <div class="doc-wrapper">
             <div class="container">
                 <div id="doc-header" class="doc-header text-center">
-                    <h1 class="doc-title"><span aria-hidden="true" class="icon icon_puzzle_alt"></span> Components</h1>
-                    <div class="meta"><i class="far fa-clock"></i> Last updated: June 13th, 2022</div>
+
+                            
+                    <h1 class="doc-title"><span aria-hidden="true" class="icon_documents_alt icon"></span>Documentation</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: July 14th, 2022</div>
                 </div><!--//doc-header-->
-                <div class="doc-body row" >
+                <div class="doc-body row">
                     <div class="doc-content col-md-9 col-12 order-1">
                         <div class="content-inner">
-                            <section id="dashboards" class="doc-section">
-                                <h2 class="section-title">Dashboards</h2>
+                            <p><b>Important notes about the terminology of this documentation:</b></p>
+                            <p>The word <b>classifiers</b> refer to the name of categorical variables associated with the dataset. For instance, <b>yeah</b>, <b>color</b>, etc... The word <b>options</b> are the levels associated with each classifier. For instance <b>red</b>, <b>blue</b> and <b>green</b> are options of color.</p>
+                            <p>The word <b>dependentVariable</b> refers to the name of the field which holds the value to be plotted. Since this package assumes that you have data in a long rather than wide format (see data), there can only be one field per JSON cell which holds the value of interest (e.g., mean or median), and <b>dependentVariable</b> is the name which identifies this JSON field.</p>
+                            <p>Another distinction that we make regards single versus multi-classifiers. Multi-classifiers are those which the user chose to select more than one option. (e.g., <b>year</b>: <b>2010, 2011</b>, <b>color: </b><b>Red, Blue</b>). Single-classifiers are those which the user chose only one level (e.g., <b>statistic</b>: <b>mean</b> or <b>median</b>).</p>
+                            <section id="HTMLStructuring" class="doc-section">
+                                <h2 class="section-title">HTML structuring</h2>
                                 <div class="section-block">
-                                    <p>Welcome! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et lorem lorem. Fusce ut maximus quam. Donec elit mauris, dignissim nec auctor a, mattis eget mauris. Praesent maximus euismod velit nec fringilla.</p>
-                                    <ul class="list list-inline">
-                                        <li class="list-inline-item"><a class="btn btn-cta btn-pink" href="https://themes.3rdwavemedia.com/bootstrap-templates/product/prettydocs-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><i class="fas fa-external-link-alt"></i> View Details</a></li>
-                                        <li class="list-inline-item"><a class="btn btn-cta btn-primary" href="https://themes.3rdwavemedia.com/bootstrap-templates/product/prettydocs-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><i class="fas fa-eye"></i>View Demo</a></li>
-                                    </ul>
-                                    
-                                </div><!--//section-block-->
-                                <div class="section-block">
-	                                
-                                    <div class="row simplelightbox-gallery-1">
-                                        <div class="col-md-6 col-sm-12 col-sm-12">
-                                            <h6>Use Case 1</h6>
-                                            <p>Project management</p>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-dashboard-1.jpg" ><img class="img-fluid" src="assets/images/demo/appify-dashboard-1-thumb.jpg" alt="screenshot" /></a>
-                                            </div> 
-                                        </div>
-                                         <div class="col-md-6 col-sm-12 col-sm-12">
-                                            <h6>Use Case 2</h6>
-                                            <p>Web analytics</p>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-dashboard-2.jpg" ><img class="img-fluid" src="assets/images/demo/appify-dashboard-2-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="clearfix"></div>
-                                         <div class="col-md-6 col-sm-12 col-sm-12">
-                                            <h6>Use Case 3</h6>
-                                            <p>Health/Fitness app</p>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-dashboard-3.jpg"><img class="img-fluid" src="assets/images/demo/appify-dashboard-3-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                         <div class="col-md-6 col-sm-12 col-sm-12">
-                                            <h6>Use Case 4</h6>
-                                            <p>Web hosting</p>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-dashboard-4.jpg"><img class="img-fluid" src="assets/images/demo/appify-dashboard-4-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                    </div><!--//row-->
-                                    <div class="callout-block callout-info">
-                                        <div class="icon-holder">
-                                            <i class="fas fa-bullhorn"></i>
-                                        </div><!--//icon-holder-->
-                                        <div class="content">
-                                            <h4 class="callout-title">Lightbox Example</h4>
-                                            <p>Click the screenshot images to trigger the image modal.</p>
-                                        </div><!--//content-->
-                                    </div><!--//callout-->
-                                </div><!--//section-block-->
-                                
-                            </section><!--//doc-section-->
-                            
-                            <section id="app-components" class="doc-section">
-                                <h2 class="section-title">App Components</h2>
-                                <div id="projects" class="section-block">
-                                    <h3 class="block-title">Projects</h3>
-                                    <p>Intro goes here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis</p>
-                                    <div class="row simplelightbox-gallery-2">
-                                        <div class="col-md-6 col-12">
-                                            <h6>Projects Overview</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-projects.jpg" ><img class="img-fluid" src="assets/images/demo/appify-projects-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <h6>Project Details</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-project.jpg"><img class="img-fluid" src="assets/images/demo/appify-project-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                    </div><!--//row-->
-                                </div><!--//section-block-->
-                                <div id="discussions" class="section-block">
-                                    <h3 class="block-title">Discussions</h3>
-                                    <div class="row simplelightbox-gallery-3">
-                                        <div class="col-md-6 col-12">
-                                            <h6>Discussions Overview</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-discussions.jpg"><img class="img-fluid" src="assets/images/demo/appify-discussions-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <h6>Discussion Details</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-discussion.jpg" ><img class="img-fluid" src="assets/images/demo/appify-discussion-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                    </div><!--//row-->  
-                                </div><!--//section-block-->
-                                
-                                <div id="members" class="section-block">
-                                    <h3 class="block-title">Members</h3>
-                                    <div class="row simplelightbox-gallery-4">
-                                        <div class="col-md-6 col-12">
-                                            <h6>Members Overview</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-members.jpg"><img class="img-fluid" src="assets/images/demo/appify-members-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <h6>Individual Member</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-member.jpg"><img class="img-fluid" src="assets/images/demo/appify-member-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                    </div><!--//row-->  
-                                </div><!--//section-block-->
-                                
-                                <div id="account" class="section-block">
-                                    <h3 class="block-title">User Account</h3>
-                                    <p>Intro goes here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-                                    <div class="row simplelightbox-gallery-5">
-                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                            <h6>User Profile</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-account-profile.jpg"><img class="img-fluid" src="assets/images/demo/appify-account-profile-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                            <h6>User Settings</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-account-settings.jpg"><img class="img-fluid" src="assets/images/demo/appify-account-settings-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                            <h6>User Billing</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-account-billing.jpg"><img class="img-fluid" src="assets/images/demo/appify-account-billing-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                            <h6>User Messages</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-account-messages.jpg" ><img class="img-fluid" src="assets/images/demo/appify-account-messages-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                            <h6>User Drive</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-account-drive.jpg"><img class="img-fluid" src="assets/images/demo/appify-account-drive-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-6">
-                                            <h6>User Reminders</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-account-reminders.jpg"><img class="img-fluid" src="assets/images/demo/appify-account-reminders-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                    </div><!--//row-->  
-                                </div><!--//section-block-->
-                                
-                                 <div id="others" class="section-block">
-                                    <h3 class="block-title">Others</h3>
-                                    <div class="row simplelightbox-gallery-6">
-                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                            <h6>Activities</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-activities.jpg"><img class="img-fluid" src="assets/images/demo/appify-activities-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                            <h6>Tickets</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-tickets.jpg"><img class="img-fluid" src="assets/images/demo/appify-tickets-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                            <h6>Inbox</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-inbox.jpg"><img class="img-fluid" src="assets/images/demo/appify-inbox-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                            <h6>Timeline</h6>
-                                            <div class="screenshot-holder">
-                                                <a href="assets/images/demo/appify-timeline.jpg"><img class="img-fluid" src="assets/images/demo/appify-timeline-thumb.jpg" alt="screenshot" /></a>
-                                                
-                                            </div> 
-                                        </div>
-                                    </div><!--//row-->  
-                                </div><!--//section-block-->
-                                <div class="section-block">
-                                    <p class="text-center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-                                    <div class="center-block text-center">
-                                         <a class="btn btn-primary" href="#" target="_blank">More App Components</a>
-                                    </div>
+                                    <p>Establish pre-defined divisions of the HTML page. Functions located at /src/generateHTMLstructure.js </p>
+                                </div>
+                                <div id="initiateDashboard"  class="section-block">
+                                    <h3 class="block-title">initiateDashboard()</h3>
+                                    <p>Generates structure of the HTML page.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                    <th>Dependence</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>renderMap</td>
+                                                    <td>[Boolean] Whether or not a canvas will be created for displaying interactive maps.</td>
+                                                    <td>false</td>
+                                                    <td>None</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>directory</td>
+                                                    <td>[String] Path to the library's style sheets</td>
+                                                    <td>null</td>
+                                                    <td>None</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
                                 </div><!--//section-block-->
                             </section><!--//doc-section-->
-                           
-                            
+                            <section id="categoricSelectors" class="doc-section">
+                                <h2 class="section-title">Category selectors</h2>
+                                <div class="section-block">
+                                    <p>Family of functions that allow user to select different classifiers within the data set.</p>
+                                </div>
+                                <div id="extractCategoriesAndOptions"  class="section-block">
+                                    <h3 class="block-title">extractCategoriesAndOptions()</h3>
+                                    <p>Output: list of two lists, where the first is a list of classifiers, and the second is a list of options extracted from the data. This output can be used as input parameter of function generateCheckBoxes (see below).</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>data</td>
+                                                    <td>[Object] JSON object. </td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>dependentVariableName</td>
+                                                    <td>[string] Key from JSON which names the field holding the value to be plotted.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="generateCheckBoxes"  class="section-block">
+                                    <h3 class="block-title">generateCheckBoxes()</h3>
+                                    <p>Output: div with checkboxes for all classifiers and options. This allows users to select different options within each classifier. Subsequently, these choices will be used to filter the data (see function filterDataByCheckBox) and generate the graphs.</p>
+                                    <p>Depends on initiateDashboard().</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- options, whereAppend, data, dependentVariable, labels = null -->
+
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>categories</td>
+                                                    <td>[List] List of strings holding category names.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>options</td>
+                                                    <td>[List] List of lists of strings holding the options for each category. Order of the list needs to match the order of the category list.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>data</td>
+                                                    <td>[Object] JSON holding data to be plotted.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>dependentVariable</td>
+                                                    <td>[String] Object key indicating the JSON field which holds the values to be plotted.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>labels</td>
+                                                    <td>[Object] Object holding the labels to translate classifier and options codes into user-friendly names. For instance, translates the classifier <b>rgn</b> into <b>Region</b>.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>whereAppend</td>
+                                                    <td>[String] ID of the div which will hold the checkbox values.</td>
+                                                    <td>'boxTop'</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="checkedValuesObjectGenerator"  class="section-block">
+                                    <h3 class="block-title">checkedValuesObjectGenerator()</h3>
+                                    <p>Output: object with keys matching the structure of classifiers. Each key will indicate what options have been chosen by the user within each classifier. When initiated, the object will have only classifier keys, but empty values. The values of each keys will be updated every time a user makes a checkbox selection.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>classifiers</td>
+                                                    <td>[List] List of classifiers.</td>
+                                                    <td>none</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="checkBoxVerificationSystem"  class="section-block">
+                                    <h3 class="block-title">checkBoxVerificationSystem()</h3>
+                                    <p>Output: system which verifies what values have been checked by the user. This updates the global variable generated with checkedValuesObjectGenerator(), and filters the dataset based on the user selection of checkboxes.</p>
+                                    <p>Function depends on the existance of a global value called checkedValues, which needs to be generated with the function checkedValuesObjectGenerator(). </p>
+                                    <!--exception = "dependentVariable" //Value is written inside the global variable checkedValues -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>classifiers</td>
+                                                    <td>[List] List of classifiers.</td>
+                                                    <td>none</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>checkedValues</td>
+                                                    <td>[Object] Global object generated with the function checkedValuesObjectGenerator().</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>data</td>
+                                                    <td>[Object] JSON holding data to be plotted.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">5</th>
+                                                    <td>filterFunction</td>
+                                                    <td>[Function] Function which will read the selected check boxes and filter the data accordingly. We have a pre-defined version of this function (see filterDataByCheckBox).</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">5</th>
+                                                    <td>exception</td>
+                                                    <td>[String] Object key indicating one particular classifier that can only be selected as a single-classifier.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <!-- async function simulateSelection(multi, single){ -->
+                                <div id="simulateSelection"  class="section-block">
+                                    <h3 class="block-title">simulateSelection()</h3>
+                                    <p>Output: Automatically select checkboxes. There can be up to two multi-classifiers and any number of single-classifiers. Multi-classifiers will have all options checked, whereas single-classifiers will receive one check in a random option.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>multi</td>
+                                                    <td>[List] List of strings containing the Object keys for the multi-classifiers. Length of the list is <= 2.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>single</td>
+                                                    <td>[List] List of strings containing the Object keys for the single-classifiers.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="pickMultiClassClassifiers"  class="section-block">
+                                    <h3 class="block-title">pickMultiClassClassifiers()</h3>
+                                    <p>Output: verifies which classifiers are multi-classifiers (i.e., receive more than one options checked). Output is stored in a variable named <b>multiClassClassifiers</b></p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>checkedValues</td>
+                                                    <td>[Object] Global object generated with the function checkedValuesObjectGenerator().</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>classifiers</td>
+                                                    <td>[List] List of classifiers.</td>
+                                                    <td>none</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+                            <section id="family2" class="doc-section">
+                                <h2 class="section-title">Data processing</h2>
+                                <div class="section-block">
+                                    <p>About family</p>
+                                </div>
+                                <div id="filterDataByCheckBox"  class="section-block">
+                                    <h3 class="block-title">filterDataByCheckBox()</h3>
+                                    <p>Output: global variable named filteredData, which holds the filtered dataset based on selected check box option within each classifier.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>classifiers</td>
+                                                    <td>[List] List of classifiers.</td>
+                                                    <td>none</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>data</td>
+                                                    <td>[Object] JSON holding data to be plotted.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>checkedValues</td>
+                                                    <td>[Object] Global object generated with the function checkedValuesObjectGenerator().</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="separateDataInGroups"  class="section-block">
+                                    <!--filteredData, groupSelected, checkedValues-->
+                                    <h3 class="block-title">separateDataInGroups()</h3>
+                                    <p>Output: x-Axis and y-Axis to be used in graphing functions. The y-Axis will be separated beased on the options chosen for the multi-classifier.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>filteredData</td>
+                                                    <td>[Object] Dataset that has been filtered based on user selection of classifiers and options. This global variable is updated every time the user makes a selection from the check boxes.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>groupSelected</td>
+                                                    <td>[String] Classifier which has been selected as a multi-clssifier. This variable can be taken from the output of the function pickMultiClassClassifiers().</td>
+                                                    <td>null</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>checkedValues</td>
+                                                    <td>[Object] Global object generated with the function checkedValuesObjectGenerator().</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
+                            <section id="graphing" class="doc-section">
+                                <h2 class="section-title">Graphing</h2>
+                                <div class="section-block">
+                                    <p>About family</p>
+                                </div>
+                                <div id="function1"  class="section-block">
+                                    <h3 class="block-title">Function 1</h3>
+                                    <p>About function</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>@mdo</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>@fat</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Larry</td>
+                                                    <td>the Bird</td>
+                                                    <td>@twitter</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="function2"  class="section-block">
+                                    <h3 class="block-title">Function 2</h3>
+                                    <p>About function</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>@mdo</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>@fat</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Larry</td>
+                                                    <td>the Bird</td>
+                                                    <td>@twitter</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                            </section><!--//doc-section-->
                         </div><!--//content-inner-->
                     </div><!--//doc-content-->
                     <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
                         <div id="doc-nav" class="doc-nav">
-                            <ul id="doc-menu" class="nav doc-menu flex-column sticky">
-	                            <li class="nav-item">
-                                     <a class="nav-link scrollto" href="#dashboards">Dashboards</a>
-	                            </li>
-	                            <li class="nav-item">
-                                    <a class="nav-link scrollto" href="#app-components">App Components</a>
-	                            </li>
-	                            <li class="nav-item">
-                                    <ul class="nav doc-sub-menu nav flex-column">
-	                                    <li class="nav-item">
-                                            <a class="nav-link scrollto" href="#projects">Projects</a>
-	                                    </li>
-	                                    <li class="nav-item">
-                                            <a class="nav-link scrollto" href="#discussions">Discussions</a>
-	                                    </li>
-	                                    <li class="nav-item">
-                                            <a class="nav-link scrollto" href="#members">Members</a>
-	                                    </li>
-	                                    <li class="nav-item">
-                                            <a class="nav-link scrollto" href="#account">User Account</a>
-	                                    </li>
-	                                    <li class="nav-item">
-                                            <a class="nav-link scrollto" href="#others">Others</a>
-	                                    </li>
-                                    </ul><!--//nav-->
-	                            </li>
-                            </ul><!--//doc-menu-->
-                        </div><!--//doc-nav-->
+                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                <li class="nav-item">
+                                    <a class="nav-link scrollto" href="#HTMLStructuring">HTML structuring</a>
+                                </li>
+                                <nav class="nav doc-sub-menu nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#initiateDashboard">initiateDashboard</a>
+                                    </li>
+                                </nav><!--//nav-->
+
+                                <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#categoricSelectors">Category selectors</a>
+                                    </li>
+                                    <nav class="nav doc-sub-menu nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#extractCategoriesAndOptions">extractCategoriesAndOptions()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#generateCheckBoxes">generateCheckBoxes()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#checkedValuesObjectGenerator">checkedValuesObjectGenerator()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#checkBoxesVerificationSystem">checkBoxVerificationSystem()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#simulateSelection">simulateSelection()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#pickMultiClassClassifiers">pickMultiClassClassifiers()</a>
+                                        </li>
+                                    </nav><!--//nav-->
+                                </nav><!--//doc-menu-->
+
+                                <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#dataProcessing">Data processing</a>
+                                    </li>
+                                    <nav class="nav doc-sub-menu nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#filterDataByCheckBox">filterDataByCheckBox()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#separateDataInGroups">separateDataInGroups()</a>
+                                        </li>
+                                    </nav><!--//nav-->
+                                </nav><!--//doc-menu-->
+
+                                <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                    <li class="nav-item">
+                                        <a class="nav-link scrollto" href="#graphing">Graphing</a>
+                                    </li>
+                                    <nav class="nav doc-sub-menu nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#function1">Function 1</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#function2">Function 2</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#function3">Function 3</a>
+                                        </li>
+                                    </nav><!--//nav-->
+                                </nav><!--//doc-menu-->
+                            </nav><!--//doc-menu-->
+                        </div>
                     </div><!--//doc-sidebar-->
                 </div><!--//doc-body-->              
             </div><!--//container-->
         </div><!--//doc-wrapper-->
-        
-        <div id="promo-block" class="promo-block">
-            <div class="container">
-                <div class="promo-block-inner">
-                    <h3 class="promo-title text-center"><i class="fas fa-heart"></i> <a href="https://themes.3rdwavemedia.com/bootstrap-templates/portfolio/instance-bootstrap-portfolio-theme-for-developers/" target="_blank">Are you an ambitious and entrepreneurial developer?</a></h3>
-                    <div class="row">
-                        <div class="figure-holder col-lg-5 col-md-6 col-12">
-                            <div class="figure-holder-inner">
-                                <a href="https://themes.3rdwavemedia.com/bootstrap-templates/portfolio/instance-bootstrap-portfolio-theme-for-developers/" target="_blank"><img class="img-fluid" src="assets/images/demo/instance-promo.jpg" alt="Instance Theme" /></a>
-                               
-                                
-                            </div>
-                        </div><!--//figure-holder-->
-                        <div class="content-holder col-lg-7 col-md-6 col-12">
-                            <div class="content-holder-inner">
-                                <div class="desc">
-                                    <h4 class="content-title"><strong> Instance - Bootstrap Portfolio Theme for Aspiring Developers</strong></h4>
-                                    <p>Check out <a href="https://themes.3rdwavemedia.com/bootstrap-templates/portfolio/instance-bootstrap-portfolio-theme-for-developers/" target="_blank">Instance</a> - a Bootstrap personal portfolio theme I created for developers. The UX design is focused on selling a developer’s skills and experience to potential employers or clients, and has <strong class="highlight">all the winning ingredients to get you hired</strong>. It’s not only a HTML site template but also a marketing framework for you to <strong class="highlight">build an impressive online presence with a high conversion rate</strong>. </p>
-                                    <p><strong class="highlight">[Tip for developers]:</strong> If your project is Open Source, you can use this area to promote your other projects or hold third party adverts like Bootstrap and FontAwesome do!</p>
-                                    <a class="btn btn-cta" href="https://themes.3rdwavemedia.com/bootstrap-templates/portfolio/instance-bootstrap-portfolio-theme-for-developers/" target="_blank"><i class="fas fa-external-link-alt"></i> View Demo</a>
-                                    
-                                </div><!--//desc-->
-                                
-                                
-                                <div class="author"><a href="https://themes.3rdwavemedia.com">Xiaoying Riley</a></div>
-                            </div><!--//content-holder-inner-->
-                        </div><!--//content-holder-->
-                    </div><!--//row-->
-                </div><!--//promo-block-inner-->  
-            </div><!--//container-->
-        </div><!--//promo-block-->
         
     </div><!--//page-wrapper-->
     
@@ -365,4 +593,3 @@
     
 </body>
 </html> 
-

@@ -1,12 +1,12 @@
 //Filter values from reshapedJSON output to match only checked values from checkboxes
-function filterDataByCheckBoxSelectorTT(categories, data, checkedValues){
+function filterDataByCheckBox(classifiers, data, checkedValues){
   var filteredData = data
-  for(k in categories){
+  for(k in classifiers){
     for(i in filteredData){
     }
-    var selectedCategories = window.checkedValues[categories[k]]
+    var selectedCategories = window.checkedValues[classifiers[k]]
     if(selectedCategories.length > 0){
-      var filteredData = filteredData.filter(i => selectedCategories.indexOf(i[categories[k]].toString()) !== -1)
+      var filteredData = filteredData.filter(i => selectedCategories.indexOf(i[classifiers[k]].toString()) !== -1)
     }
   }
   return(filteredData)
@@ -60,5 +60,20 @@ function removeNullColumns(yAxis, xAxis, labels){
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
+}
+
+//Receives filtered (by checkbox selector) data and returns list of lists
+//where each list contains values of yAxis separated. Group selected
+//determines what category will be used to separate yAxis
+function separateDataInGroups(filteredData, groupSelected, checkedValues){
+  var yAxis = []
+  var labels = []
+  for(k in window.checkedValues[groupSelected]){
+    var group = filteredData.filter(i => i[groupSelected] == window.checkedValues[groupSelected][k])
+    var y = [group.map(i => Number(i.value))]
+    yAxis.push(y[0])
+    labels.push(window.checkedValues[groupSelected][k])
+  }
+  return [yAxis, labels];
 }
 

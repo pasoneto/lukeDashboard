@@ -1,45 +1,45 @@
 //Function extracts options associated with each category within the data
 function extractCategoriesAndOptions(data, dependentVariableName){
 
-  var categories = Object.keys(data[0]) //Extract classifier names (e.g., year, size, etc...)
-  var categories = categories.filter(i => i !== dependentVariableName) //Remove value, which is what we want to plot
+  var classifiers = Object.keys(data[0]) //Extract classifier names (e.g., year, size, etc...)
+  var classifiers = classifiers.filter(i => i !== dependentVariableName) //Remove value, which is what we want to plot
 
   var options = []
-  for(k in categories){
-    var a = data.map(i=>i[categories[k]])
+  for(k in classifiers){
+    var a = data.map(i=>i[classifiers[k]])
     var a = a.filter(onlyUnique)
     options.push(a)
   }
   var options = options.filter(i=> i[0] !== undefined)
-  return [categories, options]
+  return [classifiers, options]
 }
 
 //Generates checkbox for classifier selection
-function generateCheckBoxes(categories, options, whereAppend, data, labels = null){
+function generateCheckBoxes(classifiers, options, data, dependentVariable, labels = null, whereAppend = 'boxTop'){
   html = '';
   html += '<div id="categorySelectorHeader"><p>Category selector</p></div>'; //Header of category selector
   html += '<button id="buttonDimensionSelector2">Render graphs</button>';
   html += '<div id="checkBoxListContainer">';
-  for(category in categories){
-    if(labels && categories[category] !== "dependentVariable"){
-      html += '<label id = ' + categories[category] + 'Label' + '>' + labels[0]['classifiers'][categories[category]] + '<div id="' + categories[category] + 'Label' + 'SingleMultiple"></div></label>'
+  for(category in classifiers){
+    if(labels && classifiers[category] !== dependentVariable){
+      html += '<label id = ' + classifiers[category] + 'Label' + '>' + labels[0]['classifiers'][classifiers[category]] + '<div id="' + classifiers[category] + 'Label' + 'SingleMultiple"></div></label>'
     } else {
-      html += '<label id = ' + categories[category] + 'Label' + '>' + categories[category] + '<div id="' + categories[category] + 'Label' + 'SingleMultiple"></div></label>'
+      html += '<label id = ' + classifiers[category] + 'Label' + '>' + classifiers[category] + '<div id="' + classifiers[category] + 'Label' + 'SingleMultiple"></div></label>'
     }
-    html += '<ul id="' + categories[category] + '">'
+    html += '<ul id="' + classifiers[category] + '">'
     for(option in options[category]){
       html += '<li><input type="checkbox" id="'
       //if labels are provided, rendered checkbox will show their names
       if(labels){
         var catItem = options[category][option].toString()
-        if(labels[0]['subLabels'][categories[category]]){
-          var allCats = Object.keys(labels[0]['subLabels'][categories[category]])
+        if(labels[0]['subLabels'][classifiers[category]]){
+          var allCats = Object.keys(labels[0]['subLabels'][classifiers[category]])
           var allCats = allCats.map(i=> i.toString())
         } else {
           var allCats = [{}];
         }
         if(allCats.includes(catItem)){ 
-            html += options[category][option] + '">' + labels[0]['subLabels'][categories[category]][options[category][option]] + '</li>'
+            html += options[category][option] + '">' + labels[0]['subLabels'][classifiers[category]][options[category][option]] + '</li>'
         } else {
             html += options[category][option] + '">' + options[category][option] + '</li>'
         }
@@ -55,7 +55,7 @@ function generateCheckBoxes(categories, options, whereAppend, data, labels = nul
 }
 
 //Changes style of checkBox container. Now it appears in front of everything
-function showBoxSelector(id){
+function showBoxSelector(id = "boxTop"){
   var boxTop = document.getElementById(id)
   if(boxTop.style.display == '') {
     boxTop.style.display = 'block';
@@ -64,11 +64,11 @@ function showBoxSelector(id){
   }
 }
 
-//Generates object with keys corresponding to the categories. Values are empty list, and will receive values when checkboxes are clicked
-function checkedValuesObjectGenerator(categories){
+//Generates object with keys corresponding to the classifiers. Values are empty list, and will receive values when checkboxes are clicked
+function checkedValuesObjectGenerator(classifiers){
   var checkedValues = {} //Creates empty object with category keys
-  for(k in categories){
-    checkedValues[categories[k]] = []
+  for(k in classifiers){
+    checkedValues[classifiers[k]] = []
   }
   return(checkedValues)
 }
@@ -88,11 +88,11 @@ function verifyCheckedBoxes(category){
   return(json)
 }
 
-//Runs function verifyCheckedBoxes across all categories, and returns a single object with selections
-function mergeVerifyCheckedBoxes(categories){
+//Runs function verifyCheckedBoxes across all classifiers, and returns a single object with selections
+function mergeVerifyCheckedBoxes(classifiers){
   var allChecks = {}
-  for(k in categories){
-    var a = verifyCheckedBoxes(categories[k])
+  for(k in classifiers){
+    var a = verifyCheckedBoxes(classifiers[k])
     Object.assign(allChecks, a)
   }
   window.checkedValues = allChecks
@@ -109,85 +109,87 @@ function removeChecksExceptCurrent(checkBoxes, current) {
 }
 
 //Functions applies the onlyOne function to all elements of a category ID
-function onlyOne(category, checkedValues, categories, data, filterFunction){
+function onlyOne(category, checkedValues, classifiers, data, filterFunction){
   var a = document.getElementById(category)
   var b = a.getElementsByTagName('input')
   for(j in b){
     b[j].onclick = function(){
       removeChecksExceptCurrent(b, this)
-      checkedValues = mergeVerifyCheckedBoxes(categories)
+      checkedValues = mergeVerifyCheckedBoxes(classifiers)
       //Filters data on every click
-      window.filteredData = filterFunction(categories, data, window.checkedValues)
+      window.filteredData = filterFunction(classifiers, data, window.checkedValues)
     }
   }
 }
 
 //Checks number of selected boxes per category. If one category has more than 1 checks, 
 //applies onlyOne to all except that category.
-function onlyOneEnforcer(categories, checkedValues, data, filterFunction){
+function onlyOneEnforcer(classifiers, checkedValues, data, filterFunction){
   var multipleCheckCategories = []
-  for(k in categories){
-    var nCheckedByCategory = checkedValues[categories[k]].length
-    if((nCheckedByCategory > 1) && (multipleCheckCategories.indexOf(categories[k]) == -1)){
-      multipleCheckCategories.push(categories[k])
+  for(k in classifiers){
+    var nCheckedByCategory = checkedValues[classifiers[k]].length
+    if((nCheckedByCategory > 1) && (multipleCheckCategories.indexOf(classifiers[k]) == -1)){
+      multipleCheckCategories.push(classifiers[k])
     }
   }
   if(multipleCheckCategories.length == 2){ //If there are two multiple checks
-    for(k in categories){
-        //document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = categories[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
-        var notMultiple = multipleCheckCategories.indexOf(categories[k]) !== -1
+    for(k in classifiers){
+        //document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = classifiers[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+        var notMultiple = multipleCheckCategories.indexOf(classifiers[k]) !== -1
         if(!notMultiple){
-          document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
-          onlyOne(categories[k], checkedValues, categories, data, filterFunction)
+          document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+          onlyOne(classifiers[k], checkedValues, classifiers, data, filterFunction)
       }
     }
   }
 }
 
-//Function returns true if ALL categories have up to 1 checkbox selected
-function allOK(categories, checkedValues){
-  var categoriesWithMultiple = []
-  for(k in categories){
-    var multipleCategoryMarked = categoriesWithMultiple.indexOf(categories[k]) !== -1 
-    var multipleCategory = checkedValues[categories[k]].length > 1
+//Function returns true if ALL classifiers have up to 1 checkbox selected
+function allOK(classifiers, checkedValues){
+  var classifiersWithMultiple = []
+  for(k in classifiers){
+    var multipleCategoryMarked = classifiersWithMultiple.indexOf(classifiers[k]) !== -1 
+    var multipleCategory = checkedValues[classifiers[k]].length > 1
     if( (!multipleCategoryMarked) && ( multipleCategory ) ){
-      categoriesWithMultiple.push(categories[k]) 
+      classifiersWithMultiple.push(classifiers[k]) 
     }
   }
-  var notManyChecked = categoriesWithMultiple.length < 2
+  var notManyChecked = classifiersWithMultiple.length < 2
   return(notManyChecked)
 }
 
 //If no category has more than 1 check, initial function state is established (multiple selection allowed)
-function establishInitial(allCheckBoxes, categories, checkedValues, data, filterFunction, exception = null){
+function checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunction, exception = null){
+
+  var allCheckBoxes = document.querySelectorAll('input');
 
   if(exception){
-    onlyOne(exception, checkedValues, categories, data, filterFunction)
+    onlyOne(exception, checkedValues, classifiers, data, filterFunction)
     //Establishes that exception category will only be single selector
     document.getElementById(exception + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
   }
 
-  var notMany = allOK(categories, checkedValues)
+  var notMany = allOK(classifiers, checkedValues)
   if(notMany){ //Removes OnlyOne
-    for(k in categories){
-      if(categories[k] !== exception){
-        document.getElementById(categories[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+    for(k in classifiers){
+      if(classifiers[k] !== exception){
+        document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
       }
     }
     for(j in allCheckBoxes){
       allCheckBoxes[j].onclick = function(){
-        checkedValues = mergeVerifyCheckedBoxes(categories)
-        onlyOneEnforcer(categories, checkedValues, data, filterFunction)
-        establishInitial(allCheckBoxes, categories, checkedValues, data, filterFunction, exception)
+        checkedValues = mergeVerifyCheckedBoxes(classifiers)
+        onlyOneEnforcer(classifiers, checkedValues, data, filterFunction)
+        checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunction, exception)
         
         //Filters data on every click
-        window.filteredData = filterFunction(categories, data, window.checkedValues)
+        window.filteredData = filterFunction(classifiers, data, window.checkedValues)
 
       }
     }
   }
   if(exception){
-    onlyOne(exception, checkedValues, categories, data, filterFunction) //Puts back the single check in a particular category
+    onlyOne(exception, checkedValues, classifiers, data, filterFunction) //Puts back the single check in a particular category
   }
 };
 
@@ -271,3 +273,13 @@ async function simulateSelection(multi, single){
   }
 }
 
+//Selects only categories which received 2 or more checks in checkboxes
+function pickMultiClassClassifiers(checkedValues, categories){
+  window.multiClassClassifiers = []
+  for(k in categories){
+    var nChecks = window.checkedValues[categories[k]].length
+    if(nChecks > 1){
+      window.multiClassClassifiers.push(categories[k])
+    }
+  }
+}

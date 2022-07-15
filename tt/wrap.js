@@ -12,30 +12,30 @@ var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifie
 //Function translates value -1 to its label (because this does not come from ED's backend)
 function averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
 
-//Extracting categories and options
-var categories = Object.keys(data[0])
-var categories = categories.filter(i => i !== 'value')
+//Extracting classifiers and options
+var classifiers = Object.keys(data[0])
+var classifiers = classifiers.filter(i => i !== 'value')
 var options = []
-for(k in categories){
-  var a = data.map(i=>i[categories[k]])
+for(k in classifiers){
+  var a = data.map(i=>i[classifiers[k]])
   var a = a.filter(onlyUnique)
   var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
   options.push(a)
 }
 var options = options.filter(i=> i[0] !== undefined)
 
-var categoriesAndOptions = {}
-for(k in categories){
-  var a = data.map(i=>i[categories[k]])
+var classifiersAndOptions = {}
+for(k in classifiers){
+  var a = data.map(i=>i[classifiers[k]])
   var a = a.filter(onlyUnique)
   var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
-  categoriesAndOptions[categories[k]] = a
+  classifiersAndOptions[classifiers[k]] = a
 }
 
 var map;
 
 //Generate checkbox inside box
-generateCheckBoxes(categories, options, 'boxTop', data, labels)
+generateCheckBoxes(classifiers, options, data, 'dependentVariable', labels)
 
 document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
 
@@ -58,34 +58,33 @@ for(k in buttonsRenderGraph){
 
 
 //Creates empty object with category keys
-var checkedValues = checkedValuesObjectGenerator(categories)
-var allCheckBoxes = document.querySelectorAll('input');
+var checkedValues = checkedValuesObjectGenerator(classifiers)
 
 //Establishes checkbox verification system. Multiple or single selection
-establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "dependentVariable") //Value is written inside the global variable checkedValues
+checkBoxVerificationSystem(classifiers, checkedValues, data, filterDataByCheckBox, exception = "dependentVariable") //Value is written inside the global variable checkedValues
 
 var filteredDataForMap;
 var filteredData;
 
 function completeWrap(){
-  //Selects categories which will be used as group and xAxis  
-  var dropdownCategories;
-  pickMultiClassCategories(checkedValues, categories, dropdownCategories)
+  //Selects classifiers which will be used as group and xAxis  
+  var multiClassClassifiers;
+  pickMultiClassClassifiers(checkedValues, classifiers)
 
-  var nMulticlassClassifiers = window.dropdownCategories.length
+  var nMulticlassClassifiers = window.multiClassClassifiers.length
 
   //For when there are 2 milticlass classifier
   if(nMulticlassClassifiers == 2){
 
     renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
 
-    var group1 = window.dropdownCategories[1]
-    var group2 = window.dropdownCategories[0]
+    var group1 = window.multiClassClassifiers[1]
+    var group2 = window.multiClassClassifiers[0]
 
-    var xAxisName1 = window.dropdownCategories[0]
-    var xAxisName2 = window.dropdownCategories[1]
+    var xAxisName1 = window.multiClassClassifiers[0]
+    var xAxisName2 = window.multiClassClassifiers[1]
 
-    window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+    window.filteredDataForMap = filterDataByCheckBox(classifiers, data, window.checkedValues)
 
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
     var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
@@ -157,10 +156,10 @@ function completeWrap(){
 
     renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
 
-    var group1 = window.dropdownCategories[0]
-    var xAxisName1 = categories.filter(i=>i !== group1)[0]
+    var group1 = window.multiClassClassifiers[0]
+    var xAxisName1 = classifiers.filter(i=>i !== group1)[0]
 
-    window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+    window.filteredDataForMap = filterDataByCheckBox(classifiers, data, window.checkedValues)
 
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
 
@@ -191,10 +190,10 @@ function completeWrap(){
     
     renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
 
-    var group1 = categories[0]
-    var xAxisName1 = categories[1]
+    var group1 = classifiers[0]
+    var xAxisName1 = classifiers[1]
 
-    window.filteredDataForMap = filterDataByCheckBoxSelectorTT(categories, data, window.checkedValues)
+    window.filteredDataForMap = filterDataByCheckBox(classifiers, data, window.checkedValues)
 
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
 
@@ -233,12 +232,12 @@ dragElement(boxSelector, headerSelector);
 
 //Selecting two multiclass classifiers
 var multi = ["vuosi_"];
-var categoriesNoVuosi = categories.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
-var randomElement = categoriesNoVuosi[Math.floor(Math.random() * categoriesNoVuosi.length)];
+var classifiersNoVuosi = classifiers.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
+var randomElement = classifiersNoVuosi[Math.floor(Math.random() * classifiersNoVuosi.length)];
 multi.push(randomElement)
 
 //Establishing the single classifiers
-var single = categories.filter(i => multi.includes(i) == false)
+var single = classifiers.filter(i => multi.includes(i) == false)
 
 //Running click simulation
 simulateSelection(multi, single)
@@ -247,15 +246,15 @@ displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Displ
 
 //Establishing initial state of dependentVariable click box
 var currentCheck = checkedValues['dependentVariable']
-var dependentIndex = categoriesAndOptions['dependentVariable'].indexOf(currentCheck[0])
+var dependentIndex = classifiersAndOptions['dependentVariable'].indexOf(currentCheck[0])
 
 document.getElementById("nextDependent").onclick = function(){
-  nextDependent(categoriesAndOptions, true, window.dependentIndex, "dependentVariable")
+  nextDependent(classifiersAndOptions, true, window.dependentIndex, "dependentVariable")
   completeWrap()
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
 }
 document.getElementById("previousDependent").onclick = function(){
-  nextDependent(categoriesAndOptions, false, window.dependentIndex, "dependentVariable")
+  nextDependent(classifiersAndOptions, false, window.dependentIndex, "dependentVariable")
   completeWrap()
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
 }

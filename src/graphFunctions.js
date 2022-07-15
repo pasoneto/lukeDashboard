@@ -189,21 +189,21 @@ function displayNonGraphs(filteredData, whereToAppend){
 //Wrap up graph functions for convenience
 function wrapGraph(checkedValues, categories, filteredData){
 
-  var dropdownCategories;  //Selects categories which will be used as group and xAxis  
-  pickMultiClassCategories(checkedValues, categories, dropdownCategories)
+  var multiClassClassifiers;  //Selects categories which will be used as group and xAxis  
+  pickMultiClassCategories(checkedValues, categories, multiClassClassifiers)
 
-  var nMulticlassClassifiers = window.dropdownCategories.length
+  var nMulticlassClassifiers = window.multiClassClassifiers.length
   renderGraphBoxes(whereToAppend = 'graphsContainer', nMulticlassClassifiers = 2)
   console.log("Rendered boxes")
 
   //For when there are 2 multiclass classifier
   if(nMulticlassClassifiers == 2){
 
-    var group1 = window.dropdownCategories[1]
-    var group2 = window.dropdownCategories[0]
+    var group1 = window.multiClassClassifiers[1]
+    var group2 = window.multiClassClassifiers[0]
 
-    var xAxisName1 = window.dropdownCategories[0]
-    var xAxisName2 = window.dropdownCategories[1]
+    var xAxisName1 = window.multiClassClassifiers[0]
+    var xAxisName2 = window.multiClassClassifiers[1]
 
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
     var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
@@ -265,7 +265,7 @@ function wrapGraph(checkedValues, categories, filteredData){
   ///////For when there is only 1 multiclass classifier
   if(nMulticlassClassifiers == 1) {
 
-    var group1 = window.dropdownCategories[0]
+    var group1 = window.multiClassClassifiers[0]
     var xAxisName1 = categories.filter(i=>i !== group1)[0]
 
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
@@ -315,3 +315,4 @@ function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName
     ticks[window.dependentIndex.mod(dependentOptions.length)].click()
   }
 }
+

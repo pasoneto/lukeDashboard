@@ -108,7 +108,7 @@ initiateDashboard()
                                 <h2 class="section-title">Data handling</h2>
                                 <div class="section-block">
                                 <p>
-                                    To populate the dashboard, we need to have data. This system works with JSON format, and you can input any type of data as long as it is in the following displayed below. As you can see, there 4 classifiers (statistic, year, region, and size), and each one of these classifiers can be associated with any number of categorical variables (e.g. year can be 2018, 2019, 2020, etc...).
+                                    To populate the dashboard, we need to have data. This system works with JSON format, and you can input any type of data as long as it is in the format displayed below. As you can see, there are 4 classifiers (statistic, year, region, and size), and each one of these classifiers can be associated with any number of categorical variables (e.g. year can be 2018, 2019, 2020, etc...).
                                 </p>
 <div class="code-block">
 <pre><code class="language-javascript">var data = [{
@@ -134,7 +134,7 @@ initiateDashboard()
                                 </p>
 
                                 <p>
-                                    For the purpose of this tutorial, we have already created a ficticious dataset, which you can import by adding the script figData.js to the header of your HTML page, as shown below.
+                                    For the purpose of this tutorial, we have already created a ficticious dataset, which you can import by adding the script ficData.js to the header of your HTML page, as shown below.
                                 </p>
 
 <pre><code class="language-markup">&lt;header&gt;
@@ -147,10 +147,10 @@ initiateDashboard()
 
 
                                 <p>
-                                    The idea of the dashboard is to enable users to make selections of the data, and combine different classifiers between each other. For instance, the user can choose to see only mean statistics for year 2021 and regions 10 and 11. Or he could choose to compare mean values of years 2020 and 2021 for region 10.
+                                    The idea of the dashboard is to enable users to make selections of the data, and combine different classifiers between each other. For instance, the user can choose to see only values for year 2021 and regions 10 and 11. Or he could choose to compare values of years 2020 and 2021 for region 10.
                                 </p>
                                 <p>
-                                    In order to enable such choices, we need to know which classifiers are available, and what are the values associated with each one of them. This is what we are doing in the code below. notice that we need to add the ./src/dataUtil.js plugin to the header of the page.
+                                    In order to enable such choices, we need to know which classifiers are available, and what are the values associated with each one of them. This is what we are doing in the code below. Notice that we need to add the ./src/dataUtil.js plugin to the header of the page.
                                 </p>
 <div class="code-block">
 <pre><code class="language-markup">&lt;header&gt;
@@ -210,7 +210,7 @@ document.getElementById("selectDimensionButton").onclick = function(){
 </p>
 
 <p>
-    In order to filter the data, we pass a function called filterDataByCheckBoxSelectorTT, which will simply filter the data based on the values that the user selected in the checkboxes. We define this function separately in case you want to define your own filtering function. As a result of this function, there will be a global variable called filteredData, which will be updated everytime the user clicks or unclicks any of the checkboxes.
+    In order to filter the data, we pass a function called filterDataByCheckBoxSelectorTT, which will simply filter the data based on the values that the user selected in the checkboxes. We define this function separately, so you can define your own filtering function, if you need. As a result of this function, there will be a global variable called filteredData, which will be updated everytime the user clicks or unclicks any of the checkboxes.
 </p>
 
 <div class="code-block">
@@ -282,7 +282,7 @@ establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByChe
 &lt;/script&gt;
 </code></pre>
 <p>
-    In the case of this dataset, there is no mean values any region with size small and year 18. If you select these variables in the checkboxes, you should be able to see the message displayed on the screen.
+    In the case of this dataset, there are no mean values for any region with size small and year 18. If you select these variables in the checkboxes, you should be able to see the message displayed on the screen.
 </p>
                             </section>
                         </div><!--//content-inner-->
