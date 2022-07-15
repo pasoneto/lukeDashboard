@@ -53,8 +53,8 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
         showBoxSelector("tip-container")
         hiddenDiv.innerHTML = stat
 
-        var group1 = window.dropdownCategories[1]
-        var xAxisName1 = window.dropdownCategories[0]
+        var group1 = window.multiClassClassifiers[1]
+        var xAxisName1 = window.multiClassClassifiers[0]
 
         var [yAxis1, labels1] = separateDataInGroups(currentTarget, group1, checkedValues)
         var xAxis1 = window.checkedValues[xAxisName1]
