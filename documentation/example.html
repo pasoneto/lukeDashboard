@@ -25,12 +25,8 @@
         wrapGraph(checkedValues, categories, filteredData)
         displayNonGraphs(filteredData)
     }
-    document.getElementById("selectDimensionButton").onclick = function(){
-        showBoxSelector("boxTop")
-    }
     
     var checkedValues = checkedValuesObjectGenerator(categories)
-    var allCheckBoxes = document.querySelectorAll('input');
     
     checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox, exception = "statistic")
     

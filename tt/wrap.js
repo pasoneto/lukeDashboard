@@ -1,3 +1,8 @@
+//Initiating global variables
+var filteredDataForMap;
+var filteredData;
+var multiClassClassifiers;
+
 //Adding event listener for database selector
 var classifiers = Object.keys(classifierLabels[0])
 
@@ -10,7 +15,7 @@ allLabels["dependentVariable"] = dependentLabels[0]
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Function translates value -1 to its label (because this does not come from ED's backend)
-function averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
+function _averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
 
 //Extracting classifiers and options
 var classifiers = Object.keys(data[0])
@@ -49,7 +54,6 @@ for(k in buttonsRenderGraph){
   buttonsRenderGraph[k].onclick = function(){
     showBoxSelector("boxTop") //Hide box with checkboxes
     completeWrap() 
-
     displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
     //Add back function to show checkboxes div
     document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
@@ -62,12 +66,8 @@ var checkedValues = checkedValuesObjectGenerator(classifiers)
 //Establishes checkbox verification system. Multiple or single selection
 checkBoxVerificationSystem(classifiers, checkedValues, data, filterDataByCheckBox, exception = "dependentVariable") //Value is written inside the global variable checkedValues
 
-var filteredDataForMap;
-var filteredData;
-
 function completeWrap(){
   //Selects classifiers which will be used as group and xAxis  
-  var multiClassClassifiers;
   pickMultiClassClassifiers(checkedValues, classifiers)
 
   var nMulticlassClassifiers = window.multiClassClassifiers.length

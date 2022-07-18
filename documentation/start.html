@@ -196,9 +196,6 @@ generateCheckBoxes(categories, options, whereToAppend, data)
 <pre><code class="language-javascript">document.getElementById("buttonDimensionSelector").onclick = function(){
     showBoxSelector("boxTop") //Shows or hides box with checkboxes
 }
-document.getElementById("selectDimensionButton").onclick = function(){
-    showBoxSelector("boxTop") //Hides box with checkboxes
-}
 </code></pre>
 </div><!--//code-block-->
 
@@ -289,6 +286,7 @@ checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox
                                 <h2 class="section-title">Complete code</h2>
                                 <div class="section-block">
 
+                                <p>Click <a href="example.html">here</a> for a working example of the complete code.</p>
 <div class="code-block">
 <pre><code class="language-markup">&lt;!DOCTYPE html&gt;
     &lt;head&gt;
@@ -317,9 +315,6 @@ checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox
             showBoxSelector("boxTop")
             wrapGraph(checkedValues, categories, filteredData)
             displayNonGraphs(filteredData, whereToAppend = "graphsContainer")
-        }
-        document.getElementById("selectDimensionButton").onclick = function(){
-            showBoxSelector("boxTop")
         }
         
         var checkedValues = checkedValuesObjectGenerator(categories)

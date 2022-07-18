@@ -56,7 +56,7 @@ async function initiateDashboard(renderMap = false, directory = null){
 
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
               'Graph Control<br>'+
-              '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
+              '<button class="displayBoxButton" onclick=showBoxSelector("boxTop") id="selectDimensionButton">Select dimensions</button>'+
               '<div id="selectedVariables"></div>'+
               '</div>'
 
@@ -79,6 +79,7 @@ async function initiateDashboard(renderMap = false, directory = null){
 
 	documentAppender(document.head, headHTML)
 	documentAppender(document.body, bodyHTML)
+
   if(renderMap === false){
     document.getElementById("graphsContainer").style.width = '100vw'
     document.getElementById("dimensionSelector").style.width = '100vw'

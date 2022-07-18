@@ -60,3 +60,5 @@ function applyFunctionMap(i, mapRegionsCode, filteredDataForMap, whereShow){
     }
   }
 }
+//Tuki alue / Subsidy region: a, b, c1, c2, c2p, c3, c4
+//
