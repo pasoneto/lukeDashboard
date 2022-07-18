@@ -52,6 +52,12 @@ function generateCheckBoxes(classifiers, options, data, dependentVariable, label
   html += '</div>'
   html += '<button id="buttonDimensionSelector">Render graphs</button>'
   document.getElementById(whereAppend).innerHTML += html
+
+  //Initiate map
+  var boxSelector = document.getElementById("boxTop")
+  var headerSelector = document.getElementById("categorySelectorHeader")
+  dragElement(boxSelector, headerSelector);
+
 }
 
 //Changes style of checkBox container. Now it appears in front of everything

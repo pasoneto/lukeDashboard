@@ -85,3 +85,50 @@ async function initiateDashboard(renderMap = false, directory = null){
   }
   console.log("Rendered all boxes")
 }
+
+//nMulticlassClassifiers is the length of the output from function pickMultiClassCategories
+//Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
+function renderGraphBoxes(nMulticlassClassifiers){
+  if(nMulticlassClassifiers == 2){
+    html = '<div class="row">'+
+                 '<div class="column graphBox" id="box">'+
+                   '<canvas id="myChart"></canvas>'+
+                   '</div>'+
+                   '<div class="column graphBox" id="box1">'+
+                   '<canvas id="myChart1"></canvas>'+
+                   '</div>'+
+                 '</div>'+
+                 '<div class="row" id="pieChartsContainer">'+
+                   '<div class="column graphBox3" id="box2"></div>'+
+                   '<div class="column graphBox3" id="box3"></div>'+
+                   '<div class="column graphBox3" id="box4"></div>'+
+                 '</div>'+
+                 '</div>'
+  } else {
+    html = '<div class="row">'+
+              '<div class="graphSingleBox" id="box">'+
+              '<canvas id="myChart"></canvas>'+
+              '</div>'+
+           '</div>'
+  }
+  document.getElementById("graphsContainer").innerHTML = html
+}
+
+function generatePieChartsContainers(nPieCharts){
+  var htmlPieCharts = '';
+  for (var i = 2; i < nPieCharts+2; i++){
+    if(nPieCharts == 3){
+      var dimensionGraph = '32.35%'
+    }
+    if(nPieCharts == 2){
+      var dimensionGraph = '49%'
+    }
+    if(nPieCharts == 1){
+      var dimensionGraph = '98%'
+    }
+    htmlPieCharts += '<div class="column graphBox3" style="width:' + dimensionGraph + '" id="box' + i + '">'+
+                     '<canvas id="myChart' + i + '"></canvas>'+
+                     '</div>'
+  }
+  document.getElementById("pieChartsContainer").innerHTML = htmlPieCharts
+}

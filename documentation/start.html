@@ -210,17 +210,16 @@ document.getElementById("selectDimensionButton").onclick = function(){
 </p>
 
 <p>
-    In order to filter the data, we pass a function called filterDataByCheckBoxSelectorTT, which will simply filter the data based on the values that the user selected in the checkboxes. We define this function separately, so you can define your own filtering function, if you need. As a result of this function, there will be a global variable called filteredData, which will be updated everytime the user clicks or unclicks any of the checkboxes.
+    In order to filter the data, we pass a function called filterDataByCheckBox, which will simply filter the data based on the values that the user selected in the checkboxes. We define this function separately, so you can define your own filtering function, if you need. As a result of this function, there will be a global variable called filteredData, which will be updated everytime the user clicks or unclicks any of the checkboxes.
 </p>
 
 <div class="code-block">
 <pre><code class="language-javascript">var checkedValues = checkedValuesObjectGenerator(categories) //Creates empty object which receives boxes that can be checked.
-var allCheckBoxes = document.querySelectorAll('input');
 
 var exception = "statistic" //Any category that you wish to keep as single-selector. Here we chose statistic as an ilustration, and in this case, the user will only be able to select mean or median.
 
 //Establishes checkbox verification system. Multiple or single selection
-establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = exception)
+checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox, exception = exception)
 </code></pre>
 </div><!--//code-block-->
 
@@ -324,9 +323,8 @@ establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByChe
         }
         
         var checkedValues = checkedValuesObjectGenerator(categories)
-        var allCheckBoxes = document.querySelectorAll('input');
         
-        establishInitial(allCheckBoxes, categories, checkedValues, data, filterDataByCheckBoxSelectorTT, exception = "statistic")
+        checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox, exception = "statistic")
     &lt;/script&gt;
     
     &lt;/html&gt;

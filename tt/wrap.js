@@ -56,7 +56,6 @@ for(k in buttonsRenderGraph){
   }
 }
 
-
 //Creates empty object with category keys
 var checkedValues = checkedValuesObjectGenerator(classifiers)
 
@@ -76,7 +75,7 @@ function completeWrap(){
   //For when there are 2 milticlass classifier
   if(nMulticlassClassifiers == 2){
 
-    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
+    renderGraphBoxes(nMulticlassClassifiers)
 
     var group1 = window.multiClassClassifiers[1]
     var group2 = window.multiClassClassifiers[0]
@@ -93,11 +92,8 @@ function completeWrap(){
     var xAxis2 = window.checkedValues[xAxisName2]
 
     //Filtering null and missing values
-    var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-    var [yAxis2, labels2] = filterNull(yAxis2, labels2)
-
-    var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
-    var [yAxis2, xAxis2, labels2] = removeNullColumns(yAxis2, xAxis2, labels2)
+    var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
+    var [yAxis2, xAxis2, labels2] = nullsOut(yAxis2, xAxis2, labels2)
     //End of filtering null and missing values
 
     //Translating subClassifier codes to labels
@@ -110,51 +106,28 @@ function completeWrap(){
     var group1Label = labels[0]['classifiers'][group1]
     var group2Label = labels[0]['classifiers'][group2]
 
-    var box = document.getElementById("box")
-    var box1 = document.getElementById("box1")
-    box.innerHTML = '<canvas id="myChart"></canvas>'
-    box1.innerHTML = '<canvas id="myChart1"></canvas>'
-
-    var randomColors1 = colorGenerator(yAxis1);
-    var randomColors2 = colorGenerator(yAxis2);
-
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1Label, randomColors1)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2Label, randomColors2, showLegend = true)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1Label)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2Label, showLegend = true)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)
     var htmlPieCharts = '';
 
     var nPieCharts = Math.min(yAxis1.length, 3)
-    for (var i = 2; i < nPieCharts+2; i++){
-      if(nPieCharts == 3){
-        var dimensionGraph = '32.35%'
-      }
-      if(nPieCharts == 2){
-        var dimensionGraph = '49%'
-      }
-      if(nPieCharts == 1){
-        var dimensionGraph = '98%'
-      }
-      htmlPieCharts += '<div class="column graphBox3" style="width:' + dimensionGraph + '" id="box' + i + '">'+
-                       '<canvas id="myChart' + i + '"></canvas>'+
-                       '</div>'
-    }
-    document.getElementById("pieChartsContainer").innerHTML = htmlPieCharts
+    generatePieChartsContainers(nPieCharts)
 
     for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
       graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
     }
 
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, exception = "dependentVariable", labels)
-    displeySelectedSingleVariables(singleLabels)
+    displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
   } 
   
   ///////For when there is only 1 milticlass classifier
   if(nMulticlassClassifiers == 1) {
 
-    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
+    renderGraphBoxes(nMulticlassClassifiers)
 
     var group1 = window.multiClassClassifiers[0]
     var xAxisName1 = classifiers.filter(i=>i !== group1)[0]
@@ -166,8 +139,8 @@ function completeWrap(){
     var xAxis1 = window.checkedValues[xAxisName1]
 
     //Filtering null and missing values
-    var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-    var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+    var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
+    
     //End of filtering null and missing values
     
     //Translating subClassifier codes to labels
@@ -175,20 +148,14 @@ function completeWrap(){
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
     var group1Label = labels[0]['classifiers'][group1]
 
-    var box = document.getElementById("box")
-    box.innerHTML = '<canvas id="myChart"></canvas>'
-
-    var randomColors1 = colorGenerator(yAxis1);
-
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label, randomColors1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label)
     
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
-    displeySelectedSingleVariables(singleLabels)
+    displaySelectedSingleVariables(window.checkedValues, labels = labels)
 
   } if(nMulticlassClassifiers < 1) {
     
-    renderGraphBoxes("graphsContainer", nMulticlassClassifiers)
+    renderGraphBoxes(nMulticlassClassifiers)
 
     var group1 = classifiers[0]
     var xAxisName1 = classifiers[1]
@@ -200,19 +167,14 @@ function completeWrap(){
     var xAxis1 = window.checkedValues[xAxisName1]
 
     //Filtering null and missing values
-    var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-    var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+    var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
     //End of filtering null and missing values
 
     //Translating subClassifier codes to labels
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
 
-    var box = document.getElementById("box")
-    box.innerHTML = '<canvas id="myChart"></canvas>'
-
-    var randomColors1 = colorGenerator(yAxis1);
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "", randomColors1)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "")
     
     //Display single variable names
     var singleLabels = singleLabelExtractor(window.checkedValues, labels) 
@@ -224,11 +186,6 @@ function completeWrap(){
   var mrc = renameMapRegions(filteredDataForMap);
   drawMap(maakunta, 'maakunta', mrc, filteredDataForMap, map, labels)
 }
-
-//Initiate map
-var boxSelector = document.getElementById("boxTop")
-var headerSelector = document.getElementById("categorySelectorHeader")
-dragElement(boxSelector, headerSelector);
 
 //Selecting two multiclass classifiers
 var multi = ["vuosi_"];
@@ -242,7 +199,7 @@ var single = classifiers.filter(i => multi.includes(i) == false)
 //Running click simulation
 simulateSelection(multi, single)
 completeWrap()
-displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
+displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
 
 //Establishing initial state of dependentVariable click box
 var currentCheck = checkedValues['dependentVariable']
@@ -251,10 +208,10 @@ var dependentIndex = classifiersAndOptions['dependentVariable'].indexOf(currentC
 document.getElementById("nextDependent").onclick = function(){
   nextDependent(classifiersAndOptions, true, window.dependentIndex, "dependentVariable")
   completeWrap()
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
+  displayNonGraphs(window.filteredData)
 }
 document.getElementById("previousDependent").onclick = function(){
   nextDependent(classifiersAndOptions, false, window.dependentIndex, "dependentVariable")
   completeWrap()
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer") //Display message saying that data is only null or 0
+  displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
 }

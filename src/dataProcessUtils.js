@@ -13,7 +13,7 @@ function filterDataByCheckBox(classifiers, data, checkedValues){
 }
 
 //Filter out group with only missing values
-function filterNull(yAxis, labels){
+function _filterNull(yAxis, labels){
   
   //Removes category with only missing values
   var newY = []
@@ -30,7 +30,7 @@ function filterNull(yAxis, labels){
 }
 
 //Removes x Axis and labels with only missing values
-function removeNullColumns(yAxis, xAxis, labels){
+function _removeNullColumns(yAxis, xAxis, labels){
   
   //Identifies which columns have only 0 values
   var columns = []
@@ -58,6 +58,12 @@ function removeNullColumns(yAxis, xAxis, labels){
   return [yAxis, xAxis, labels]
 }
 
+function nullsOut(yAxis, xAxis, labels){
+    var [yAxis, labels] = _filterNull(yAxis, labels)
+    var [yAxis, xAxis, labels] = _removeNullColumns(yAxis, xAxis, labels)
+    return [yAxis, xAxis, labels]
+}
+
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
@@ -76,4 +82,5 @@ function separateDataInGroups(filteredData, groupSelected, checkedValues){
   }
   return [yAxis, labels];
 }
+
 
