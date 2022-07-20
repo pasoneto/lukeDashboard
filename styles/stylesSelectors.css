@@ -2,16 +2,17 @@
 .dimensionSelector{
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   height: 12%;
-  width: 80%;
+  width: 100%;
   margin: 1px;
   margin-top: 0px;
   margin-left: 0px;
   margin-right: 0px;
   background-color: #DBEDF9;
+  gap: 10px;
 }
-
 /*Statistics selector box*/
 #statisticsSelector{
  margin: 1px;
@@ -26,7 +27,8 @@
 }
 /*Single dimensions selector box*/
 #selectedVariables{
- width: 100%
+ width: 100%;
+ text-align: center;
 }
 #dropdown-btn {
   float: left

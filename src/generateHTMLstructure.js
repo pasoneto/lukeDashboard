@@ -163,12 +163,10 @@ async function initiateDashboardTT(renderMap = false, directory = '.'){
   }
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
                 '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
-                '<div id="selectorButtons">'+
-                  '<button id="previousDependent">Previous dependent variable</button>'+
-                  '<button id="nextDependent">Next dependent variable > </button>'+
-                '</div>'+
-                '<div id="selectedVariables"></div>'+
-              '</div>'
+                '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> Previous</button>'+
+                '<button id="nextDependent">Next <i class="fa fa-arrow-circle-right"></i></button>'+
+              '</div>'+
+              '<div id="selectedVariables"></div>'
 
   if(renderMap){
     bodyHTML += '<div class="column mapBox" id="mapBox">'+

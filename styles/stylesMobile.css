@@ -57,14 +57,8 @@
     margin-right: 0px;
     background-color: #DBEDF9;
   }
-  #selectorButtons{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
   #selectDimensionButton{
-    width: 100%
+    width: 100%;
   }
   #selectedVariables{
     margin-top: 10px;
