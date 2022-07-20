@@ -30,7 +30,7 @@ function showUnderliningMap(baseTile){
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
 var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
 var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
-var bigRegions = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=suuralue4500k_2022&bbox=-13897.244162771385,6486387.218574781,914028.2558372286,7927801.468574781'
+var suuralue = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=suuralue4500k_2022&bbox=-13897.244162771385,6486387.218574781,914028.2558372286,7927801.468574781'
 
 async function drawMap(url, regionDivision, regionsIn, statistics, map, labels = null){
 
@@ -60,8 +60,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
         var [yAxis1, labels1] = separateDataInGroups(currentTarget, group1, checkedValues)
         var xAxis1 = window.checkedValues[xAxisName1]
 
-        var [yAxis1, labels1] = filterNull(yAxis1, labels1)
-        var [yAxis1, xAxis1, labels1] = removeNullColumns(yAxis1, xAxis1, labels1)
+        var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
 
         if(labels){
           var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
@@ -124,16 +123,13 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
       }
   }
 
-  function assignValueToGeoJsonObject(geoJSONObject, filteredDataForMap, regionDivision){
-    for(i in mrc){
-      var value = Object.values(filteredDataForMap).filter(k=> renameOne(k[regionDivision]) == mrc[i])
+  function assignValueToGeoJsonObject(geoJSONObject, filteredDataForMap, regionDivision, regionsIn){
+    for(i in regionsIn){
+      var value = Object.values(filteredDataForMap).filter(k=> renameOne(k[regionDivision]) == regionsIn[i])
       for(k in Object.values(geoJSONObject.features)){
-        var regionMatches = geoJSONObject.features[k].properties[regionDivision] == mrc[i]
+        var regionMatches = geoJSONObject.features[k].properties[regionDivision] == regionsIn[i]
         if(regionMatches){ //Assign statistics value
-          var allNull = value.every(i => i.value === null)
-          if(allNull == false){ //Checks if all values are null. If not, region receives data
-            geoJSONObject.features[k].properties['data'] = value
-          }
+          geoJSONObject.features[k].properties['data'] = value // this should not be here, but a separate function instead
         }
       }
     }
@@ -154,7 +150,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
 
     var tilesLayer;
     var geoJSON = await loadArea(url);
-    var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision)
+    var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision, regionsIn)
     var tilesLayer = L.geoJSON(geoJSON, {
           style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},
           onEachFeature: onEachFeature
@@ -174,7 +170,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
 
     var tilesLayer;
     var geoJSON = await loadArea(url);
-    var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision)
+    var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision, regionsIn)
     var tilesLayer = L.geoJSON(geoJSON, {
           style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},
           onEachFeature: onEachFeature

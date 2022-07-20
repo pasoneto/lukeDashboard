@@ -1,12 +1,14 @@
 /*Dimension selectors*/
 .dimensionSelector{
-  height: 12vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 12%;
   width: 80%;
   margin: 1px;
   margin-top: 0px;
   margin-left: 0px;
   margin-right: 0px;
-  background-color: #bbb;
   background-color: #DBEDF9;
 }
 
@@ -22,10 +24,9 @@
  background-color: #DBEDF9;
  width: 19.5%;
 }
-
-/*Dropdown buttons*/
-.dropdown-btn {
-  float: left
+/*Single dimensions selector box*/
+#selectedVariables{
+ width: 100%
 }
 #dropdown-btn {
   float: left

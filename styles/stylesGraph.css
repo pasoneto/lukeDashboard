@@ -1,33 +1,52 @@
+/* Box holding all graphs*/
 #graphsContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /*Spacing between rows*/
+  width: 80%
 }
 .graphBox {
   background: #EDF6FC;
   height: 35vh;
-  margin: 1px;
-  width: 49%;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-.graphSingleBox {
-  background: #EDF6FC;
-  margin: 1px;
+/* Row of two main graphs on top*/
+#mainGraphs{
+  display: flex;
   width: 100%;
-  height: 65vh;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  gap: 20px;
 }
-
-/* Pie charts */
+/* Row box around all Pie charts */
+#pieChartsContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 20px; /*Spacing between columns of pie charts*/
+}
+/* Individual pie charts */
 .graphBox3 {
   background: #EDF6FC;
   height: 35vh;
-  margin: 1px;
-  width: 32.6%;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 /* End of pie charts */
 
+/* Container holding graph for single graph selection */
+.graphSingleBox {
+  background: #EDF6FC;
+  height: 70vh;
+  width: 100vw;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
 .graphBox.mainGraph {
   width: 98%;
 }

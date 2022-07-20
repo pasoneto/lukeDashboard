@@ -1,7 +1,19 @@
+var renderMap = false
+initiateDashboardTT(renderMap = renderMap, directory = '.')
+
 //Initiating global variables
 var filteredDataForMap;
 var filteredData;
 var multiClassClassifiers;
+
+//determines the region division
+if(Object.keys(data[0]).includes('maakunta')){
+  var mapURL = maakunta
+  var mapDivision = 'maakunta'
+} else if(Object.keys(data[0].includes('suuralue'))){
+  var mapURL = suuralue
+  var mapDivision = 'suuralue'
+}
 
 //Adding event listener for database selector
 var classifiers = Object.keys(classifierLabels[0])
@@ -42,7 +54,9 @@ var map;
 //Generate checkbox inside box
 generateCheckBoxes(classifiers, options, data, 'dependentVariable', labels)
 
-document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
+if(renderMap){
+  document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
+}
 
 //Add function to show checkboxes div
 document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
@@ -75,7 +89,7 @@ function completeWrap(){
   //For when there are 2 milticlass classifier
   if(nMulticlassClassifiers == 2){
 
-    renderGraphBoxes(nMulticlassClassifiers)
+    renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
     var group1 = window.multiClassClassifiers[1]
     var group2 = window.multiClassClassifiers[0]
@@ -127,7 +141,7 @@ function completeWrap(){
   ///////For when there is only 1 milticlass classifier
   if(nMulticlassClassifiers == 1) {
 
-    renderGraphBoxes(nMulticlassClassifiers)
+    renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
     var group1 = window.multiClassClassifiers[0]
     var xAxisName1 = classifiers.filter(i=>i !== group1)[0]
@@ -155,7 +169,7 @@ function completeWrap(){
 
   } if(nMulticlassClassifiers < 1) {
     
-    renderGraphBoxes(nMulticlassClassifiers)
+    renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
     var group1 = classifiers[0]
     var xAxisName1 = classifiers[1]
@@ -181,10 +195,11 @@ function completeWrap(){
     displeySelectedSingleVariables(singleLabels)
 
   }
-
-  //Getting only region codes that exist in data
-  var mrc = renameMapRegions(filteredDataForMap);
-  drawMap(maakunta, 'maakunta', mrc, filteredDataForMap, map, labels)
+  if(renderMap){
+    //Getting only region codes that exist in data
+    var mrc = renameMapRegions(filteredDataForMap);
+    drawMap(mapURL, mapDivision, mrc, filteredDataForMap, map, labels)
+  }
 }
 
 //Selecting two multiclass classifiers

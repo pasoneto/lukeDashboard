@@ -6,7 +6,19 @@
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
+  #boxTop {
+    display: none;
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    overflow:auto;
+    resize: both;
+    align-items: center;
+  }
   .column  {
     width: 100%;
     height: auto;
@@ -17,4 +29,52 @@
   .graphBox.mainGraph {
     width: 100%;
   }
+  #pieChartsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+  #mainGraphs{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+  }
+  .dimensionSelector{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 12%;
+    width: 80%;
+    margin: 1px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: #DBEDF9;
+  }
+  #selectorButtons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #selectDimensionButton{
+    width: 100%
+  }
+  #selectedVariables{
+    margin-top: 10px;
+    text-align: center;
+  }
+  #previousDependent {
+    width: 100%
+  }
+  #nextDependent {
+    width: 100%
+  }
+
 }

@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <head>
-    <!-- change directories here if you're not working within the /documentation folder --> <script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>
+    <!-- change directories here if you're not working within the /documentation folder --> 
+    <script src="../src/generateHTMLstructure.js"></script>
+    <script src="../tt/sankey/costs.js"></script>
+    <script src="../tt/sankey/income.js"></script>
+    <script src="../tt/dataProcess.js"></script>
     <script src="../src/dataProcessUtils.js"></script>
+    <script src="../src/graphFunctions.js"></script>
     <script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
-    <script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>
     <script src="./data.js"></script>
     <script src="../src/sankeyFunctions.js"></script>
     <script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>
@@ -21,25 +25,36 @@
 
     initiateDashboard(false, directory = "https://pasoneto.github.io/lukeDashboard/")
     
-    //Adding event listener for database selector
-    var classifierNames = Object.keys(classifierLabels[0])
-
     var classifiers = Object.keys(classifierLabels[0])
-    var data = reshapeJSON(data, classifiers)
+    var classifiers = classifiers.concat(['type'])
 
-    var categories = ['classifiers', 'dependentVariables']
-    var options = [classifierNames, Object.keys(dependentLabels[0])]
+    //var income = income.map(i=> i.type = 'income')
+    //var costs = costs.map(i=> i.type = 'costs')
 
-    generateCheckBoxes(categories, options, 'boxTop', data)
+    var income = reshapeJSON(income, classifiers)
+    var costs = reshapeJSON(costs, classifiers)
+
+    income.forEach(i => {
+      i.type = 'income';
+      i.dependentVariable = i.dependentVariable + ' income';
+    });
+      
+    costs.forEach(i => {
+      i.type = 'costs';
+      i.dependentVariable = i.dependentVariable + ' costs';
+    });
+
+    var data = costs.concat(income)
+
+    var [categories, options] = extractCategoriesAndOptions(data, 'value')
+
+    generateCheckBoxes(categories, options, data)
     
-    //Adding event listener for database selector
-    var classifiers = Object.keys(classifierLabels[0])
-
     //Variable to hold chosen of sankey node. Values assigned by 
     var orderClassifiers = classifiers
 
     //Creates checkboxes for sankey order and assigns function to verify which values were chosen
-    sankeyControls(classifiers)
+    //sankeyControls(classifiers)
 
     var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
     allLabels["dependentVariable"] = dependentLabels[0]
@@ -47,12 +62,15 @@
 
     var checkedValues = checkedValuesObjectGenerator(categories)
     var allCheckBoxes = document.querySelectorAll('input');
-    
-    //Establishes checkbox verification system. Multiple or single selection
-    function byPassFilter(){}
-    establishInitial(allCheckBoxes, categories, checkedValues, data, byPassFilter, exception = "classifiers") //Value is written inside the global variable checkedValues
 
-    //Selecting two multiclass classifiers
+    //Establishes checkbox verification system. Multiple or single selection
+    checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox, exception = "tuotantosuuntaso") //Value is written inside the global variable checkedValues
+
+    //Simulating selection
+    var multi = ["type", "dependentVariable"];
+    var single = categories.filter(i => multi.includes(i) == false)
+    simulateSelection(multi, single)
+
     document.getElementById("buttonDimensionSelector").onclick = function(){
         showBoxSelector("boxTop")
         document.getElementById("graphsContainer").innerHTML = '<div id="container" style="width: 100vw; height: 60vh"></div>'
@@ -61,14 +79,22 @@
           // create a sankey diagram instance
           let chart = anychart.sankey();
 
-
           //Setting chosen classifiers
           var dependentName = 'dependentVariable' //Can only be dependentVariable
           var levelsDependent = checkedValues['dependentVariables'] //subDepententVariables chosen
-          var from = checkedValues['classifiers'][0] //Only one classifier can be selected
+          var from = checkedValues['type'][0] //Only one classifier can be selected
           var valueField = 'value' //Field holding value
+          
           //Create connection data
-          var filteredData1 = connectionGenerator(dependentName, levelsDependent, from, valueField, labels)
+          var filteredData0 = filteredData.filter(i=>i.type === "costs")
+          var filteredData1 = filteredData.filter(i=>i.type === "income")
+
+          filteredData0 = filteredData0.map(i=> ({'from': i.dependentVariable, 'to': 'costs -> income', 'weight': i.value }))
+          filteredData1 = filteredData1.map(i=> ({'from': 'costs -> income', 'to': i.dependentVariable, 'weight': i.value }))
+          
+          filteredData1 = filteredData1.concat(filteredData0)  
+
+          displaySelectedSingleVariables(checkedValues, exception = 'dependenetVariable', labels)
 
           // load the data to the sankey diagram instance
           chart.data(filteredData1);

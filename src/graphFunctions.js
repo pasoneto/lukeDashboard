@@ -126,13 +126,13 @@ function _singleLabelExtractor(checkedValues, exception = null, labels = null){
       }
     }
   } else {
-    for(k in selectedClassifiers){
-      if(selectedClassifiers[k].length == 1){
+    for(k in selectedOptions){
+      if(selectedOptions[k].length == 1){
         //Except dependent variable, which doesn't have a translator. Create more general function for this
-        if(selectedOptions[k] != exception){
-          json += "<strong>" + selectedOptions[k] + "</strong>" + ": " + selectedClassifiers[k] + ";  "
+        if(selectedClassifiers[k] !== exception){
+          json += "<strong>" + selectedClassifiers[k] + "</strong>" + ": " + selectedOptions[k] + ";  "
         } else {
-          json += "<strong>" + selectedOptions[k] + "</strong>" + ": " + selectedClassifiers[k] + ";  "
+          json += "<strong>" + selectedClassifiers[k] + "</strong>" + ": " + selectedOptions[k] + ";  "
         }
       }
     }
@@ -140,9 +140,9 @@ function _singleLabelExtractor(checkedValues, exception = null, labels = null){
   return(json)
 }
 
-function displaySelectedSingleVariables(checkedValues, exception = null, labels){
-  var checkedValues = _singleLabelExtractor(checkedValues, exception, labels)
-  document.getElementById("selectedVariables").innerHTML = checkedValues
+function displaySelectedSingleVariables(checkedValues, exception = null, labels = null){
+  var cV = _singleLabelExtractor(checkedValues, exception, labels)
+  document.getElementById("selectedVariables").innerHTML = cV
 }
 
 function displayNonGraphs(filteredData, whereToAppend){

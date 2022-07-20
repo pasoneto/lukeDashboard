@@ -84,27 +84,32 @@ async function initiateDashboard(renderMap = false, directory = null){
     document.getElementById("graphsContainer").style.width = '100vw'
     document.getElementById("dimensionSelector").style.width = '100vw'
   }
+
   console.log("Rendered all boxes")
 }
 
 //nMulticlassClassifiers is the length of the output from function pickMultiClassCategories
 //Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
-function renderGraphBoxes(nMulticlassClassifiers){
+function renderGraphBoxes(nMulticlassClassifiers, map=true){
+  var html = ''
   if(nMulticlassClassifiers == 2){
-    html = '<div class="row">'+
-                 '<div class="column graphBox" id="box">'+
-                   '<canvas id="myChart"></canvas>'+
-                   '</div>'+
-                   '<div class="column graphBox" id="box1">'+
-                   '<canvas id="myChart1"></canvas>'+
-                   '</div>'+
-                 '</div>'+
-                 '<div class="row" id="pieChartsContainer">'+
-                   '<div class="column graphBox3" id="box2"></div>'+
-                   '<div class="column graphBox3" id="box3"></div>'+
-                   '<div class="column graphBox3" id="box4"></div>'+
-                 '</div>'+
-                 '</div>'
+    if(map){
+      html += '<div class="column mapBox" id="mapBox"></div>'
+    } 
+    html += '<div class="row" id="mainGraphs">'+
+             '<div class="column graphBox" id="box">'+
+               '<canvas id="myChart"></canvas>'+
+               '</div>'+
+               '<div class="column graphBox" id="box1">'+
+               '<canvas id="myChart1"></canvas>'+
+               '</div>'+
+           '</div>'+
+           '<div class="row" id="pieChartsContainer">'+
+             '<div class="column graphBox3" id="box2"></div>'+
+             '<div class="column graphBox3" id="box3"></div>'+
+             '<div class="column graphBox3" id="box4"></div>'+
+           '</div>'+
+           '</div>'
   } else {
     html = '<div class="row">'+
               '<div class="graphSingleBox" id="box">'+
@@ -118,18 +123,74 @@ function renderGraphBoxes(nMulticlassClassifiers){
 function generatePieChartsContainers(nPieCharts){
   var htmlPieCharts = '';
   for (var i = 2; i < nPieCharts+2; i++){
-    if(nPieCharts == 3){
-      var dimensionGraph = '32.35%'
-    }
-    if(nPieCharts == 2){
-      var dimensionGraph = '49%'
-    }
-    if(nPieCharts == 1){
-      var dimensionGraph = '98%'
-    }
-    htmlPieCharts += '<div class="column graphBox3" style="width:' + dimensionGraph + '" id="box' + i + '">'+
+    htmlPieCharts += '<div class="column graphBox3" id="box' + i + '">'+
                      '<canvas id="myChart' + i + '"></canvas>'+
                      '</div>'
   }
   document.getElementById("pieChartsContainer").innerHTML = htmlPieCharts
 }
+
+//Initiate html of TT
+async function initiateDashboardTT(renderMap = false, directory = '.'){
+
+  var bodyHTML = '<body>'+
+      '<div class="header">'+
+        '<img id="logo" src="https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png">'+
+        '<div id="title"></div>'+
+      '</div>'+
+
+      '<!-- Box on top of everything. Selects classifiers -->'+
+      '<div id="boxTop">'+
+      '</div>'+
+      '<!-- Box on top of everything. Selects classifiers -->'
+
+  if(renderMap){
+    bodyHTML += '<!-- Box on top of everything. Shows graph based on map hover -->'+
+      '<div id="boxTopMap">'+
+      '</div>'+
+      '<div id="tip-container">'+
+        '<div id="popup-tip"></div>'+
+      '</div>'+
+      '<!-- Box on top of everything. Shows graph based on map hover -->'+
+
+      '<div class="row">'+
+        '<div class="column statisticsSelector" id="statisticsSelector">'+
+           'Map Control'+
+          '<div id="selector-map"></div>'+
+          '<div id="mapInfo"></div>'+
+      '</div>'
+
+  }
+  bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
+                '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
+                '<div id="selectorButtons">'+
+                  '<button id="previousDependent">Previous dependent variable</button>'+
+                  '<button id="nextDependent">Next dependent variable > </button>'+
+                '</div>'+
+                '<div id="selectedVariables"></div>'+
+              '</div>'
+
+  if(renderMap){
+    bodyHTML += '<div class="column mapBox" id="mapBox">'+
+                '</div>'
+  }
+
+  bodyHTML += '<div class="column graphsBox" id="graphsContainer">'+
+          'Graphs'+
+        '</div>'+
+      '</div>'
+
+
+	documentAppender(document.body, bodyHTML)
+
+  if(renderMap === false){
+    document.getElementById("graphsContainer").style.width = '100vw'
+    document.getElementById("dimensionSelector").style.width = '100vw'
+  }
+  console.log("Rendered all boxes")
+}
+
+
+
+
+
