@@ -88,10 +88,10 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
       x = e.containerPoint['x']
       y = e.containerPoint['y']
       hiddenDiv.style.left = x - 8 + 'px'
-      hiddenDiv.style.top = y - 118 + 'px'
+      hiddenDiv.style.top = y - 180 + 'px'
 
       tip.style.left = x + 10 + 'px'
-      tip.style.top = y + 158 + 'px'
+      tip.style.top = y + 96 + 'px'
     }
   }
 

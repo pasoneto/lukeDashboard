@@ -1,10 +1,6 @@
+//Initiate Map object
 var renderMap = false
 initiateDashboardTT(renderMap = renderMap, directory = '.')
-
-//Initiating global variables
-var filteredDataForMap;
-var filteredData;
-var multiClassClassifiers;
 
 //determines the region division
 if(Object.keys(data[0]).includes('maakunta')){
@@ -15,15 +11,22 @@ if(Object.keys(data[0]).includes('maakunta')){
   var mapDivision = 'suuralue'
 }
 
-//Adding event listener for database selector
+//Initiating global variables
+var filteredDataForMap;
+var filteredData;
+var multiClassClassifiers;
+var map;
+
+
+//Extracting classifiers from ED file classifierLabels
 var classifiers = Object.keys(classifierLabels[0])
 
+//Reshaping json object from wide to long format
 var data = reshapeJSON(data, classifiers)
 
+//Merging labels into one object
 var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
-
 allLabels["dependentVariable"] = dependentLabels[0]
-
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Function translates value -1 to its label (because this does not come from ED's backend)
@@ -41,6 +44,7 @@ for(k in classifiers){
 }
 var options = options.filter(i=> i[0] !== undefined)
 
+//Manually extracting classifiersAndOptions because I want to remove N, Eyelain, and Otos
 var classifiersAndOptions = {}
 for(k in classifiers){
   var a = data.map(i=>i[classifiers[k]])
@@ -49,14 +53,12 @@ for(k in classifiers){
   classifiersAndOptions[classifiers[k]] = a
 }
 
-var map;
-
-//Generate checkbox inside box
+//Generate checkbox inside hidden div
 generateCheckBoxes(classifiers, options, data, 'dependentVariable', labels)
 
-if(renderMap){
-  document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
-}
+//if(renderMap){
+  //document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
+  //}
 
 //Add function to show checkboxes div
 document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
@@ -135,7 +137,7 @@ function completeWrap(){
     }
 
     //Display single variable names
-    displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
+    //displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
   } 
   
   ///////For when there is only 1 milticlass classifier
@@ -165,7 +167,7 @@ function completeWrap(){
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label)
     
     //Display single variable names
-    displaySelectedSingleVariables(window.checkedValues, labels = labels)
+    //displaySelectedSingleVariables(window.checkedValues, labels = labels)
 
   } if(nMulticlassClassifiers < 1) {
     

@@ -6,33 +6,7 @@ function documentAppender(element, html){
 	}
 }
 
-async function initiateDashboard(renderMap = false, directory = null){
-	var headHTML = '<title>Example dashboard</title>'+
-				'<meta charset="UTF-8">'+
-				'<meta name="viewport" content="width=device-width, initial-scale=1">'+
-				'<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'
-  
-  //If user chooses to work from a different directory
-  if(directory){
-    headHTML += '<link rel="stylesheet" href="' + directory + '/styles/stylesGeneral.css">'+
-				'<link rel="stylesheet" href="' + directory + '/styles/stylesMap.css">'+
-				'<link rel="stylesheet" href="' + directory + '/styles/stylesGraph.css">'+
-				'<link rel="stylesheet" href="' + directory + '/styles/stylesMobile.css">'+
-				'<link rel="stylesheet" href="' + directory + '/styles/stylesSelectors.css">'+
-				'<link rel="stylesheet" href="' + directory + '/styles/stylesBoxSelector.css">'
-  } else {
-    headHTML += '<link rel="stylesheet" href="../styles/stylesGeneral.css">'+
-				'<link rel="stylesheet" href="../styles/stylesMap.css">'+
-				'<link rel="stylesheet" href="../styles/stylesGraph.css">'+
-				'<link rel="stylesheet" href="../styles/stylesMobile.css">'+
-				'<link rel="stylesheet" href="../styles/stylesSelectors.css">'+
-				'<link rel="stylesheet" href="../styles/stylesBoxSelector.css">'
-  }
-  headHTML += 
-				'<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />'+
-				'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'+
-				'<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>'
-
+async function initiateDashboard(renderMap = false, directory = '../'){
 	var bodyHTML = '<div class="header">'+
 				'<h1>Initial dashboard</h1>'+
 				'<div id="title"></div>'+
@@ -55,7 +29,6 @@ async function initiateDashboard(renderMap = false, directory = null){
   }
 
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-              'Graph Control<br>'+
               '<button class="displayBoxButton" onclick=showBoxSelector("boxTop") id="selectDimensionButton">Select dimensions</button>'+
               '<div id="selectedVariables"></div>'+
               '</div>'
@@ -77,7 +50,6 @@ async function initiateDashboard(renderMap = false, directory = null){
                 '</div>'+
               '</div>'
 
-	documentAppender(document.head, headHTML)
 	documentAppender(document.body, bodyHTML)
 
   if(renderMap === false){
@@ -93,9 +65,6 @@ async function initiateDashboard(renderMap = false, directory = null){
 function renderGraphBoxes(nMulticlassClassifiers, map=true){
   var html = ''
   if(nMulticlassClassifiers == 2){
-    if(map){
-      html += '<div class="column mapBox" id="mapBox"></div>'
-    } 
     html += '<div class="row" id="mainGraphs">'+
              '<div class="column graphBox" id="box">'+
                '<canvas id="myChart"></canvas>'+
@@ -157,16 +126,15 @@ async function initiateDashboardTT(renderMap = false, directory = '.'){
         '<div class="column statisticsSelector" id="statisticsSelector">'+
            'Map Control'+
           '<div id="selector-map"></div>'+
-          '<div id="mapInfo"></div>'+
+          '<div id="mapInfo">Hover over map</div>'+
       '</div>'
-
   }
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
                 '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
                 '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> Previous</button>'+
                 '<button id="nextDependent">Next <i class="fa fa-arrow-circle-right"></i></button>'+
-              '</div>'+
-              '<div id="selectedVariables"></div>'
+              '</div>'
+    //'<div id="selectedVariables"></div>'
 
   if(renderMap){
     bodyHTML += '<div class="column mapBox" id="mapBox">'+

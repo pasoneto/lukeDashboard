@@ -50,7 +50,7 @@
     flex-wrap: wrap;
     justify-content: center;
     height: 12%;
-    width: 80%;
+    width: 100%; /*Mobile has no map selector*/
     margin: 1px;
     margin-top: 0px;
     margin-left: 0px;
@@ -69,6 +69,12 @@
   }
   #nextDependent {
     width: 100%
+  }
+  #statisticsSelector{ /*Mobile has no map selector*/
+    display: none
+  }
+  .mapBox  {
+    display: none
   }
 
 }

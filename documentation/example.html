@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <head>
-    <!-- change directories here if you're not working within the /documentation folder -->
-    <script src="../src/graphFunctions.js"></script>
-    <script src="../src/generateHTMLstructure.js"></script>
-    <script src="../src/dataProcessUtils.js"></script>
-    <script src="../src/checkBoxSelectors.js"></script>
-    <script src="./ficData.js"></script>
-    <script src="../pxWebFunctions/dataFilter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" href="../styles/stylesGeneral.css">
+    <link rel="stylesheet" href="../styles/stylesMap.css">
+    <link rel="stylesheet" href="../styles/stylesGraph.css">
+    <link rel="stylesheet" href="../styles/stylesSelectors.css">
+    <link rel="stylesheet" href="../styles/stylesBoxSelector.css">
+    <link rel="stylesheet" href="../styles/stylesMobile.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <script src="../src/generateHTMLstructure.js"></script>
+  <script src="../tt/dataProcess.js"></script>
+  <script src="./ficData.js"></script>
+  <script src="../src/dataProcessUtils.js"></script>
+  <script src="../src/graphFunctions.js"></script>
+  <script src="../src/leafLetFunctions.js"></script>
+  <script src="../src/mapFunctions.js"></script>
+  <script src="../src/dropdownSelection.js"></script>
+  <script src="../src/checkBoxSelectors.js"></script>
 
 <script>
 
@@ -35,6 +48,6 @@
 
     //Running click simulation
     simulateSelection(multi, single)
-     
+    wrapGraph(checkedValues, categories, filteredData)
 </script>
 </html>
