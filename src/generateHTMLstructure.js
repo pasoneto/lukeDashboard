@@ -29,7 +29,7 @@ async function initiateDashboard(renderMap = false, directory = '../'){
   }
 
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-              '<button class="displayBoxButton" onclick=showBoxSelector("boxTop") id="selectDimensionButton">Select dimensions</button>'+
+              '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")>Select dimensions</button>'+
               '<div id="selectedVariables"></div>'+
               '</div>'
 
@@ -100,7 +100,7 @@ function generatePieChartsContainers(nPieCharts){
 }
 
 //Initiate html of TT
-async function initiateDashboardTT(renderMap = false, directory = '.'){
+async function initiateDashboardTT(renderMap = false, directory = '.', flipperButton = true){
 
   var bodyHTML = '<body>'+
       '<div class="header">'+
@@ -130,10 +130,14 @@ async function initiateDashboardTT(renderMap = false, directory = '.'){
       '</div>'
   }
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-                '<button class="displayBoxButton" id="selectDimensionButton">Select dimensions</button>'+
-                '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> Previous</button>'+
-                '<button id="nextDependent">Next <i class="fa fa-arrow-circle-right"></i></button>'+
-              '</div>'
+                '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")>Select dimensions</button>'
+
+  if(flipperButton){
+    bodyHTML += '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> Previous</button>'+
+                '<button id="nextDependent">Next <i class="fa fa-arrow-circle-right"></i></button>'
+  }
+
+  bodyHTML += '</div>'
     //'<div id="selectedVariables"></div>'
 
   if(renderMap){
@@ -155,8 +159,3 @@ async function initiateDashboardTT(renderMap = false, directory = '.'){
   }
   console.log("Rendered all boxes")
 }
-
-
-
-
-
