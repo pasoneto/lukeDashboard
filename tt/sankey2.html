@@ -1,29 +1,44 @@
 <!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+
 <head>
-    <!-- change directories here if you're not working within the /documentation folder --> 
-    <script src="../src/generateHTMLstructure.js"></script>
-    <script src="../tt/sankey/costs.js"></script>
-    <script src="../tt/sankey/income.js"></script>
-    <script src="../tt/dataProcess.js"></script>
-    <script src="../src/dataProcessUtils.js"></script>
-    <script src="../src/graphFunctions.js"></script>
-    <script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script> <!-- Renders database selector -->
-    <script src="./data.js"></script>
-    <script src="../src/sankeyFunctions.js"></script>
-    <script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-sankey.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <meta charset="UTF-8">
+  <title>Luke - Economy doctor dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="stylesheet" href="../styles/stylesGeneral.css">
+  <link rel="stylesheet" href="../styles/stylesMap.css">
+  <link rel="stylesheet" href="../styles/stylesGraph.css">
+  <link rel="stylesheet" href="../styles/stylesSelectors.css">
+  <link rel="stylesheet" href="../styles/stylesBoxSelector.css">
+  <link rel="stylesheet" href="../styles/stylesMobile.css">
 </head>
 
 <body>
 </body>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-sankey.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="./sankey/costs.js"></script>
+  <script src="./sankey/income.js"></script>
+  <script src="./data.js"></script>
+  <script src="../src/generateHTMLstructure.js"></script>
+  <script src="./dataProcess.js"></script>
+  <script src="../src/dataProcessUtils.js"></script>
+  <script src="../src/graphFunctions.js"></script>
+  <script src="../src/leafLetFunctions.js"></script>
+  <script src="../src/mapFunctions.js"></script>
+  <script src="../src/dropdownSelection.js"></script>
+  <script src="../src/checkBoxSelectors.js"></script>
+
 <script>
 
-    initiateDashboard(false, directory = "https://pasoneto.github.io/lukeDashboard/")
+    initiateDashboardTT(renderMap = false, directory = '.', flipperButton = false)
+
+    //initiateDashboard(false, directory = "https://pasoneto.github.io/lukeDashboard/")
     
     var classifiers = Object.keys(classifierLabels[0])
     var classifiers = classifiers.concat(['type'])
@@ -66,11 +81,6 @@
     //Establishes checkbox verification system. Multiple or single selection
     checkBoxVerificationSystem(categories, checkedValues, data, filterDataByCheckBox, exception = "tuotantosuuntaso") //Value is written inside the global variable checkedValues
 
-    //Simulating selection
-    var multi = ["type", "dependentVariable"];
-    var single = categories.filter(i => multi.includes(i) == false)
-    simulateSelection(multi, single)
-
     document.getElementById("buttonDimensionSelector").onclick = function(){
         showBoxSelector("boxTop")
         document.getElementById("graphsContainer").innerHTML = '<div id="container" style="width: 100vw; height: 60vh"></div>'
@@ -94,7 +104,7 @@
           
           filteredData1 = filteredData1.concat(filteredData0)  
 
-          displaySelectedSingleVariables(checkedValues, exception = 'dependenetVariable', labels)
+          //displaySelectedSingleVariables(checkedValues, exception = 'dependenetVariable', labels)
 
           // load the data to the sankey diagram instance
           chart.data(filteredData1);
@@ -115,8 +125,14 @@
     document.getElementById("selectDimensionButton").onclick = function(){
         showBoxSelector("boxTop")
     }
-    
 
-     
+    //Simulating selection
+    var multi = ["type", "dependentVariable"];
+    var single = categories.filter(i => multi.includes(i) == false)
+    simulateSelection(multi, single)
+    document.getElementById("buttonDimensionSelector").click()
+    showBoxSelector("boxTop")
+
 </script>
+
 </html>

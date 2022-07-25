@@ -7,6 +7,7 @@
   align-items: center;
   gap: 20px; /*Spacing between rows*/
   width: 80%
+  min-width: 0;
 }
 .graphBox {
   background: #EDF6FC;
@@ -19,6 +20,7 @@
   display: flex;
   width: 100%;
   gap: 20px;
+  min-width: 0;
 }
 /* Row box around all Pie charts */
 #pieChartsContainer{
@@ -34,6 +36,7 @@
 .graphBox3 {
   background: #EDF6FC;
   height: 35vh;
+  min-width: 0;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }

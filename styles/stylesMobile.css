@@ -76,5 +76,14 @@
   .mapBox  {
     display: none
   }
+  #graphsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /*Spacing between rows*/
+    width: 100%
+  }
 
 }
