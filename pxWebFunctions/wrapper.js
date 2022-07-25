@@ -1,7 +1,8 @@
 var renderMap = false
-initiateDashboardTT(renderMap = renderMap, directory = '.')
+initiateDashboardTT(renderMap = renderMap, directory = '.', flipperButton = false)
 
-var optionNames = ["Green house hass emission"]
+var classifiers;
+var options;
 
 //Url will be passed by user, depending on the report selected. To test on different reports,
 //Change URL value
@@ -17,8 +18,10 @@ async function wrapData(url){
   //Fetch all data from given report
   var allData = await fetch(url, queryBody);
   var allData = await allData.json();
+
   var allData = await restructureData(baseData, allData)
   var allData = Object.values(allData)
+
   return (allData)
 }
 
@@ -63,19 +66,19 @@ function wrapGraph(nMulticlassClassifiers){
       renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
       var group1 = window.multiClassClassifiers[0]
+      var xAxisName1 = classifiers.filter(i=>i !== group1)[0]
 
       var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
-
-      var xAxisName1 = window.multiClassClassifiers[0]
 
       var xAxis1 = window.checkedValues[xAxisName1]
 
       //Filtering null and missing values
       var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
-      //End of filtering null and missing values
-
-      graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Title")
       
+      //End of filtering null and missing values
+      
+      graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Title")
+
       //displaySelectedSingleVariables(window.checkedValues)
 
     } if(nMulticlassClassifiers < 1) {
@@ -108,6 +111,10 @@ allData.then(allData => {
   //Extract classifiers and options
   var [classifiers, options] = extractCategoriesAndOptions(allData, 'value')
   
+  //Store values as global variables, so it is accessible by the whole system
+  window.classifiers = classifiers
+  window.options = options
+
   //Generate checkboxes 
   generateCheckBoxes(classifiers, options, 'boxTop', allData)
   
