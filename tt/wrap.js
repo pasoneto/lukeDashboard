@@ -1,3 +1,4 @@
+console.log(window.location.search.split(5))
 //Initiate Map object
 var renderMap = false
 initiateDashboardTT(renderMap = renderMap, directory = '.')

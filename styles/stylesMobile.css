@@ -85,5 +85,8 @@
     gap: 20px; /*Spacing between rows*/
     width: 100%
   }
+  #shareDashboardButton{
+    margin-left: 0;
+  }
 
 }

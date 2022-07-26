@@ -137,7 +137,9 @@ async function initiateDashboardTT(renderMap = false, directory = '.', flipperBu
                 '<button id="nextDependent">Next <i class="fa fa-arrow-circle-right"></i></button>'
   }
 
-  bodyHTML += '</div>'
+  bodyHTML += '<button id="shareDashboardButton" onclick=shareDashboard("url")>Share URL<i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+              '<button onclick=shareDashboard("embed")>Embed URL<i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+              '</div>'
     //'<div id="selectedVariables"></div>'
 
   if(renderMap){

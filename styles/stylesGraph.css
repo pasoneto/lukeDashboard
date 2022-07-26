@@ -7,13 +7,13 @@
   align-items: center;
   gap: 20px; /*Spacing between rows*/
   width: 80%
-  min-width: 0;
 }
 .graphBox {
   background: #EDF6FC;
   height: 35vh;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  min-width: 0;
 }
 /* Row of two main graphs on top*/
 #mainGraphs{
