@@ -1,7 +1,7 @@
-console.log(window.location.search.split(5))
 //Initiate Map object
 var renderMap = false
-initiateDashboardTT(renderMap = renderMap, directory = '.')
+var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
+initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.')
 
 //URLs to fetch map data
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
@@ -211,19 +211,32 @@ function completeWrap(){
   }
 }
 
-//Selecting two multiclass classifiers
-var multi = ["vuosi_"];
-var classifiersNoVuosi = classifiers.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
-var randomElement = classifiersNoVuosi[Math.floor(Math.random() * classifiersNoVuosi.length)];
-multi.push(randomElement)
+//If user is entering for the first time, random selection is done.
+//Otherwise, if the page has url parameters, page will render the selection previously made
+var urlCheckBoxes = checkBoxesFromUrl()
+if(urlCheckBoxes === false){
+  //Selecting two multiclass classifiers
+  var multi = ["vuosi_"];
+  var classifiersNoVuosi = classifiers.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
+  var randomElement = classifiersNoVuosi[Math.floor(Math.random() * classifiersNoVuosi.length)];
+  multi.push(randomElement)
 
-//Establishing the single classifiers
-var single = classifiers.filter(i => multi.includes(i) == false)
+  //Establishing the single classifiers
+  var single = classifiers.filter(i => multi.includes(i) == false)
 
-//Running click simulation
-simulateSelection(multi, single)
-completeWrap()
-displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
+  //Running click simulation
+  simulateSelection(multi, single)
+  completeWrap()
+  displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
+
+} else {
+  var checkKeys = Object.keys(urlCheckBoxes)
+  for(l in checkKeys){
+    targetCheck(checkKeys[l], urlCheckBoxes[checkKeys[l]])
+  }
+  completeWrap()
+  displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
+}
 
 //Establishing initial state of dependentVariable click box
 var currentCheck = checkedValues['dependentVariable']

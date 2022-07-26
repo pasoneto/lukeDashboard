@@ -19,7 +19,7 @@ function _filterNull(yAxis, labels){
   var newY = []
   var newL = []
   for(t in yAxis){
-    var all0 = yAxis[t].every(i => i === 0)
+    var all0 = yAxis[t].every(i => i === 0 || isNaN(i))
     if(all0 === false){
       newY.push(yAxis[t])
       newL.push(labels[t])
@@ -44,7 +44,7 @@ function _removeNullColumns(yAxis, xAxis, labels){
 
   var columnsToKeep = []
   for(k in columns){
-    if(columns[k].every(l => l === 0) === false){
+    if(columns[k].every(l => l === 0 || isNaN(l)) === false){
       columnsToKeep.push(Number(k))
     }
   }

@@ -257,6 +257,13 @@ function singleCheck(categoryName){
   a[randomIndex].click()
 }
 
+function targetCheck(categoryName, options){
+  var a = document.getElementById(categoryName)
+  var a = Array.from(a.getElementsByTagName("input"))
+  function clickIf(i){ if(options.includes(i.id)){i.click()} }
+  a.map(i=> clickIf(i))
+}
+
 async function simulateSelection(multi, single){
   while (true) {
     multi.map(i => multiCheck(i))

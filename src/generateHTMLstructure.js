@@ -100,12 +100,12 @@ function generatePieChartsContainers(nPieCharts){
 }
 
 //Initiate html of TT
-async function initiateDashboardTT(renderMap = false, directory = '.', flipperButton = true){
+async function initiateDashboardTT(title, logo, renderMap = false, directory = '.', flipperButton = true){
 
   var bodyHTML = '<body>'+
       '<div class="header">'+
-        '<img id="logo" src="https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png">'+
-        '<div id="title"></div>'+
+        '<img id="logo" src="' + logo + '">'+
+        '<div id="title">' + title + '</div>'+
       '</div>'+
 
       '<!-- Box on top of everything. Selects classifiers -->'+

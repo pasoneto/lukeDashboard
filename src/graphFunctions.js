@@ -11,7 +11,7 @@ function _randomNoRepeats(array) {
 }
 
 function colorGenerator(yAxis){
-  var choices = ['#B35C00', '#CC0082', '#000000', '#FF8200', '#CCF0FA', '#E3F2D1', '#009FC7', '#54585A', '#E5D9EB', '#CCD6ED', '#528316', '#007B9A', '#FFCCEB', '#7F3F98', 'DEDEDE', '#78BE20', '#E13C98', '#E07400', '#00B5E2', '#65A11B', '#FFE5CC', '#0033A0']
+  var choices = ['#B35C00', '#CC0082', '#000000', '#FF8200', '#CCF0FA', '#E3F2D1', '#009FC7', '#54585A', '#E5D9EB', '#CCD6ED', '#528316', '#007B9A', '#FFCCEB', '#7F3F98', '#DEDEDE', '#78BE20', '#E13C98', '#E07400', '#00B5E2', '#65A11B', '#FFE5CC', '#0033A0']
   var randomColors = [];
   for (var i=0; i<yAxis.length; i++) {
       var randomColor = _randomNoRepeats(choices);

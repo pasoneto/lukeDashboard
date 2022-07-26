@@ -14,3 +14,17 @@ function shareDashboard(which){
     copyText(url)
   }
 }
+
+function checkBoxesFromUrl(){
+  var urlParameters = window.location.search
+  var searchObject = new URLSearchParams(urlParameters);
+  var hasParameters = searchObject.has('set')
+  if(hasParameters){
+    var checkedValues = searchObject.get('set')
+    return JSON.parse(checkedValues)
+  } else {
+    return false
+  }
+}
+
+checkBoxesFromUrl()

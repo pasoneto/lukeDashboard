@@ -1,5 +1,7 @@
 var renderMap = false
-initiateDashboardTT(renderMap = renderMap, directory = '.', flipperButton = false)
+var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
+var title = ''
+initiateDashboardTT(title, logoURL, renderMap = renderMap, directory = '.', flipperButton = false)
 
 var classifiers;
 var options;
@@ -7,8 +9,8 @@ var options;
 //Url will be passed by user, depending on the report selected. To test on different reports,
 //Change URL value
 //var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/02%20Maatalous/02%20Rakenne/02%20Maatalous-%20ja%20puutarhayritysten%20rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px'
-//var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
-var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/02%20Maatalous/02%20Rakenne/02%20Maatalous-%20ja%20puutarhayritysten%20rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px'
+var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
+//var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/02%20Maatalous/02%20Rakenne/02%20Maatalous-%20ja%20puutarhayritysten%20rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px'
 
 //Wrapper function to fetch data
 async function wrapData(url){
@@ -38,7 +40,7 @@ function wrapGraph(nMulticlassClassifiers){
 
       var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
       var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
-      
+
       var xAxis1 = window.checkedValues[xAxisName1]
       var xAxis2 = window.checkedValues[xAxisName2]
 
