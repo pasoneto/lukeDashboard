@@ -1,7 +1,8 @@
 var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 var title = ''
-initiateDashboardTT(title, logoURL, renderMap = renderMap, directory = '.', flipperButton = false)
+var sourceText = 'PxWeb'
+initiateDashboardTT(title, logoURL, renderMap = renderMap, directory = '.', flipperButton = false, sourceText)
 
 var classifiers;
 var options;

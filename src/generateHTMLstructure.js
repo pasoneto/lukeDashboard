@@ -7,7 +7,7 @@ function documentAppender(element, html){
 }
 
 async function initiateDashboard(renderMap = false, directory = '../'){
-	var bodyHTML = '<div class="header">'+
+	var bodyHTML = '<div class="header" id="header">'+
 				'<h1>Initial dashboard</h1>'+
 				'<div id="title"></div>'+
 				'</div>'+
@@ -100,10 +100,10 @@ function generatePieChartsContainers(nPieCharts){
 }
 
 //Initiate html of TT
-async function initiateDashboardTT(title, logo, renderMap = false, directory = '.', flipperButton = true){
+async function initiateDashboardTT(title, logo, renderMap = false, directory = '.', flipperButton = true, sourceText){
 
   var bodyHTML = '<body>'+
-      '<div class="header">'+
+      '<div class="header" id="header">'+
         '<img id="logo" src="' + logo + '">'+
         '<div id="title">' + title + '</div>'+
       '</div>'+
@@ -152,6 +152,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
         '</div>'+
       '</div>'
 
+  bodyHTML += '<div id="footer">Source: ' + sourceText + '</div>'
 
 	documentAppender(document.body, bodyHTML)
 

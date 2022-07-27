@@ -1,7 +1,9 @@
 //Initiate Map object
 var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
-initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.')
+var sourceText = 'Economy doctor'
+
+initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, sourceText = sourceText)
 
 //URLs to fetch map data
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
@@ -213,10 +215,10 @@ function completeWrap(){
 
 //If user is entering for the first time, random selection is done.
 //Otherwise, if the page has url parameters, page will render the selection previously made
-var urlCheckBoxes = checkBoxesFromUrl()
-if(urlCheckBoxes === false){
+var urlCheckBoxes = checkBoxesFromUrl() //Does the url have checkbox parameters?
+if(urlCheckBoxes === false){ //If no, run random simulation of elements
   //Selecting two multiclass classifiers
-  var multi = ["vuosi_"];
+  var multi = ["vuosi_"]; //Vuosi is always present, so we pick this as one multiclassifier
   var classifiersNoVuosi = classifiers.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
   var randomElement = classifiersNoVuosi[Math.floor(Math.random() * classifiersNoVuosi.length)];
   multi.push(randomElement)
@@ -229,7 +231,8 @@ if(urlCheckBoxes === false){
   completeWrap()
   displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
 
-} else {
+} else { //If yes, check checkboxes according to the parameters of the urlCheckBoxes
+  hideSelectors() //If user intends to embed url, there will be a parameter called embed. If embed is true, headers and selectors will be hiden for compactness.
   var checkKeys = Object.keys(urlCheckBoxes)
   for(l in checkKeys){
     targetCheck(checkKeys[l], urlCheckBoxes[checkKeys[l]])
