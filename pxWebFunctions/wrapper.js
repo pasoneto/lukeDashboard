@@ -60,6 +60,8 @@ function wrapGraph(nMulticlassClassifiers){
       var nPieCharts = Math.min(yAxis1.length, 3)
       generatePieChartsContainers(nPieCharts)
 
+      displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
+
       for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
         graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
       }
@@ -78,10 +80,14 @@ function wrapGraph(nMulticlassClassifiers){
       //Filtering null and missing values
       var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
       
+      console.log(xAxis1)
+      console.log(yAxis1)
+
       //End of filtering null and missing values
       
       graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Title")
 
+      displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
       //displaySelectedSingleVariables(window.checkedValues)
 
     } if(nMulticlassClassifiers < 1) {
@@ -91,17 +97,19 @@ function wrapGraph(nMulticlassClassifiers){
       var group1 = classifiers[0]
       var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
 
-      var xAxis1 = window.checkedValues[xAxisName1]
-
+      var xAxis1 = window.checkedValues[group1]
+      console.log(xAxis1)
+      console.log(yAxis1)
       //Filtering null and missing values
       var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
       //End of filtering null and missing values
 
       graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "")
       
+      displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
       //Display single variable names
-      var singleLabels = singleLabelExtractor(window.checkedValues, labels) 
-      displeySelectedSingleVariables(singleLabels)
+      //var singleLabels = singleLabelExtractor(window.checkedValues, labels) 
+      //displeySelectedSingleVariables(singleLabels)
     }
 }
 
@@ -149,5 +157,5 @@ allData.then(allData => {
   simulateSelection(multi, single)
   document.getElementById("buttonDimensionSelector").click()
   showBoxSelector("boxTop") //Hide box with checkboxes
-
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
 });
