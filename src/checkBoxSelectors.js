@@ -179,7 +179,7 @@ function checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunc
   if(notMany){ //Removes OnlyOne
     for(k in classifiers){
       if(classifiers[k] !== exception){
-        document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
+        document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Multiple selector)</font><p><input type="checkbox" id="selectAll" onclick=multiCheck("' + classifiers[k] + '")></input><div id="selectAllText">All <i class="fa fa-arrow-right" aria-hidden="true"></i></div></p>' //Add text saying that this category is multiple selector
       }
     }
     for(j in allCheckBoxes){

@@ -1,7 +1,7 @@
 //Initiate Map object
 var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
-var sourceText = 'Economy doctor'
+var sourceText = '<a href="https://portal.mtt.fi/portal/page/portal/economydoctor/">Economy Doctor</a>'
 
 initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, sourceText = sourceText)
 

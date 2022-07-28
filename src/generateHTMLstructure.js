@@ -152,7 +152,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
         '</div>'+
       '</div>'
 
-  bodyHTML += '<div id="footer">Source: ' + sourceText + '</div>'
+  bodyHTML += '<div id="footer"><div id="footerText">Source: ' + sourceText + '</div></div>'
 
 	documentAppender(document.body, bodyHTML)
 
