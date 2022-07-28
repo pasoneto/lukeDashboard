@@ -130,7 +130,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
       '</div>'
   }
   bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-                '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")>Select dimensions</button>'
+                '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>'
 
   if(flipperButton){
     bodyHTML += '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> Previous</button>'+
