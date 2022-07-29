@@ -1,7 +1,9 @@
+var map; //Initiate map global variable
 var renderMap = true
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 var title = ''
 var sourceText = 'PxWeb'
+
 initiateDashboardTT(title, logoURL, renderMap = renderMap, directory = '.', flipperButton = false, sourceText)
 
 var classifiers;
@@ -161,13 +163,12 @@ allData.then(allData => {
   showBoxSelector("boxTop") //Hide box with checkboxes
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
 
-
   //Minimal map setup
   var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
-  var mapDivision = 'ely'
-
-  //var mrc = renameMapRegions(filteredData);
-  drawMap(ely, mapDivision, mrc, filteredDataForMap, map, labels)
-
-
+  var mapDivision = 'ely' //this is now fixed, but should read from the API request
+  var mrc = filteredData.map(i=>i["ELY-keskus"]); //Same for this variable
+  var mrc = mrc.filter(onlyUnique)
+  drawMap(ely, mapDivision, mrc, filteredData, map)
+  //End of minimal map setup
+  
 });

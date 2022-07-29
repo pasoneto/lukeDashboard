@@ -1,13 +1,13 @@
-var headHTML = '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'
-var div = document.createElement('div');
+//var headHTML = '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'
+//var div = document.createElement('div');
 
-div.innerHTML = headHTML;
-while (div.children.length > 0) {
-	  document.head.appendChild(div.children[0]);
-}
+//div.innerHTML = headHTML;
+//while (div.children.length > 0) {
+  //document.head.appendChild(div.children[0]);
+  //}
 
 //Initiate Map object
-var renderMap = false
+var renderMap = true
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 var sourceText = '<a href="https://portal.mtt.fi/portal/page/portal/economydoctor/">Economy Doctor</a>'
 
@@ -33,7 +33,6 @@ var filteredDataForMap;
 var filteredData;
 var multiClassClassifiers;
 var map;
-
 
 //Extracting classifiers from ED file classifierLabels
 var classifiers = Object.keys(classifierLabels[0])

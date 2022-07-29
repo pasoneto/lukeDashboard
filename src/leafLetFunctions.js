@@ -120,7 +120,12 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
 
   function assignValueToGeoJsonObject(geoJSONObject, filteredDataForMap, regionDivision, regionsIn){
     for(i in regionsIn){
-      var value = Object.values(filteredDataForMap).filter(k=> renameOne(k[regionDivision]) == regionsIn[i])
+      try {
+        var value = Object.values(filteredDataForMap).filter(k=> renameOne(k[regionDivision]) == regionsIn[i])
+      }
+      catch (e) {
+        var value = Object.values(filteredDataForMap).filter(k=> k[regionDivision] == regionsIn[i])
+      }
       for(k in Object.values(geoJSONObject.features)){
         var regionMatches = geoJSONObject.features[k].properties[regionDivision] == regionsIn[i]
         if(regionMatches){ //Assign statistics value

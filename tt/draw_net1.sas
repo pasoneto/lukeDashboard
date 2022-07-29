@@ -125,16 +125,16 @@ data _null_;
 
     put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
     put '<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/dataProcessUtils.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/graphFunctions.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/mapFunctions.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/dropdownSelection.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/shareFunctions.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script>';
-    put '<script https://pasoneto.github.io/lukeDashboard/tt/wrap.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/dataProcessUtils.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/graphFunctions.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/mapFunctions.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/dropdownSelection.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/shareFunctions.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/tt/wrap.js"></script>';
 
     put '</html>';
 run;
