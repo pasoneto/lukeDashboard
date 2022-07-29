@@ -1,17 +1,3 @@
-var headerHTML = '<title>Luke - Economy doctor dashboard</title>'+
-                 '<meta charset="UTF-8">'+
-                 '<meta name="viewport" content="width=device-width, initial-scale=1">'+
-                 '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'+
-                 '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGeneral.css">'+
-                 '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMap.css">'+
-                 '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGraph.css">'+
-                 '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">'+
-                 '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesSelectors.css">'+
-                 '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesBoxSelector.css">'+
-                 '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />'
-
-documentAppender(document.head, headerHTML)
-
 //Initiate Map object
 var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'

@@ -32,19 +32,19 @@ data _null_;
     put '<html lang="en">';
     put '<meta charset="UTF-8">';
 
-    /*put '<head>';*/
-    /*put   '<title>Luke - Economy doctor dashboard</title>';*/
-    /*put   '<meta charset="UTF-8">';*/
-    /*put   '<meta name="viewport" content="width=device-width, initial-scale=1">';*/
-    /*put   '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">';*/
-    /*put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGeneral.css">';*/
-    /*put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMap.css">';*/
-    /*put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGraph.css">';*/
-    /*put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';*/
-    /*put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesSelectors.css">';*/
-    /*put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesBoxSelector.css">';*/
-    /*put   '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />';*/
-    /*put '</head>';*/
+    put '<head>';
+    put   '<title>Luke - Economy doctor dashboard</title>';
+    put   '<meta charset="UTF-8">';
+    put   '<meta name="viewport" content="width=device-width, initial-scale=1">';
+    put   '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGeneral.css">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMap.css">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGraph.css">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesSelectors.css">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesBoxSelector.css">';
+    put   '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />';
+    put '</head>';
 
     put '<body>';
     put '</body>';
