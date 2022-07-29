@@ -210,8 +210,8 @@
 
                                                 <tr>
                                                     <th scope="row">1</th>
-                                                    <td>categories</td>
-                                                    <td>[List] List of strings holding category names.</td>
+                                                    <td>classifiers</td>
+                                                    <td>[List] List of strings holding classifier names.</td>
                                                     <td>null</td>
                                                 </tr>
                                                 <tr>
@@ -353,6 +353,54 @@
                                     </div><!--//table-responsive-->
                                 </div><!--//section-block-->
                                 <!-- async function simulateSelection(multi, single){ -->
+                                <div id="singleCheck"  class="section-block">
+                                    <h3 class="block-title">singleCheck()</h3>
+                                    <p>Output: Automatically select one check box from a given classifier name. Checked option will be a random element within the option list for that classifier.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>classifierName</td>
+                                                    <td>[String] String indicating tha name of one classifier to which a random option will be checked.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="multiCheck"  class="section-block">
+                                    <h3 class="block-title">multiCheck()</h3>
+                                    <p>Output: Automatically select all check boxes from a given classifier.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>classifierName</td>
+                                                    <td>[String] String indicating tha name of one classifier to which all options will be checked.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
                                 <div id="simulateSelection"  class="section-block">
                                     <h3 class="block-title">simulateSelection()</h3>
                                     <p>Output: Automatically select checkboxes. There can be up to two multi-classifiers and any number of single-classifiers. Multi-classifiers will have all options checked, whereas single-classifiers will receive one check in a random option.</p>
@@ -377,6 +425,30 @@
                                                     <th scope="row">2</th>
                                                     <td>single</td>
                                                     <td>[List] List of strings containing the Object keys for the single-classifiers.</td>
+                                                    <td>null</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--//table-responsive-->
+                                </div><!--//section-block-->
+                                <div id="verifyAllClassifiersChecked"  class="section-block">
+                                    <h3 class="block-title">verifyAllClassifiersChecked()</h3>
+                                    <p>Output: Verifies if user chose at least one options for each classifier. If not, calls singleCheck() function with the name of that classifier as input.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Parameters</th>
+                                                    <th>Description</th>
+                                                    <th>Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>checkedValues</td>
+                                                    <td>[Object] Global object generated with the function checkedValuesObjectGenerator().</td>
                                                     <td>null</td>
                                                 </tr>
                                             </tbody>
@@ -737,7 +809,16 @@
                                             <a class="nav-link scrollto" href="#pickMultiClassClassifiers">pickMultiClassClassifiers()</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#singleCheck">singleCheck()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#multiCheck">multiCheck()</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link scrollto" href="#simulateSelection">simulateSelection()</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link scrollto" href="#verifyAllClassifiersChecked">verifyAllClassifiersChecked()</a>
                                         </li>
                                     </nav><!--//nav-->
                                 </nav><!--//doc-menu-->

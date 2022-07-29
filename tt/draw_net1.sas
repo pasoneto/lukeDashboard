@@ -36,7 +36,7 @@ data _null_;
     put   '<title>Luke - Economy doctor dashboard</title>';
     put   '<meta charset="UTF-8">';
     put   '<meta name="viewport" content="width=device-width, initial-scale=1">';
-    put   '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">';
+    put   '<!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGeneral.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMap.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGraph.css">';

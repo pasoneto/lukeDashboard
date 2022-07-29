@@ -296,3 +296,14 @@ function pickMultiClassClassifiers(checkedValues, categories){
     }
   }
 }
+
+//Verifies if user chose at least one option for each classifier. If not calls function singleCheck() with classifier name as parameter
+function verifyAllClassifiersChecked(checkedValues){
+  var checkedClassifiers = Object.keys(checkedValues)
+  for(k in checkedClassifiers){
+    var nChecked = checkedValues[checkedClassifiers[k]].length
+    if(nChecked < 1){
+      singleCheck(checkedClassifiers[k])
+    }
+  }
+}

@@ -1,3 +1,11 @@
+var headHTML = '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'
+var div = document.createElement('div');
+
+div.innerHTML = headHTML;
+while (div.children.length > 0) {
+	  document.head.appendChild(div.children[0]);
+}
+
 //Initiate Map object
 var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
@@ -92,6 +100,9 @@ var checkedValues = checkedValuesObjectGenerator(classifiers)
 checkBoxVerificationSystem(classifiers, checkedValues, data, filterDataByCheckBox, exception = "dependentVariable") //Value is written inside the global variable checkedValues
 
 function completeWrap(){
+  //Verifies if user chose at least one options for each classifier. If not, random assignment is made
+  verifyAllClassifiersChecked(checkedValues)
+
   //Selects classifiers which will be used as group and xAxis  
   pickMultiClassClassifiers(checkedValues, classifiers)
 

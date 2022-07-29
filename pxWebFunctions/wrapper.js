@@ -1,4 +1,4 @@
-var renderMap = false
+var renderMap = true
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 var title = ''
 var sourceText = 'PxWeb'
@@ -12,6 +12,8 @@ var options;
 //var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/02%20Maatalous/02%20Rakenne/02%20Maatalous-%20ja%20puutarhayritysten%20rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px'
 var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
 //var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/02%20Maatalous/02%20Rakenne/02%20Maatalous-%20ja%20puutarhayritysten%20rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px'
+
+
 
 //Wrapper function to fetch data
 async function wrapData(url){
@@ -158,4 +160,14 @@ allData.then(allData => {
   document.getElementById("buttonDimensionSelector").click()
   showBoxSelector("boxTop") //Hide box with checkboxes
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
+
+
+  //Minimal map setup
+  var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
+  var mapDivision = 'ely'
+
+  //var mrc = renameMapRegions(filteredData);
+  drawMap(ely, mapDivision, mrc, filteredDataForMap, map, labels)
+
+
 });
