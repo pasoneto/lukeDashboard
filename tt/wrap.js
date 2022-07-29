@@ -7,7 +7,7 @@
   //}
 
 //Initiate Map object
-var renderMap = true
+var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 var sourceText = '<a href="https://portal.mtt.fi/portal/page/portal/economydoctor/">Economy Doctor</a>'
 
