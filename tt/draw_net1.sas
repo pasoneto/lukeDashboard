@@ -40,16 +40,16 @@ data _null_;
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGeneral.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMap.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGraph.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesSelectors.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesBoxSelector.css">';
-    put   '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/checkBoxes.css">';
+    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';
+    put   '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>';
+    put   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
     put '</head>';
 
     put '<body>';
     put '</body>';
-
-    put '</html>';
 
 	  put '<script>';
 	  put 'var data =';

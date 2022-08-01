@@ -49,7 +49,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    height: 12%;
+    height: fit-content;
     width: 100%; /*Mobile has no map selector*/
     margin: 1px;
     margin-top: 0px;
@@ -87,6 +87,9 @@
   }
   #shareDashboardButton{
     margin-left: 0;
+  }
+  .header{
+    height: fit-content;
   }
 
 }

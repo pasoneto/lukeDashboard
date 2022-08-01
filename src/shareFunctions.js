@@ -6,9 +6,9 @@ function copyText(text){
 function shareDashboard(which){
   var url = new URL(location.href)  
   var checkedString = '?set=' + JSON.stringify(checkedValues) //bug here. Parameters stacking together
-  var url = url + checkedString + '&embed=true'
+  var url = url + checkedString
   if(which === 'embed'){
-    var embedURL = '<iframe type="text/html" style="resize: both" src=' + url + '></iframe>'
+    var embedURL = '<iframe type="text/html" style="resize: both" src=' + url + '&embed=true' + '></iframe>'
     copyText(embedURL)
   } else {
     copyText(url)
