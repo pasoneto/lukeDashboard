@@ -159,7 +159,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
   if(renderMap === false){
     document.getElementById("graphsContainer").style.width = '100vw'
     document.getElementById("dimensionSelector").style.width = '100vw'
-    if(document.getElementsByClassName("graphSingleBox") !== null){
+    if(document.getElementById("graphSingleBox") !== null){
       document.getElementsByClassName("graphSingleBox").style.width = '100vw'
     }
   }
