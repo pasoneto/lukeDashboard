@@ -265,3 +265,9 @@ document.getElementById("previousDependent").onclick = function(){
   completeWrap()
   displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
 }
+
+document.getElementById("goBackSelection").onclick = function(){
+  var urlParameters = window.location.search
+  console.log(urlParameters)
+}
+

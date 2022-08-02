@@ -139,6 +139,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
 
   bodyHTML += '<button id="shareDashboardButton" onclick=shareDashboard("url")>Share URL<i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
               '<button onclick=shareDashboard("embed")>Embed URL<i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+              '<button id="goBackSelection">Back to selection <i class="fa fa-hand-o-left" aria-hidden="true"></i></button>'+
               '</div>'
     //'<div id="selectedVariables"></div>'
 
