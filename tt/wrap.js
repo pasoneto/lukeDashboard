@@ -268,7 +268,7 @@ document.getElementById("previousDependent").onclick = function(){
 
 document.getElementById("goBackSelection").onclick = function(){
   var urlParameters = window.location.search
-  var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/?' + urlParameters
+  var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/' + urlParameters
   console.log(newLink) 
 }
 
