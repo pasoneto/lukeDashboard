@@ -15,8 +15,6 @@ var options;
 var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
 //var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/02%20Maatalous/02%20Rakenne/02%20Maatalous-%20ja%20puutarhayritysten%20rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px'
 
-
-
 //Wrapper function to fetch data
 async function wrapData(url){
   var baseData = await baseURL(url)
@@ -168,7 +166,7 @@ allData.then(allData => {
   var mapDivision = 'ely' //this is now fixed, but should read from the API request
   var mrc = filteredData.map(i=>i["ELY-keskus"]); //Same for this variable
   var mrc = mrc.filter(onlyUnique)
-  drawMap(ely, mapDivision, mrc, filteredData, map)
+  drawMap(geoTest, mapDivision, mrc, filteredData, map, zoom = 5.8, centering = [54, 4])
   //End of minimal map setup
   
 });

@@ -27,7 +27,7 @@ function showUnderliningMap(baseTile){
   window.baseTilePresent = baseTilePresent == false  
 }
 
-async function drawMap(url, regionDivision, regionsIn, statistics, map, labels = null){
+async function drawMap(url, regionDivision, regionsIn, statistics, map, zoom = 4.7, labels = null){
 
   function hoverBox(e) { //Function generates box over each hovered region
 
@@ -139,7 +139,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
   if(window.map === undefined){
     console.log("initiating map")
     //Initiate base map
-    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
+    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
 
     var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -149,8 +149,13 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
     window.map.options.minZoom = 4;
 
     var tilesLayer;
-    var geoJSON = await loadArea(url);
+    if(typeof(url) === 'string'){
+      var geoJSON = await loadArea(url);
+    } else {
+      var geoJSON = url
+    }
     var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision, regionsIn)
+    console.log(geoJSON)
     var tilesLayer = L.geoJSON(geoJSON, {
           style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},
           onEachFeature: onEachFeature
@@ -158,7 +163,7 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
   } else {
     console.log("removing")
     window.map.remove()
-    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView([65.3, 25], 4.7);
+    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
 
     var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -168,7 +173,12 @@ async function drawMap(url, regionDivision, regionsIn, statistics, map, labels =
     window.map.options.minZoom = 4;
 
     var tilesLayer;
-    var geoJSON = await loadArea(url);
+    if(typeof(url) === 'string'){
+      var geoJSON = await loadArea(url);
+    } else {
+      var geoJSON = url
+    }
+    var geoJSON = url
     var geoJSON = assignValueToGeoJsonObject(geoJSON, statistics, regionDivision, regionsIn)
     var tilesLayer = L.geoJSON(geoJSON, {
           style: function(feature){ return( styleGen(feature, regionsIn, regionDivision) )},

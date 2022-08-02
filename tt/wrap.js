@@ -219,7 +219,7 @@ function completeWrap(){
   if(renderMap){
     //Getting only region codes that exist in data
     var mrc = renameMapRegions(filteredDataForMap);
-    drawMap(mapURL, mapDivision, mrc, filteredDataForMap, map, labels)
+    drawMap(mapURL, mapDivision, mrc, filteredDataForMap, map, zoom = 4.7, centering = [65.3, 25], labels)
   }
 }
 
