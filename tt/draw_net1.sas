@@ -51,6 +51,8 @@ data _null_;
     put '<body>';
     put '</body>';
 
+    put '</html>';
+
 	  put '<script>';
 	  put 'var data =';
 	

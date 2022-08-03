@@ -113,26 +113,27 @@ function _singleLabelExtractor(checkedValues, exception = null, labels = null){
   //var singleLabels = singleLabels.map(i => labels[0]['subLabels'][xAxisName1][i])
   var selectedOptions = Object.values(checkedValues)
   var selectedClassifiers = Object.keys(checkedValues)
-  json = ""
+  json = []
   if(labels){
     for(k in selectedOptions){
       if(selectedOptions[k].length == 1){ //Verify if it is single classifier
         //Except dependent variable, which doesn't have a translator. Create more general function for this
         if(selectedClassifiers[k] != exception){
-          json += "<strong>" + labels[0]['classifiers'][selectedClassifiers[k]] + "</strong>" + ": " + labels[0]['subLabels'][selectedClassifiers[k]][selectedOptions[k]] + ";  "
+          json.push(labels[0]['subLabels'][selectedClassifiers[k]][selectedOptions[k]])
         } else {
-          json += "<strong>" + selectedClassifiers[k] + "</strong>" + ": " + labels[0]["dependentVariable"][selectedOptions[k]] + ";  "
+          json.push(labels[0]["dependentVariable"][selectedOptions[k]])
         }
       }
     }
   } else {
     for(k in selectedOptions){
       if(selectedOptions[k].length == 1){
+        console.log("a")
         //Except dependent variable, which doesn't have a translator. Create more general function for this
         if(selectedClassifiers[k] !== exception){
-          json += "<strong>" + selectedClassifiers[k] + "</strong>" + ": " + selectedOptions[k] + ";  "
+          json.push(selectedOptions[k])
         } else {
-          json += "<strong>" + selectedClassifiers[k] + "</strong>" + ": " + selectedOptions[k] + ";  "
+          json.push(selectedOptions[k])
         }
       }
     }

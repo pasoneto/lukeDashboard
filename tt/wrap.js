@@ -141,8 +141,15 @@ function completeWrap(){
     var group1Label = labels[0]['classifiers'][group1]
     var group2Label = labels[0]['classifiers'][group2]
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", "Comparing by " + group1Label)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", "Comparing by " + group2Label, showLegend = true)
+    //Display single variable names
+    var singleLabels = _singleLabelExtractor(window.checkedValues, exception = 'dependentVariable', labels)
+    //displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
+
+    var title1 = singleLabels[0] + ' and ' + singleLabels[1]
+    var title2 = singleLabels[0] + ' and ' + singleLabels[1]
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title2, showLegend = true)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)
@@ -155,8 +162,6 @@ function completeWrap(){
       graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
     }
 
-    //Display single variable names
-    //displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
   } 
   
   ///////For when there is only 1 milticlass classifier
@@ -183,10 +188,12 @@ function completeWrap(){
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
     var group1Label = labels[0]['classifiers'][group1]
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Comparing by " + group1Label)
-    
     //Display single variable names
+    var singleLabels = _singleLabelExtractor(window.checkedValues, exception = 'dependentVariable', labels)
     //displaySelectedSingleVariables(window.checkedValues, labels = labels)
+    
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', singleLabels)
+    
 
   } if(nMulticlassClassifiers < 1) {
     
@@ -209,11 +216,12 @@ function completeWrap(){
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "")
-    
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels) 
-    displeySelectedSingleVariables(singleLabels)
+    var singleLabels = _singleLabelExtractor(window.checkedValues, exception = 'dependentVariable', labels)
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', singleLabels)
+    
+    //displaySelectedSingleVariables(singleLabels)
 
   }
   if(renderMap){
