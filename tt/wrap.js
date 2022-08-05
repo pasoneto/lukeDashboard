@@ -43,6 +43,7 @@ var data = reshapeJSON(data, classifiers)
 //Merging labels into one object
 var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
+classifierLabels[0]['dependentVariable'] = 'reportName'
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Function translates value -1 to its label (because this does not come from ED's backend)
@@ -142,14 +143,16 @@ function completeWrap(){
     var group2Label = labels[0]['classifiers'][group2]
 
     //Display single variable names
-    var singleLabels = _singleLabelExtractor(window.checkedValues, exception = 'dependentVariable', labels)
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
     //displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
 
-    var title1 = singleLabels[0] + ' and ' + singleLabels[1]
-    var title2 = singleLabels[0] + ' and ' + singleLabels[1]
+    var singleClassifiers = Object.keys(singleLabels)
+    var singleOptions = Object.values(singleLabels)
+
+    var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title2, showLegend = true)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)
@@ -189,10 +192,12 @@ function completeWrap(){
     var group1Label = labels[0]['classifiers'][group1]
 
     //Display single variable names
-    var singleLabels = _singleLabelExtractor(window.checkedValues, exception = 'dependentVariable', labels)
-    //displaySelectedSingleVariables(window.checkedValues, labels = labels)
-    
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', singleLabels)
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleClassifiers = Object.keys(singleLabels)
+    var singleOptions = Object.values(singleLabels)
+    var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
     
 
   } if(nMulticlassClassifiers < 1) {
@@ -217,11 +222,12 @@ function completeWrap(){
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
 
     //Display single variable names
-    var singleLabels = _singleLabelExtractor(window.checkedValues, exception = 'dependentVariable', labels)
+    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleClassifiers = Object.keys(singleLabels)
+    var singleOptions = Object.values(singleLabels)
+    var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', singleLabels)
-    
-    //displaySelectedSingleVariables(singleLabels)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
 
   }
   if(renderMap){

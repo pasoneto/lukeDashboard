@@ -109,32 +109,20 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors, legend = fa
 }
 
 //Verifies which classifiers were selected as single-classifiers, and what were the options selected made
-function _singleLabelExtractor(checkedValues, exception = null, labels = null){
-  //var singleLabels = singleLabels.map(i => labels[0]['subLabels'][xAxisName1][i])
+function singleLabelExtractor(checkedValues, labels = null){
   var selectedOptions = Object.values(checkedValues)
   var selectedClassifiers = Object.keys(checkedValues)
-  json = []
+  json = {}
   if(labels){
     for(k in selectedOptions){
       if(selectedOptions[k].length == 1){ //Verify if it is single classifier
-        //Except dependent variable, which doesn't have a translator. Create more general function for this
-        if(selectedClassifiers[k] != exception){
-          json.push(labels[0]['subLabels'][selectedClassifiers[k]][selectedOptions[k]])
-        } else {
-          json.push(labels[0]["dependentVariable"][selectedOptions[k]])
-        }
+        json[labels[0]['classifiers'][selectedClassifiers[k]]] = labels[0]['subLabels'][selectedClassifiers[k]][selectedOptions[k]]
       }
     }
   } else {
     for(k in selectedOptions){
-      if(selectedOptions[k].length == 1){
-        console.log("a")
-        //Except dependent variable, which doesn't have a translator. Create more general function for this
-        if(selectedClassifiers[k] !== exception){
-          json.push(selectedOptions[k])
-        } else {
-          json.push(selectedOptions[k])
-        }
+      if(selectedOptions[k].length == 1){ //Verify if it is single classifier
+        json[selectedClassifiers[k]] = selectedOptions[k]
       }
     }
   }
