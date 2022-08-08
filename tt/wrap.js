@@ -290,12 +290,9 @@ document.getElementById("goBackSelection").onclick = function(){
     if(parameterValue !== null){
       filteredParams += parameters[i] + '=' + parameterValue
     } else {
-      filteredParams += parameters[i] + '='
     }
   }
-  for(i in naytas){
-    filteredParams += 'nayta=' + naytas[i]
-  }
+  filteredParams += '&nayta=2.dimensio&nayta=3.dimensio' 
   var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/?' + filteredParams
   console.log(newLink)
   location.href = newLink 
