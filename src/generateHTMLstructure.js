@@ -64,7 +64,7 @@ async function initiateDashboard(renderMap = false, directory = '../'){
 //Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
 function renderGraphBoxes(nMulticlassClassifiers, map=true){
   var html = ''
-  if(nMulticlassClassifiers == 2){
+  if(nMulticlassClassifiers > 0){
     html += '<div class="row" id="mainGraphs">'+
              '<div class="column graphBox" id="box">'+
                '<canvas id="myChart"></canvas>'+

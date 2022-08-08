@@ -198,7 +198,18 @@ function completeWrap(){
     var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
+    graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart1", 'line', title1, showLegend=false)
     
+    //Rendering up to 3 pieCharts
+    var pieColors = colorGenerator(xAxis1)
+    var htmlPieCharts = '';
+
+    var nPieCharts = Math.min(yAxis1.length, 3)
+    generatePieChartsContainers(nPieCharts)
+
+    for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
+      graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
+    }
 
   } if(nMulticlassClassifiers < 1) {
     
