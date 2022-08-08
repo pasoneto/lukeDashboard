@@ -54,9 +54,7 @@ data _null_;
     put '</html>';
 
 	  put '<script>';
-    put 'var reportType ="';
-    put &rapotsikko;
-    put '"';
+    put 'var reportType ="' &rapotsikko '"';
 	  put 'var data =';
 	
 run;

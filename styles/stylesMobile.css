@@ -91,5 +91,18 @@
   .header{
     height: fit-content;
   }
-
+  ul{
+    -moz-column-count: 1;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 1;
+    -webkit-column-gap: 20px;
+    column-count: 1;
+    column-gap: 20px;
+    list-style-type: none;
+    margin-left: 60px;
+    font-size: 25px;
+  }
+  li{
+    margin-bottom: 5px;
+  }
 }

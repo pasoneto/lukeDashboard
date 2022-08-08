@@ -1,3 +1,40 @@
+/*Container wraping list of classifiers*/
+#checkBoxListContainer{
+  background-color: snow;
+  margin: auto;
+  margin-top: 0px;
+  padding: 10px;
+  border-radius: 4px;
+  width: 95%;
+}
+/*Container wraping list of classifiers*/
+
+/*Header of category selector box*/
+#categorySelectorHeader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  font-size: 18px;
+  /*background-color: #2196F3; #ff8200; #02b5e2; */
+  background: #0088A9;
+  color: #fff;
+}
+/*Header of category selector box*/
+
+/*Checkbox list*/
+ul{
+  -moz-column-count: 3;
+  -moz-column-gap: 0px;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 0px;
+  column-count: 3;
+  column-gap: 0px;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 50px;
+}
+/*Checkbox list*/
+
 /* Checkboxes styles */
 input[type="checkbox"]{
 

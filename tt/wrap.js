@@ -43,7 +43,7 @@ var data = reshapeJSON(data, classifiers)
 //Merging labels into one object
 var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
-classifierLabels[0]['dependentVariable'] = report
+classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Function translates value -1 to its label (because this does not come from ED's backend)

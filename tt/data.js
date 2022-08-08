@@ -1,4 +1,4 @@
-var report = 'Tuloslaskelma'
+var reportType = 'Tuloslaskelma'
 var data =
 [
 {
