@@ -1,3 +1,4 @@
+var report = 'Tuloslaskelma'
 var data =
 [
 {

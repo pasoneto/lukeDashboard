@@ -43,7 +43,7 @@ var data = reshapeJSON(data, classifiers)
 //Merging labels into one object
 var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
-classifierLabels[0]['dependentVariable'] = 'reportName'
+classifierLabels[0]['dependentVariable'] = report
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Function translates value -1 to its label (because this does not come from ED's backend)
@@ -71,7 +71,7 @@ for(k in classifiers){
 }
 
 //Generate checkbox inside hidden div
-generateCheckBoxes(classifiers, options, data, 'dependentVariable', labels)
+generateCheckBoxes(classifiers, options, data, '', labels)
 
 //if(renderMap){
   //document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
