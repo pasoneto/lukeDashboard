@@ -281,8 +281,23 @@ document.getElementById("previousDependent").onclick = function(){
 }
 
 document.getElementById("goBackSelection").onclick = function(){
-  var urlParameters = window.location.search
-  var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/' + urlParameters
+  var urlParameters = new URLSearchParams(window.location.search);
+  var parameters = ['tulostus', 'dim1paataso', 'dim1alataso', 'dim2paataso', 'dim2alataso', 'dim3paataso', 'dim3alataso']
+  var naytas = urlParameters.getAll('nayta')
+  var filteredParams = ''
+  for(i in parameters){
+    var parameterValue = urlParameters.get(parameters[i])
+    if(parameterValue !== null){
+      filteredParams += parameters[i] + '=' + parameterValue
+    } else {
+      filteredParams += parameters[i] + '='
+    }
+  }
+  for(i in naytas){
+    filteredParams += 'nayta=' + naytas[i]
+  }
+  var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/?' + filteredParams
+  console.log(newLink)
   location.href = newLink 
 }
 
