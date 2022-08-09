@@ -124,6 +124,9 @@ function completeWrap(){
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
     var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
     
+    console.log(yAxis1)
+    console.log(yAxis2)
+
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
 
@@ -131,6 +134,9 @@ function completeWrap(){
     var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
     var [yAxis2, xAxis2, labels2] = nullsOut(yAxis2, xAxis2, labels2)
     //End of filtering null and missing values
+
+    console.log(yAxis1)
+    console.log(yAxis2)
 
     //Translating subClassifier codes to labels
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
@@ -197,19 +203,15 @@ function completeWrap(){
     var singleOptions = Object.values(singleLabels)
     var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
-    graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart1", 'line', title1, showLegend=false)
+    graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', title1, showLegend=false)
     
     //Rendering up to 3 pieCharts
-    var pieColors = colorGenerator(xAxis1)
-    var htmlPieCharts = '';
+    var pieColors = colorGenerator(labels1)
 
     var nPieCharts = Math.min(yAxis1.length, 3)
-    generatePieChartsContainers(nPieCharts)
-
-    for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
-      graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
-    }
+    generatePieChartsContainers(2)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', title1)
+    graphCustomPie(labels1, yAxis1, "myChart2", "pie", title1, pieColors)
 
   } if(nMulticlassClassifiers < 1) {
     

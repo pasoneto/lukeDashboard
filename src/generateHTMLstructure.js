@@ -64,7 +64,7 @@ async function initiateDashboard(renderMap = false, directory = '../'){
 //Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
 function renderGraphBoxes(nMulticlassClassifiers, map=true){
   var html = ''
-  if(nMulticlassClassifiers > 0){
+  if(nMulticlassClassifiers == 2){
     html += '<div class="row" id="mainGraphs">'+
              '<div class="column graphBox" id="box">'+
                '<canvas id="myChart"></canvas>'+
@@ -79,7 +79,22 @@ function renderGraphBoxes(nMulticlassClassifiers, map=true){
              '<div class="column graphBox3" id="box4"></div>'+
            '</div>'+
            '</div>'
-  } else {
+  } 
+  if(nMulticlassClassifiers == 1){
+    html += '<div class="row" id="mainGraphs">'+
+               /*Locally changing width to 100%. Think of more general solution*/
+               '<div class="column graphBox" id="box" style="width: 100%">'+
+                 '<canvas id="myChart"></canvas>'+
+               '</div>'+
+             '</div>'+
+             '<div class="row" id="pieChartsContainer">'+
+               '<div class="column graphBox3" id="box2"></div>'+
+               '<div class="column graphBox3" id="box3"></div>'+
+               '<div class="column graphBox3" id="box4"></div>'+
+             '</div>'+
+             '</div>'
+  }
+  if(nMulticlassClassifiers < 1) {
     html = '<div class="row">'+
               '<div class="graphSingleBox" id="box">'+
               '<canvas id="myChart"></canvas>'+

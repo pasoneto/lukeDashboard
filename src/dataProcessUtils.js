@@ -19,7 +19,7 @@ function _filterNull(yAxis, labels){
   var newY = []
   var newL = []
   for(t in yAxis){
-    var all0 = yAxis[t].every(i => i === 0 || isNaN(i))
+    var all0 = yAxis[t].every(i => isNaN(i) || i === null)
     if(all0 === false){
       newY.push(yAxis[t])
       newL.push(labels[t])
@@ -44,7 +44,8 @@ function _removeNullColumns(yAxis, xAxis, labels){
 
   var columnsToKeep = []
   for(k in columns){
-    if(columns[k].every(l => l === 0 || isNaN(l)) === false){
+    var all0 = columns[k].every(l => isNaN(l) || l === null)
+    if(all0 === false){
       columnsToKeep.push(Number(k))
     }
   }
@@ -76,7 +77,7 @@ function separateDataInGroups(filteredData, groupSelected, checkedValues){
   var labels = []
   for(k in window.checkedValues[groupSelected]){
     var group = filteredData.filter(i => i[groupSelected] == window.checkedValues[groupSelected][k])
-    var y = [group.map(i => Number(i.value))]
+    var y = [group.map(i => i.value)]
     yAxis.push(y[0])
     labels.push(window.checkedValues[groupSelected][k])
   }
