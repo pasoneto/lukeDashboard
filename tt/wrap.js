@@ -172,7 +172,8 @@ function completeWrap(){
     generatePieChartsContainers(nPieCharts)
 
     for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
-      graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "pie", labels1[i-2], pieColors)
+      //var all0 = yAxis1[i-2].every(i => i === 0)
+      graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "doughnut", labels1[i-2], pieColors)
     }
 
   } 
