@@ -161,8 +161,8 @@ function completeWrap(){
     }
     var title1 = title1.slice(0, -1)
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = false)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = false)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)
@@ -221,7 +221,7 @@ function completeWrap(){
     var nPieCharts = Math.min(yAxis1.length, 3)
     generatePieChartsContainers(2)
     graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', title1)
-    graphCustomPie(labels1, yAxis1, "myChart2", "pie", title1, pieColors)
+    graphCustomPie(labels1, yAxis1, "myChart2", "doughnut", title1, pieColors)
 
   } if(nMulticlassClassifiers < 1) {
     
@@ -312,25 +312,26 @@ document.getElementById("previousDependent").onclick = function(){
 }
 //tulostus=1&dim1paataso=1&dim1alataso=18,19,02,21&nayta=2.dimensio&dim2paataso=13&dim2alataso=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21&nayta=3.dimensio&dim3paataso=79&dim3alataso=1,5,6
 document.getElementById("goBackSelection").onclick = function(){
-  var urlParameters = new URLSearchParams(window.location.search);
-  var parameters = ['tulostus', 'dim1paataso', 'dim1alataso', 'nayta=2.dimensio', 'dim2paataso', 'dim2alataso', 'nayta=3.dimensio', 'dim3paataso', 'dim3alataso']
-  var filteredParams = ''
-  for(i in parameters){
-    var parameterValue = urlParameters.get(parameters[i])
-    if(parameterValue !== null){
-      filteredParams += parameters[i] + '=' + parameterValue + '&'
-    } else {
-      if(parameters[i] === 'nayta=2.dimensio' || parameters[i] === 'nayta=3.dimensio'){
-        filteredParams += parameters[i] + '&'
-      }
-      else{
-        filteredParams += parameters[i] + '=&'
-      }
-    }
-  }
-  var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/?' + filteredParams
-  var newLink = newLink.slice(0, -1)
-  console.log(newLink)
-  location.href = newLink 
+  javascript:history.go(-2);
+  //var urlParameters = new URLSearchParams(window.location.search);
+  //var parameters = ['tulostus', 'dim1paataso', 'dim1alataso', 'nayta=2.dimensio', 'dim2paataso', 'dim2alataso', 'nayta=3.dimensio', 'dim3paataso', 'dim3alataso']
+  //var filteredParams = ''
+  //for(i in parameters){
+    //var parameterValue = urlParameters.get(parameters[i])
+    //if(parameterValue !== null){
+      //filteredParams += parameters[i] + '=' + parameterValue + '&'
+      //} else {
+        //if(parameters[i] === 'nayta=2.dimensio' || parameters[i] === 'nayta=3.dimensio'){
+          //filteredParams += parameters[i] + '&'
+          //}
+        //else{
+          //filteredParams += parameters[i] + '=&'
+          //}
+        //}
+    //}
+  //var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/?' + filteredParams
+  //var newLink = newLink.slice(0, -1)
+  //console.log(newLink)
+  //location.href = newLink 
 }
 

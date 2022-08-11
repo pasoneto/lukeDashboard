@@ -244,6 +244,5 @@ Chart.plugins.register({
       chart.data.datasets[0].backgroundColor = '#d2dee2'; //change bg color
       chart.data.datasets[0].borderWidth = 0; //no border
       chart.options.tooltips = false; //disable tooltips
-      chart.options.legend.onClick = null; //disable legend click
    }
 });
