@@ -20,13 +20,13 @@ var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&reque
 var suuralue = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=suuralue4500k_2022&bbox=-13897.244162771385,6486387.218574781,914028.2558372286,7927801.468574781'
 
 //determines the region division
-if(Object.keys(data[0]).includes('maakunta')){
-  var mapURL = maakunta
-  var mapDivision = 'maakunta'
-} else if(Object.keys(data[0].includes('suuralue'))){
-  var mapURL = suuralue
-  var mapDivision = 'suuralue'
-}
+//if(Object.keys(data[0]).includes('maakunta')){
+  //var mapURL = maakunta
+  //var mapDivision = 'maakunta'
+  //} else if(Object.keys(data[0].includes('suuralue'))){
+    //var mapURL = suuralue
+    //var mapDivision = 'suuralue'
+    //}
 
 //Initiating global variables
 var filteredDataForMap;
@@ -154,8 +154,12 @@ function completeWrap(){
 
     var singleClassifiers = Object.keys(singleLabels)
     var singleOptions = Object.values(singleLabels)
-
-    var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
+    
+    var title1 = ''
+    for(m in singleClassifiers){
+      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '; '
+    }
+    var title1 = title1.slice(0, -1)
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1)
     graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
@@ -201,7 +205,12 @@ function completeWrap(){
     var singleLabels = singleLabelExtractor(window.checkedValues, labels)
     var singleClassifiers = Object.keys(singleLabels)
     var singleOptions = Object.values(singleLabels)
-    var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
+
+    var title1 = ''
+    for(m in singleClassifiers){
+      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '; '
+    }
+    var title1 = title1.slice(0, -1)
 
     graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', title1, showLegend=false)
     
@@ -238,7 +247,12 @@ function completeWrap(){
     var singleLabels = singleLabelExtractor(window.checkedValues, labels)
     var singleClassifiers = Object.keys(singleLabels)
     var singleOptions = Object.values(singleLabels)
-    var title1 = singleClassifiers[0] + ': ' + singleOptions[0] + '; ' + singleClassifiers[1] + ': ' + singleOptions[1]
+
+    var title1 = ''
+    for(m in singleClassifiers){
+      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '; '
+    }
+    var title1 = title1.slice(0, -1)
 
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
 
@@ -262,6 +276,9 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
 
   //Establishing the single classifiers
   var single = classifiers.filter(i => multi.includes(i) == false)
+  if(classifiers.length == 2){
+    multi = ["vuosi_", "dependentVariable"]
+  }
 
   //Running click simulation
   simulateSelection(multi, single)

@@ -242,6 +242,7 @@ function dragElement(elmnt, headerElmnt) {
 
 //Simulate checkbox selection and automates generation of dashboard
 function multiCheck(categoryName){
+  console.log(categoryName)
   var a = document.getElementById(categoryName)
   var a = Array.from(a.getElementsByTagName("input"))
 
