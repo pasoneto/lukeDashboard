@@ -55,6 +55,7 @@ data _null_;
 
 	  put '<script>';
     put 'var reportType ="' &rapotsikko '"';
+    put 'var kieli ="' &kieli '"';
 	  put 'var data =';
 	
 run;

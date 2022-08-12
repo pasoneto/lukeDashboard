@@ -9,11 +9,18 @@
 //Initiate Map object
 var renderMap = false
 
-var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
-var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-ekonomidoktorn-213x150px.png'
-var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-taloustohtori-200x150px_1.png'
-
-var language = 'fin'
+if(kieli === '1'){
+  var language = 'fin'
+  var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-taloustohtori-200x150px_1.png'
+}
+if(kieli === '2'){
+  var language = 'swd'
+  var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-ekonomidoktorn-213x150px.png'
+}
+if(kieli === '3'){
+  var language = 'eng'
+  var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
+}
 
 initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, textTranslations, language)
 
