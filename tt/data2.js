@@ -1,3 +1,4 @@
+var kieli = 1
 var reportType ="Tukierittely141  "
 var data =
 [
