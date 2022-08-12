@@ -134,10 +134,11 @@ function displaySelectedSingleVariables(checkedValues, exception = null, labels 
   document.getElementById("selectedVariables").innerHTML = cV
 }
 
-function displayNonGraphs(filteredData, whereToAppend){
+function displayNonGraphs(filteredData, whereToAppend, textTranslations, language){
   var noDisplay = Object.values(filteredData).every(i => i.value === 0 || i.value === null || isNaN(i.value))
   if(noDisplay){
-    document.getElementById("graphsContainer").innerHTML = "<div id='noGraphContainer'><div id='noGraph'><div id='textNoGraph'><p><i class='fa fa-info-circle' aria-hidden='true'></i></i>  Sorry, there is no data for this selection</p><p id='textNoGraph2'>Please, try a different combination of variables</div></p></div></div>"
+    console.log(textTranslations)
+    document.getElementById("graphsContainer").innerHTML = "<div id='noGraphContainer'><div id='noGraph'><div id='textNoGraph'><p><i class='fa fa-info-circle' aria-hidden='true'></i></i>  " + textTranslations['noGraphs']['sorryNoData'][language] + "</p><p id='textNoGraph2'>" + textTranslations['noGraphs']['pleaseTryDifferent'][language] + "</div></p></div></div>"
   }
 }
 

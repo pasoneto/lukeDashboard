@@ -8,10 +8,14 @@
 
 //Initiate Map object
 var renderMap = false
-var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
-var sourceText = '<a href="https://portal.mtt.fi/portal/page/portal/economydoctor/">Economy Doctor</a>'
 
-initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, sourceText = sourceText)
+var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
+var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-ekonomidoktorn-213x150px.png'
+var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-taloustohtori-200x150px_1.png'
+
+var language = 'fin'
+
+initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, textTranslations, language)
 
 //URLs to fetch map data
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
@@ -71,7 +75,7 @@ for(k in classifiers){
 }
 
 //Generate checkbox inside hidden div
-generateCheckBoxes(classifiers, options, data, '', labels)
+generateCheckBoxes(classifiers, options, data, '', labels, textTranslations, language)
 
 //if(renderMap){
   //document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
@@ -87,7 +91,7 @@ for(k in buttonsRenderGraph){
   buttonsRenderGraph[k].onclick = function(){
     showBoxSelector("boxTop") //Hide box with checkboxes
     completeWrap() 
-    displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
+    displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
     //Add back function to show checkboxes div
     document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
   }
@@ -284,7 +288,7 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
   //Running click simulation
   simulateSelection(multi, single)
   completeWrap()
-  displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 
 } else { //If yes, check checkboxes according to the parameters of the urlCheckBoxes
   hideSelectors() //If user intends to embed url, there will be a parameter called embed. If embed is true, headers and selectors will be hiden for compactness.
@@ -293,7 +297,7 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
     targetCheck(checkKeys[l], urlCheckBoxes[checkKeys[l]])
   }
   completeWrap()
-  displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 
 //Establishing initial state of dependentVariable click box
@@ -303,12 +307,12 @@ var dependentIndex = classifiersAndOptions['dependentVariable'].indexOf(currentC
 document.getElementById("nextDependent").onclick = function(){
   nextDependent(classifiersAndOptions, true, window.dependentIndex, "dependentVariable")
   completeWrap()
-  displayNonGraphs(window.filteredData)
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 document.getElementById("previousDependent").onclick = function(){
   nextDependent(classifiersAndOptions, false, window.dependentIndex, "dependentVariable")
   completeWrap()
-  displayNonGraphs(window.filteredData) //Display message saying that data is only null or 0
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 //tulostus=1&dim1paataso=1&dim1alataso=18,19,02,21&nayta=2.dimensio&dim2paataso=13&dim2alataso=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21&nayta=3.dimensio&dim3paataso=79&dim3alataso=1,5,6
 document.getElementById("goBackSelection").onclick = function(){
