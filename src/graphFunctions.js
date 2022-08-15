@@ -60,6 +60,9 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true, f
       legend: {
         display: showLegend,
         position: position,
+        labels: {
+          fontSize: 10,
+        }
       },
       title: {
         display: true,
@@ -256,3 +259,4 @@ Chart.plugins.register({
       chart.options.tooltips = false; //disable tooltips
    }
 });
+Chart.defaults.global.legend.labels.usePointStyle = true;

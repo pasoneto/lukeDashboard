@@ -164,7 +164,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
   
   if(textTranslations){
     bodyHTML += '<button id="shareDashboardButton" onclick=shareDashboard("url")>' + textTranslations['selectors']['shareURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
-                '<button onclick=shareDashboard("embed")>' + textTranslations['selectors']['embedURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+                '<button id="embed" onclick=shareDashboard("embed")>' + textTranslations['selectors']['embedURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
                 '<button id="goBackSelection">' + textTranslations['selectors']['backToSelection'][language] + ' <i class="fa fa-hand-o-left" aria-hidden="true"></i></button>'+
                 '</div>'
   } else {

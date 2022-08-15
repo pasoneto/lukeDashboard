@@ -13,6 +13,7 @@ var textTranslations = {
     next: {fin: "Seuraava", swd: "Nästa", eng: "Next"}, 
     shareURL: {fin: "Jaa URL", swd: "Dela URL", eng: "Share URL"}, 
     embedURL: {fin: "Upota URL", swd: "Bädda in URL", eng: "Embed URL"},
+    backToTable: {fin: "Takaisin taulukkoon", swd: "Tillbaka till tabel", eng: "Back to table"},
     backToSelection: {fin: "Takaisin valintaan", swd: "Tillbaka till urva", eng: "Back to selection"},
   },
   checkboxes: {
@@ -377,3 +378,19 @@ document.getElementById("goBackSelection").onclick = function(){
   //location.href = newLink 
 }
 
+//Changing button displays and functions
+var button1 = document.getElementById("shareDashboardButton")
+var button2 = document.getElementById("embed")
+var button3 = document.getElementById("goBackSelection")
+
+button1.innerHTML = textTranslations['selectors']['backToSelection'][language] + ' <i class="fa fa-hand-o-left" aria-hidden="true"></i>'
+button2.style.display = "none"
+button3.innerHTML = textTranslations['selectors']['backToTable'][language] + ' <i class="fa fa-hand-o-left" aria-hidden="true"></i>'
+
+button1.onclick = function(){
+  javascript:history.go(-2);
+}
+button3.onclick = function(){
+  javascript:history.go(-1);
+}
+//'<button onclick=shareDashboard("embed")>' + textTranslations['selectors']['embedURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
