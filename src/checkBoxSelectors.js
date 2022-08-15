@@ -18,8 +18,13 @@ function extractCategoriesAndOptions(data, dependentVariableName){
 function generateCheckBoxes(classifiers, options, data, dependentVariable, labels = null, textTranslations, language, whereAppend = 'boxTop'){
   console.log(textTranslations)
   html = '';
-  html += '<div id="categorySelectorHeader"><p>' + textTranslations['checkboxes']['categorySelector'][language] + '</p></div>'; //Header of category selector
-  html += '<button id="buttonDimensionSelector2">' + textTranslations['checkboxes']['renderGraphs'][language] + '</button>';
+  if(textTranslations){
+    html += '<div id="categorySelectorHeader"><p>' + textTranslations['checkboxes']['categorySelector'][language] + '</p></div>'; //Header of category selector
+    html += '<button id="buttonDimensionSelector2">' + textTranslations['checkboxes']['renderGraphs'][language] + '</button>';
+  } else {
+    html += '<div id="categorySelectorHeader"><p>Category selector</p></div>'; //Header of category selector
+    html += '<button id="buttonDimensionSelector2">Render graphs</button>';
+  }
   html += '<div id="checkBoxListContainer">';
   for(category in classifiers){
     if(labels && classifiers[category] !== dependentVariable){
@@ -51,7 +56,11 @@ function generateCheckBoxes(classifiers, options, data, dependentVariable, label
     html += '</ul>'
   }
   html += '</div>'
-  html += '<button id="buttonDimensionSelector">' + textTranslations['checkboxes']['renderGraphs'][language] + '</button>'
+  if(textTranslations){
+    html += '<button id="buttonDimensionSelector">' + textTranslations['checkboxes']['renderGraphs'][language] + '</button>'
+  } else {
+    html += '<button id="buttonDimensionSelector">Render graphs</button>'
+  }
   document.getElementById(whereAppend).innerHTML += html
 
   //Initiate map
@@ -144,7 +153,11 @@ function onlyOneEnforcer(classifiers, checkedValues, data, filterFunction){
         //document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = classifiers[k] + '<font color="blue"> (Multiple selector)</font>' //Add text saying that this category is multiple selector
         var notMultiple = multipleCheckCategories.indexOf(classifiers[k]) !== -1
         if(!notMultiple){
-          document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ')</font>' //Add text saying that this category is multiple selector
+          if(textTranslations){
+            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ')</font>' //Add text saying that this category is multiple selector
+          } else {
+            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+          }
           onlyOne(classifiers[k], checkedValues, classifiers, data, filterFunction)
       }
     }
@@ -166,28 +179,36 @@ function allOK(classifiers, checkedValues){
 }
 
 //If no category has more than 1 check, initial function state is established (multiple selection allowed)
-function checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunction, exception = null){
+function checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunction, exception = null, textTranslations = null){
 
   var allCheckBoxes = document.querySelectorAll('input');
 
   if(exception){
     onlyOne(exception, checkedValues, classifiers, data, filterFunction)
     //Establishes that exception category will only be single selector
-    document.getElementById(exception + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ')</font>' //Add text saying that this category is multiple selector
+    if(textTranslations){
+      document.getElementById(exception + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ')</font>' //Add text saying that this category is multiple selector
+    } else {
+      document.getElementById(exception + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+    }
   }
 
   var notMany = allOK(classifiers, checkedValues)
   if(notMany){ //Removes OnlyOne
     for(k in classifiers){
       if(classifiers[k] !== exception){
-        document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['multipleSelector'][language] + ') </font><p><input type="checkbox" id="selectAll" onclick=multiCheck("' + classifiers[k] + '")></input><div id="selectAllText">' + textTranslations['checkboxes']['all'][language] + ' <i class="fa fa-arrow-right" aria-hidden="true"></i></div></p>' //Add text saying that this category is multiple selector
+        if(textTranslations){
+          document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['multipleSelector'][language] + ') </font><p><input type="checkbox" id="selectAll" onclick=multiCheck("' + classifiers[k] + '")></input><div id="selectAllText">' + textTranslations['checkboxes']['all'][language] + ' <i class="fa fa-arrow-right" aria-hidden="true"></i></div></p>' //Add text saying that this category is multiple selector
+        } else {
+          document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Multiple selector) </font><p><input type="checkbox" id="selectAll" onclick=multiCheck("' + classifiers[k] + '")></input><div id="selectAllText">All <i class="fa fa-arrow-right" aria-hidden="true"></i></div></p>' //Add text saying that this category is multiple selector
+        }
       }
     }
     for(j in allCheckBoxes){
       allCheckBoxes[j].onclick = function(){
         checkedValues = mergeVerifyCheckedBoxes(classifiers)
         onlyOneEnforcer(classifiers, checkedValues, data, filterFunction)
-        checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunction, exception)
+        checkBoxVerificationSystem(classifiers, checkedValues, data, filterFunction, exception, textTranslations)
         
         //Filters data on every click
         window.filteredData = filterFunction(classifiers, data, window.checkedValues)

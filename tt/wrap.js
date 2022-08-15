@@ -8,19 +8,19 @@
 
 var textTranslations = {
   selectors: {
-    filter: {fin: "Suodattaa", swd: "Filtrera", eng: "Filter"},
+    filter: {fin: "Valitse ryhmä", swd: "Välja grupp", eng: "Select Group"},
     previous: {fin: "Edellinen", swd: "Tidigare", eng: "Previous"},
     next: {fin: "Seuraava", swd: "Nästa", eng: "Next"}, 
     shareURL: {fin: "Jaa URL", swd: "Dela URL", eng: "Share URL"}, 
     embedURL: {fin: "Upota URL", swd: "Bädda in URL", eng: "Embed URL"},
-    backToSelection: {fin: "Takaisin valintaan", swd: "Tillbaka till urval", eng: "Back to selection"},
+    backToSelection: {fin: "Takaisin valintaan", swd: "Tillbaka till urva", eng: "Back to selection"},
   },
   checkboxes: {
-    categorySelector: {fin: "Kategorian valitsin", swd: "Kategoriväljare", eng: "Category selector"},
-    renderGraphs: {fin: "Piirrä kaavioita", swd: "Gör grafer", eng: "Render graphs"},
-    singleSelector: {fin: "Yksi valitsin", swd: "Enkel väljare", eng: "Single selector"},
-    multipleSelector: {fin: "Monivalitsin", swd: "Multipelväljare", eng: "Multiple selector"},
-    all: {fin: "Kaikki", swd: "Allt", eng: "All"},
+    categorySelector: {fin: "Ryhmän valinta", swd: "Gruppval", eng: "Group Selection"},
+    renderGraphs: {fin: "Piirrä graafit", swd: "Rita graferna", eng: "Draw graphs"},
+    singleSelector: {fin: "Valitse vain yks", swd: "Välja endast en", eng: "Select only one"},
+    multipleSelector: {fin: "Voit valita monta", swd: "Du kan välja många", eng: "You can select several"},
+    all: {fin: "Vaihda", swd: "Förända", eng: "Change"},
   },
   source: {
     source: {fin: "Lähde: <a href='https://portal.mtt.fi/portal/page/portal/taloustohtori/'>Taloustohtori</a>", 
@@ -203,8 +203,8 @@ function completeWrap(){
     }
     var title1 = title1.slice(0, -1)
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = false)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = false)
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)

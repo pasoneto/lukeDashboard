@@ -1,10 +1,10 @@
 var map; //Initiate map global variable
-var renderMap = true
+var renderMap = false
 var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 var title = ''
 var sourceText = 'PxWeb'
 
-initiateDashboardTT(title, logoURL, renderMap = renderMap, directory = '.', flipperButton = false, sourceText)
+initiateDashboardTT(title, logoURL, renderMap = renderMap, directory = '.', flipperButton = false, textTranslations = false, sourceText)
 
 var classifiers;
 var options;
@@ -87,7 +87,16 @@ function wrapGraph(nMulticlassClassifiers){
 
       //End of filtering null and missing values
       
-      graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', "Title")
+      graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', 'Title', showLegend=false)
+
+      //Rendering up to 3 pieCharts
+      var pieColors = colorGenerator(labels1)
+
+      var nPieCharts = Math.min(yAxis1.length, 3)
+      generatePieChartsContainers(2)
+
+      graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '')
+      graphCustomPie(labels1, yAxis1, "myChart2", "doughnut", 'Title', pieColors)
 
       displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer")
       //displaySelectedSingleVariables(window.checkedValues)
@@ -129,7 +138,7 @@ allData.then(allData => {
   window.options = options
 
   //Generate checkboxes 
-  generateCheckBoxes(classifiers, options, 'boxTop', allData)
+  generateCheckBoxes(classifiers, options, allData, 'value')
   
   //Creates empty object with category keys
   var checkedValues = checkedValuesObjectGenerator(classifiers)

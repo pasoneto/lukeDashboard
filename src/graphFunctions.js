@@ -23,6 +23,13 @@ function colorGenerator(yAxis){
 //Generates data object to feed into graph
 function _dataGenerator(yAxis, labels, randomColors, fill){
   var dataConstructor = [];
+  if(labels.length > 10){
+    var borderWidth = 1
+    var pointRadius = 2
+  } else {
+    var borderWidth = 3
+    var pointRadius = 5
+  }
   for (var i=0; i<yAxis.length; i++) {
       var label = labels[i]
       dataConstructor[i] = {
@@ -32,7 +39,9 @@ function _dataGenerator(yAxis, labels, randomColors, fill){
           borderColor: randomColors[i],
           backgroundColor: randomColors[i],
           fill: fill,
-          borderWidth: 1,
+          borderWidth: borderWidth,
+          pointRadius: pointRadius,
+          pointHoverRadius: 6
       };
   }
   return dataConstructor

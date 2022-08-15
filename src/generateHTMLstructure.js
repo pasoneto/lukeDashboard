@@ -144,18 +144,35 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
           '<div id="mapInfo">Hover over map</div>'+
       '</div>'
   }
-  bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-    '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")><i class="fa fa-filter" aria-hidden="true"></i> ' + textTranslations['selectors']['filter'][language] + '</button>'
-
-  if(flipperButton){
-    bodyHTML += '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> ' + textTranslations['selectors']['previous'][language] + '</button>'+
-                '<button id="nextDependent">' + textTranslations['selectors']['next'][language] + ' <i class="fa fa-arrow-circle-right"></i></button>'
+  if(textTranslations){
+    bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
+      '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")><i class="fa fa-filter" aria-hidden="true"></i> ' + textTranslations['selectors']['filter'][language] + '</button>'
+  } else {
+    bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
+      '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>'
   }
 
-  bodyHTML += '<button id="shareDashboardButton" onclick=shareDashboard("url")>' + textTranslations['selectors']['shareURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
-              '<button onclick=shareDashboard("embed")>' + textTranslations['selectors']['embedURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
-              '<button id="goBackSelection">' + textTranslations['selectors']['backToSelection'][language] + ' <i class="fa fa-hand-o-left" aria-hidden="true"></i></button>'+
-              '</div>'
+  if(flipperButton){
+    if(textTranslations){
+      bodyHTML += '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i> ' + textTranslations['selectors']['previous'][language] + '</button>'+
+                  '<button id="nextDependent">' + textTranslations['selectors']['next'][language] + ' <i class="fa fa-arrow-circle-right"></i></button>'
+    } else {
+      bodyHTML += '<button id="previousDependent"><i class="fa fa-arrow-circle-left"></i>Previous</button>'+
+                  '<button id="nextDependent">Next<i class="fa fa-arrow-circle-right"></i></button>'
+    }
+  }
+  
+  if(textTranslations){
+    bodyHTML += '<button id="shareDashboardButton" onclick=shareDashboard("url")>' + textTranslations['selectors']['shareURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+                '<button onclick=shareDashboard("embed")>' + textTranslations['selectors']['embedURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+                '<button id="goBackSelection">' + textTranslations['selectors']['backToSelection'][language] + ' <i class="fa fa-hand-o-left" aria-hidden="true"></i></button>'+
+                '</div>'
+  } else {
+    bodyHTML += '<button id="shareDashboardButton" onclick=shareDashboard("url")>Share URL <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+                '<button onclick=shareDashboard("embed")>Embed URL <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+                '<button id="goBackSelection">Back to selection <i class="fa fa-hand-o-left" aria-hidden="true"></i></button>'+
+                '</div>'
+  }
     //'<div id="selectedVariables"></div>'
 
   if(renderMap){
@@ -168,7 +185,11 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
         '</div>'+
       '</div>'
 
-  bodyHTML += '<div id="footer"><div id="footerText">' + textTranslations['source']['source'][language] + '</div></div>'
+  if(textTranslations){
+    bodyHTML += '<div id="footer"><div id="footerText">' + textTranslations['source']['source'][language] + '</div></div>'
+  } else {
+    bodyHTML += '<div id="footer"><div id="footerText">Source:</div></div>'
+  }
 
 	documentAppender(document.body, bodyHTML)
 
