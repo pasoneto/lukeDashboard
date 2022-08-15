@@ -76,6 +76,7 @@ var filteredDataForMap;
 var filteredData;
 var multiClassClassifiers;
 var map;
+var reportType = reportType.slice(0, -1) //Remove empty space from report type
 
 //Extracting classifiers from ED file classifierLabels
 var classifiers = Object.keys(classifierLabels[0])
@@ -200,12 +201,14 @@ function completeWrap(){
     
     var title1 = ''
     for(m in singleClassifiers){
-      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '; '
+      title1 += '<b>' + singleClassifiers[m] + '</b>' + ': ' + '<i>' + singleOptions[m] + '</i>' + '    '
     }
-    var title1 = title1.slice(0, -1)
+    var title1 = title1.slice(0, -2)
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
+    document.getElementById('selectedVariables').innerHTML = title1
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
+    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
 
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(xAxis1)
@@ -252,11 +255,13 @@ function completeWrap(){
 
     var title1 = ''
     for(m in singleClassifiers){
-      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '; '
+      title1 += '<b>' + singleClassifiers[m] + '</b>' + ': ' + singleOptions[m] + '    '
     }
     var title1 = title1.slice(0, -1)
 
-    graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', title1, showLegend=false)
+    document.getElementById('selectedVariables').innerHTML = title1
+
+    graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
     
     //Rendering up to 3 pieCharts
     var pieColors = colorGenerator(labels1)
@@ -294,11 +299,13 @@ function completeWrap(){
 
     var title1 = ''
     for(m in singleClassifiers){
-      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '; '
+      title1 += '<b>' + singleClassifiers[m] + '</b>' + ': ' + singleOptions[m] + '    '
     }
     var title1 = title1.slice(0, -1)
 
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
+    document.getElementById('selectedVariables').innerHTML = title1
+
+    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
 
   }
   if(renderMap){
@@ -321,7 +328,7 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
   //Establishing the single classifiers
   var single = classifiers.filter(i => multi.includes(i) == false)
   if(classifiers.length == 2){
-    multi = ["vuosi_", "dependentVariable"]
+    multi = ["vuosi_"]
   }
 
   //Running click simulation

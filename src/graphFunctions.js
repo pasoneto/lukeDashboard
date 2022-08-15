@@ -11,7 +11,8 @@ function _randomNoRepeats(array) {
 }
 
 function colorGenerator(yAxis){
-  var choices = ['#B35C00', '#CC0082', '#000000', '#FF8200', '#CCF0FA', '#E3F2D1', '#009FC7', '#54585A', '#E5D9EB', '#CCD6ED', '#528316', '#007B9A', '#FFCCEB', '#7F3F98', '#DEDEDE', '#78BE20', '#E13C98', '#E07400', '#00B5E2', '#65A11B', '#FFE5CC', '#0033A0']
+  //rgba(red, green, blue, alpha)
+  var choices = ['rgba(179,92,0)', 'rgba(204,0,130)', 'rgba(0,0,0)', 'rgba(255,130,0)', 'rgba(204,240,250)', 'rgba(227,242,209)', 'rgba(0,159,199)', 'rgba(84,88,90)', 'rgba(229,217,235)', 'rgba(204,214,237)', 'rgba(82,131,22)', 'rgba(0,123,154)', 'rgba(255,204,235)', 'rgba(127,63,152)', 'rgba(222,222,222)', 'rgba(120,190,32)', 'rgba(225,60,152)', 'rgba(224,116,0)', 'rgba(0,181,226)', 'rgba(101,161,27)', 'rgba(255,229,204)', 'rgba(0,51,160)']
   var randomColors = [];
   for (var i=0; i<yAxis.length; i++) {
       var randomColor = _randomNoRepeats(choices);
@@ -20,15 +21,22 @@ function colorGenerator(yAxis){
   return randomColors
 }
 
+function _convertToOpacity(rgba, value){
+  var rgba = rgba.slice(0, -1) + ',' + value + ')'
+  return(rgba)
+}
+
 //Generates data object to feed into graph
 function _dataGenerator(yAxis, labels, randomColors, fill){
   var dataConstructor = [];
-  if(labels.length > 10){
+  //Dinamically establish the size of strokes based on number of classifiers
+  if(labels.length >= 10){
     var borderWidth = 1
-    var pointRadius = 2
+    var pointRadius = 3
   } else {
-    var borderWidth = 3
-    var pointRadius = 5
+    var borderWidth = 2
+    var pointRadius = 4
+    var fill = true
   }
   for (var i=0; i<yAxis.length; i++) {
       var label = labels[i]
@@ -37,11 +45,11 @@ function _dataGenerator(yAxis, labels, randomColors, fill){
           tension: 0,
           data: yAxis[i],
           borderColor: randomColors[i],
-          backgroundColor: randomColors[i],
+          backgroundColor: _convertToOpacity(randomColors[i], 0.3),
           fill: fill,
           borderWidth: borderWidth,
           pointRadius: pointRadius,
-          pointHoverRadius: 6
+          pointHoverRadius: 6,
       };
   }
   return dataConstructor
@@ -62,6 +70,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true, f
         position: position,
         labels: {
           fontSize: 10,
+          boxWidth: 10
         }
       },
       title: {
@@ -86,7 +95,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true, f
           display: false,
         },
         ticks: {
-          suggestedMin: suggestedMin,
+          //suggestedMin: suggestedMin, //Uncoment to make y axis always show 0 value
         }
       }],
       }
@@ -249,8 +258,12 @@ function nextDependent(categoriesAndOptions, plus, dependentIndex, dependentName
 }
 Chart.plugins.register({
    beforeInit: function(chart) {
-      var data = chart.data.datasets[0].data;
-      var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+      try{
+        var data = chart.data.datasets[0].data;
+        var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+      } catch{
+        console.log("All null")
+      }
       if (!isAllZero) return;
       // when all data values are zero...
       chart.data.datasets[0].data = data.map((e, i) => i > 0 ? 0 : 1); //add one segment
@@ -259,4 +272,3 @@ Chart.plugins.register({
       chart.options.tooltips = false; //disable tooltips
    }
 });
-Chart.defaults.global.legend.labels.usePointStyle = true;

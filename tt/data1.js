@@ -1,4 +1,5 @@
 var reportType ="Tukierittely141  "
+var kieli = 1
 var data =
 [
 {
