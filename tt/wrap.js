@@ -168,9 +168,6 @@ function completeWrap(){
     var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
     var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
     
-    console.log(yAxis1)
-    console.log(yAxis2)
-
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
 
@@ -178,9 +175,6 @@ function completeWrap(){
     var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
     var [yAxis2, xAxis2, labels2] = nullsOut(yAxis2, xAxis2, labels2)
     //End of filtering null and missing values
-
-    console.log(yAxis1)
-    console.log(yAxis2)
 
     //Translating subClassifier codes to labels
     var xAxis1 = xAxis1.map(i => labels[0]['subLabels'][xAxisName1][i])
@@ -268,8 +262,15 @@ function completeWrap(){
 
     var nPieCharts = Math.min(yAxis1.length, 3)
     generatePieChartsContainers(2)
-    graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', title1)
-    graphCustomPie(labels1, yAxis1, "myChart2", "doughnut", title1, pieColors)
+ 
+    //Define position of legend based on number of classifiers
+    if(labels1.length >= 15){
+      var position = 'right'
+    } else {
+      var position = 'bottom'
+    }
+    graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
+    graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
 
   } if(nMulticlassClassifiers < 1) {
     

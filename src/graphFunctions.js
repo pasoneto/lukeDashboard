@@ -118,6 +118,10 @@ function graphCustomPie(xAxis, yAxis, id, type, title, randomColors, legend = fa
       legend: {
         display: legend,
         position: position,
+        labels: {
+          fontSize: 10,
+          boxWidth: 10
+        }
       },
       title: {
         display: true,
@@ -261,6 +265,7 @@ Chart.plugins.register({
       try{
         var data = chart.data.datasets[0].data;
         var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+        console.log(data)
       } catch{
         console.log("All null")
       }

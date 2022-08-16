@@ -16,7 +16,6 @@ function extractCategoriesAndOptions(data, dependentVariableName){
 
 //Generates checkbox for classifier selection
 function generateCheckBoxes(classifiers, options, data, dependentVariable, labels = null, textTranslations, language, whereAppend = 'boxTop'){
-  console.log(textTranslations)
   html = '';
   if(textTranslations){
     html += '<div id="categorySelectorHeader"><p>' + textTranslations['checkboxes']['categorySelector'][language] + '</p></div>'; //Header of category selector
@@ -264,7 +263,6 @@ function dragElement(elmnt, headerElmnt) {
 
 //Simulate checkbox selection and automates generation of dashboard
 function multiCheck(categoryName){
-  console.log(categoryName)
   var a = document.getElementById(categoryName)
   var a = Array.from(a.getElementsByTagName("input"))
 
