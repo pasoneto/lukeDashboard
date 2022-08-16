@@ -328,6 +328,11 @@ function verifyAllClassifiersChecked(checkedValues){
   for(k in checkedClassifiers){
     var nChecked = checkedValues[checkedClassifiers[k]].length
     if(nChecked < 1){
+      if(labels !== null){
+        Swal.fire("You did not select any value for " + labels[0]['classifiers'][checkedClassifiers[k]] + ", so we picked one for you.")
+      } else {
+        Swal.fire("You did not select any value for " + checkedClassifiers[k] + ", so we picked one for you.")
+      }
       singleCheck(checkedClassifiers[k], 0)
     }
   }
