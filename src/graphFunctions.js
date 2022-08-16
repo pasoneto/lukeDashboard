@@ -36,7 +36,7 @@ function _dataGenerator(yAxis, labels, randomColors, fill){
   } else {
     var borderWidth = 2
     var pointRadius = 4
-    var fill = true
+    var fill = false
   }
   for (var i=0; i<yAxis.length; i++) {
       var label = labels[i]
