@@ -45,6 +45,7 @@ data _null_;
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/checkBoxes.css">';
     put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';
     put   '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>';
+    put   '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css">';
     put   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
     put '</head>';
 
@@ -128,6 +129,7 @@ data _null_;
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
 	  put '</script>';
 
+    put '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>';
     put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
     put '<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>';
