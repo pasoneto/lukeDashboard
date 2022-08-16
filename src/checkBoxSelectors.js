@@ -271,11 +271,15 @@ function multiCheck(categoryName){
   }
 }
 
-function singleCheck(categoryName){
+function singleCheck(categoryName, indexToClick = null){
   var a = document.getElementById(categoryName)
   var a = Array.from(a.getElementsByTagName("input"))
-  var randomIndex = Math.floor(Math.random() * a.length);
-  a[randomIndex].click()
+  if(indexToClick === null){
+    var randomIndex = Math.floor(Math.random() * a.length);
+    a[randomIndex].click()
+  } else {
+    a[indexToClick].click()
+  }
 }
 
 function targetCheck(categoryName, options){
@@ -324,7 +328,7 @@ function verifyAllClassifiersChecked(checkedValues){
   for(k in checkedClassifiers){
     var nChecked = checkedValues[checkedClassifiers[k]].length
     if(nChecked < 1){
-      singleCheck(checkedClassifiers[k])
+      singleCheck(checkedClassifiers[k], 0)
     }
   }
 }

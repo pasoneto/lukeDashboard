@@ -334,6 +334,7 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
 
   //Running click simulation
   simulateSelection(multi, single)
+  singleCheck('dependentVariable', 0)
   completeWrap()
   displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 
