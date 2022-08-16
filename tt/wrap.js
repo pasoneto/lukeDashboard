@@ -400,4 +400,7 @@ button1.onclick = function(){
 button3.onclick = function(){
   javascript:history.go(-1);
 }
-//'<button onclick=shareDashboard("embed")>' + textTranslations['selectors']['embedURL'][language] + ' <i class="fa fa-share-alt" aria-hidden="true"></i></button>'+
+
+//Changing styles locally
+document.getElementById("header").style.background = "#ffffff"
+document.getElementById("dimensionSelector").style.background = "#ffffff"
