@@ -8,13 +8,13 @@
 
 var textTranslations = {
   selectors: {
-    filter: {fin: "Valitse ryhmä", swd: "Välja grupp", eng: "Select Group"},
+    filter: {fin: "Valitse ryhmä", swd: "Välj grupp", eng: "Select Group"},
     previous: {fin: "Edellinen", swd: "Tidigare", eng: "Previous"},
     next: {fin: "Seuraava", swd: "Nästa", eng: "Next"}, 
     shareURL: {fin: "Jaa URL", swd: "Dela URL", eng: "Share URL"}, 
     embedURL: {fin: "Upota URL", swd: "Bädda in URL", eng: "Embed URL"},
     backToTable: {fin: "Takaisin taulukkoon", swd: "Tillbaka till tabel", eng: "Back to table"},
-    backToSelection: {fin: "Takaisin valintaan", swd: "Tillbaka till urva", eng: "Back to selection"},
+    backToSelection: {fin: "Takaisin valintaan", swd: "Tillbaka till urval", eng: "Back to selection"},
   },
   checkboxes: {
     categorySelector: {fin: "Ryhmän valinta", swd: "Gruppval", eng: "Group Selection"},
