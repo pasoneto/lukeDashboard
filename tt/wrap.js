@@ -405,4 +405,8 @@ button3.onclick = function(){
 
 //Changing styles locally
 document.getElementById("header").style.background = "#ffffff"
+document.getElementById("header").style.padding = '0'
 document.getElementById("dimensionSelector").style.background = "#ffffff"
+document.getElementById("dimensionSelector").style.alignItems = 'start'
+document.getElementById("dimensionSelector").style.margin = '0'
+document.getElementsByTagName("body")[0].style.background = 'white'

@@ -68,7 +68,7 @@ button {
   text-decoration: none;
   overflow: hidden;
   cursor: pointer;
-  margin-top: 10px;
+  /*margin-top: 10px;*/
 }
 button:after {
   content: "";
