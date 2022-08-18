@@ -411,15 +411,24 @@ button3.onclick = function(){
   javascript:history.go(-1);
 }
 
-var buttonHowTo = document.getElementById("howToButton")
-
-buttonHowTo.onclick = function(){
+function buttonQuestion(){
   var multiClassChosen = window.multiClassClassifiers.map(i=>labels[0]['classifiers'][i])
   var messageTitle = textTranslations['selectors']['messageSingle'][language][0]
   var messageBody = textTranslations['selectors']['messageSingle'][language][1]
   messageBody += multiClassChosen[0] + ' / ' + multiClassChosen[1]
   Swal.fire(messageTitle, messageBody);
 }
+
+try{
+  var buttonHowTo = document.getElementById("howToButton")
+  buttonHowTo.onclick = function(){
+    buttonQuestion()
+  }
+} catch{
+  console.log("No single selector")
+}
+
+
 
 //Changing styles locally
 document.getElementById("header").style.background = "#ffffff"

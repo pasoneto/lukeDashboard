@@ -156,7 +156,7 @@ function onlyOneEnforcer(classifiers, checkedValues, data, filterFunction){
           if(textTranslations){
             document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ') <button id="howToButton"><i class="fa fa-question-circle" aria-hidden="true"></i></button> </font>' //Add text saying that this category is multiple selector
           } else {
-            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector) <button id="howToButton"><i class="fa fa-question-circle" aria-hidden="true"></i></button> </font>' //Add text saying that this category is multiple selector
+            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector) <button id="howToButton" onclick=><i class="fa fa-question-circle" aria-hidden="true"></i></button> </font>' //Add text saying that this category is multiple selector
           }
           onlyOne(classifiers[k], checkedValues, classifiers, data, filterFunction)
       }

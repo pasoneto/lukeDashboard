@@ -2,26 +2,28 @@
 
 /* Generates json file */
 /* change directory here */
-proc json out="/data/taloustohtoritulosteet/rap/json.txt" encoding="utf-8" pretty;
+filename jsonout1 "/data/taloustohtoritulosteet/rap/json.txt" encoding="utf-16be";
+proc json out=jsonout1 pretty;
 	export graf_data_ / nosastags;
 run;
 
 /*labels for variables. Tulvarastonmuutos -> Varaston muutos  */
-proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" encoding="utf-8" pretty;
+filename jsonout2 "/data/taloustohtoritulosteet/rap/json_lab.txt" encoding="utf-16be";
+proc json out=jsonout2 pretty;
 	export graf_label_ / nosastags;
 run;
 
-
 /*labels for names of classifiers (e.g. vuosi_ -> Vuosi, Tuotantosuuntaso -> Tuotantosuunta)*/
-proc json out="/data/taloustohtoritulosteet/rap/json_classifierLabels.txt" encoding="utf-8" pretty;
+filename jsonout3 "/data/taloustohtoritulosteet/rap/json_classifierLabels.txt" encoding="utf-16be";
+proc json out=jsonout3 pretty;
 	export graf_classlabel_ / nosastags;
 run;
 
 /*labels for subclass of classifiers. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
-proc json out="/data/taloustohtoritulosteet/rap/json_classSubLab.txt" encoding="utf-8" pretty;
+filename jsonout4 "/data/taloustohtoritulosteet/rap/json_classSubLab.txt" encoding="utf-16be";
+proc json out=jsonout4 pretty;
 	export graf_subclasslabel_ / nosastags;
 run;
-
 
 /* Creates first half of HTML page */
 data _null_;
