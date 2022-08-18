@@ -419,7 +419,6 @@ buttonHowTo.onclick = function(){
   var messageBody = textTranslations['selectors']['messageSingle'][language][1]
   messageBody += multiClassChosen[0] + ' / ' + multiClassChosen[1]
   Swal.fire(messageTitle, messageBody);
-  document.querySelector(".swal2-popup").zIndex = 10000
 }
 
 //Changing styles locally
