@@ -2,23 +2,23 @@
 
 /* Generates json file */
 /* change directory here */
-proc json out="/data/taloustohtoritulosteet/rap/json.txt" pretty;
+proc json out="/data/taloustohtoritulosteet/rap/json.txt" encoding="utf-8" pretty;
 	export graf_data_ / nosastags;
 run;
 
 /*labels for variables. Tulvarastonmuutos -> Varaston muutos  */
-proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" pretty;
+proc json out="/data/taloustohtoritulosteet/rap/json_lab.txt" encoding="utf-8" pretty;
 	export graf_label_ / nosastags;
 run;
 
 
 /*labels for names of classifiers (e.g. vuosi_ -> Vuosi, Tuotantosuuntaso -> Tuotantosuunta)*/
-proc json out="/data/taloustohtoritulosteet/rap/json_classifierLabels.txt" pretty;
+proc json out="/data/taloustohtoritulosteet/rap/json_classifierLabels.txt" encoding="utf-8" pretty;
 	export graf_classlabel_ / nosastags;
 run;
 
 /*labels for subclass of classifiers. So, this is subclass labels, like with maakunta: Etelä-Savo, Pohjois-Savo */
-proc json out="/data/taloustohtoritulosteet/rap/json_classSubLab.txt" pretty;
+proc json out="/data/taloustohtoritulosteet/rap/json_classSubLab.txt" encoding="utf-8" pretty;
 	export graf_subclasslabel_ / nosastags;
 run;
 

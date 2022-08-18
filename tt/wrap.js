@@ -15,6 +15,9 @@ var textTranslations = {
     embedURL: {fin: "Upota URL", swd: "Bädda in URL", eng: "Embed URL"},
     backToTable: {fin: "Takaisin taulukkoon", swd: "Tillbaka till tabel", eng: "Back to table"},
     backToSelection: {fin: "Takaisin valintaan", swd: "Tillbaka till urval", eng: "Back to selection"},
+    messageSingle: {fin: ["Yksi valitsin", "Jos haluat valita lisää kohteita tästä luokasta, valitse vain yksi kohde seuraavista luokista: "], 
+                    swd: ["Enda väljare", "Om du vill välja fler värden från denna kategori, välj bara ett värde från följande kategorier: "], 
+                    eng: ["Single selector", "If you want to select more values from this category, select only one value from the following categories: "]},
   },
   checkboxes: {
     categorySelector: {fin: "Ryhmän valinta", swd: "Gruppval", eng: "Group Selection"},
@@ -130,18 +133,23 @@ var buttonsRenderGraph = document.querySelectorAll(`[id^="buttonDimensionSelecto
 for(k in buttonsRenderGraph){
   buttonsRenderGraph[k].onclick = function(){
     showBoxSelector("boxTop") //Hide box with checkboxes
+    showBoxSelector("dimmer") //Hide box with checkboxes
     completeWrap() 
     displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
-    //Add back function to show checkboxes div
-    document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
   }
+}
+
+//Add back function to show checkboxes div
+document.getElementById("selectDimensionButton").onclick = function(){
+  showBoxSelector("boxTop")
+  showBoxSelector("dimmer") //Hide box with checkboxes
 }
 
 //Creates empty object with category keys
 var checkedValues = checkedValuesObjectGenerator(classifiers)
 
 //Establishes checkbox verification system. Multiple or single selection
-checkBoxVerificationSystem(classifiers, checkedValues, data, filterDataByCheckBox, exception = "dependentVariable") //Value is written inside the global variable checkedValues
+checkBoxVerificationSystem(classifiers, checkedValues, data, filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations) //Value is written inside the global variable checkedValues
 
 function completeWrap(){
   //Verifies if user chose at least one options for each classifier. If not, random assignment is made
@@ -403,6 +411,17 @@ button3.onclick = function(){
   javascript:history.go(-1);
 }
 
+var buttonHowTo = document.getElementById("howToButton")
+
+buttonHowTo.onclick = function(){
+  var multiClassChosen = window.multiClassClassifiers.map(i=>labels[0]['classifiers'][i])
+  var messageTitle = textTranslations['selectors']['messageSingle'][language][0]
+  var messageBody = textTranslations['selectors']['messageSingle'][language][1]
+  messageBody += multiClassChosen[0] + ' / ' + multiClassChosen[1]
+  Swal.fire(messageTitle, messageBody);
+  document.querySelector(".swal2-popup").zIndex = 10000
+}
+
 //Changing styles locally
 document.getElementById("header").style.background = "#ffffff"
 document.getElementById("header").style.padding = '0'
@@ -410,3 +429,4 @@ document.getElementById("dimensionSelector").style.background = "#ffffff"
 document.getElementById("dimensionSelector").style.alignItems = 'start'
 document.getElementById("dimensionSelector").style.margin = '0'
 document.getElementsByTagName("body")[0].style.background = 'white'
+

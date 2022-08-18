@@ -6,60 +6,6 @@ function documentAppender(element, html){
 	}
 }
 
-async function initiateDashboard(renderMap = false, directory = '../'){
-	var bodyHTML = '<div class="header" id="header">'+
-				'<h1>Initial dashboard</h1>'+
-				'<div id="title"></div>'+
-				'</div>'+
-
-				'<!-- Box on top of everything. Selects classifiers -->'+
-				'<div id="boxTop">'+
-				'</div>'
-
-  if(renderMap){
-    bodyHTML += '<!-- Box on top of everything. Shows graph based on map hover -->'+
-                '<div id="boxTopMap">'+
-                '</div>'+
-                '<div class="row">'+
-                '<div class="column statisticsSelector" id="statisticsSelector">'+
-                  'Map Control'+
-                '<div id="selector-map"></div>'+
-                '<div id="mapInfo"></div>'+
-                '</div>'
-  }
-
-  bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-              '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")>Select dimensions</button>'+
-              '<div id="selectedVariables"></div>'+
-              '</div>'
-
-  if(renderMap){
-    bodyHTML += '<div class="column mapBox" id="mapBox">'+
-                '</div>'
-  }
-
-  bodyHTML += '<div class="column graphsBox" id="graphsContainer">'+
-                '<div id="noGraphContainer">'+
-                  '<div id="noGraph" onclick=showBoxSelector("boxTop")>'+
-                  '<div id="textNoGraph">'+
-                    '<p><i class="fa fa-info-circle" style="margin-right: 10px" aria-hidden="true"></i>'+
-                      'Select dimensions to render the graphs</p>'+
-                    '</p>'+
-                  '</div>'+
-                '</div>'+
-                '</div>'+
-              '</div>'
-
-	documentAppender(document.body, bodyHTML)
-
-  if(renderMap === false){
-    document.getElementById("graphsContainer").style.width = '100vw'
-    document.getElementById("dimensionSelector").style.width = '100vw'
-  }
-
-  console.log("Rendered all boxes")
-}
-
 //nMulticlassClassifiers is the length of the output from function pickMultiClassCategories
 //Function renders spaces for 3 graphs if multiclass, and space for 1 graph if single class
 function renderGraphBoxes(nMulticlassClassifiers, map=true){
@@ -118,6 +64,7 @@ function generatePieChartsContainers(nPieCharts){
 async function initiateDashboardTT(title, logo, renderMap = false, directory = '.', flipperButton = true, textTranslations, language){
 
   var bodyHTML = '<body>'+
+      '<div id="dimmer"></div>'+
       '<div class="header" id="header">'+
         '<img id="logo" src="' + logo + '">'+
         '<div id="title">' + title + '</div>'+
@@ -146,10 +93,10 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
   }
   if(textTranslations){
     bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-      '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")><i class="fa fa-filter" aria-hidden="true"></i> ' + textTranslations['selectors']['filter'][language] + '</button>'
+      '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("dimmer")><i class="fa fa-filter" aria-hidden="true"></i> ' + textTranslations['selectors']['filter'][language] + '</button>'
   } else {
     bodyHTML += '<div class="column dimensionSelector" id="dimensionSelector">'+
-      '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("boxTop")><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>'
+      '<button class="displayBoxButton" id="selectDimensionButton" onclick=showBoxSelector("dimmer")><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>'
   }
 
   if(flipperButton){

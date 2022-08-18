@@ -70,12 +70,13 @@ function generateCheckBoxes(classifiers, options, data, dependentVariable, label
 }
 
 //Changes style of checkBox container. Now it appears in front of everything
-function showBoxSelector(id = "boxTop"){
-  var boxTop = document.getElementById(id)
-  if(boxTop.style.display == '') {
-    boxTop.style.display = 'block';
+function showBoxSelector(id){
+  var divToChange = document.getElementById(id)
+  console.log(divToChange)
+  if(divToChange.style.display == '') {
+    divToChange.style.display = 'block';
   } else {
-    boxTop.style.display = '';
+    divToChange.style.display = '';
   }
 }
 
@@ -153,9 +154,9 @@ function onlyOneEnforcer(classifiers, checkedValues, data, filterFunction){
         var notMultiple = multipleCheckCategories.indexOf(classifiers[k]) !== -1
         if(!notMultiple){
           if(textTranslations){
-            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ')</font>' //Add text saying that this category is multiple selector
+            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (' + textTranslations['checkboxes']['singleSelector'][language] + ') <button id="howToButton"><i class="fa fa-question-circle" aria-hidden="true"></i></button> </font>' //Add text saying that this category is multiple selector
           } else {
-            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector)</font>' //Add text saying that this category is multiple selector
+            document.getElementById(classifiers[k] + 'Label' + "SingleMultiple").innerHTML = '<font color="blue"> (Single selector) <button id="howToButton"><i class="fa fa-question-circle" aria-hidden="true"></i></button> </font>' //Add text saying that this category is multiple selector
           }
           onlyOne(classifiers[k], checkedValues, classifiers, data, filterFunction)
       }
