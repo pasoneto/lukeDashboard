@@ -93,6 +93,25 @@ allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
+var dvKeys = Object.keys(labels[0]['dependentVariable'])
+for(k in dvKeys){
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replace('a', "GGGGG")
+}
+
+var listClassifiers = Object.keys(labels[0]['subLabels'])
+for(k in listClassifiers){
+  var classObject = labels[0]['subLabels'][listClassifiers[k]]
+  var listSubClasses = Object.keys(classObject)
+  for(m in listSubClasses){
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¶', 'ö')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¤', 'ä')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¥', 'å')
+  }
+}
+console.log(labels)
+
+
+
 //Function translates value -1 to its label (because this does not come from ED's backend)
 function _averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
 
