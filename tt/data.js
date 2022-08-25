@@ -1,5 +1,5 @@
 var reportType = 'Tuloslaskelma '
-var kieli = 1
+var kieli = 3
 var data =
 [
 {

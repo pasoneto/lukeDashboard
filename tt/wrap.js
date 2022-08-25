@@ -65,15 +65,6 @@ var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&r
 var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
 var suuralue = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=suuralue4500k_2022&bbox=-13897.244162771385,6486387.218574781,914028.2558372286,7927801.468574781'
 
-//determines the region division
-//if(Object.keys(data[0]).includes('maakunta')){
-  //var mapURL = maakunta
-  //var mapDivision = 'maakunta'
-  //} else if(Object.keys(data[0].includes('suuralue'))){
-    //var mapURL = suuralue
-    //var mapDivision = 'suuralue'
-    //}
-
 //Initiating global variables
 var filteredDataForMap;
 var filteredData;
@@ -95,7 +86,12 @@ var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifie
 
 var dvKeys = Object.keys(labels[0]['dependentVariable'])
 for(k in dvKeys){
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replace('a', "GGGGG")
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¶', 'ö')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¤', 'ä')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¥', 'å')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã–', 'Ö')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã„', 'Ä')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã…', 'Å')
 }
 
 var listClassifiers = Object.keys(labels[0]['subLabels'])
@@ -106,11 +102,11 @@ for(k in listClassifiers){
     labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¶', 'ö')
     labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¤', 'ä')
     labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¥', 'å')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã–', 'Ö')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã„', 'Ä')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã…', 'Å')
   }
 }
-console.log(labels)
-
-
 
 //Function translates value -1 to its label (because this does not come from ED's backend)
 function _averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
@@ -446,8 +442,6 @@ try{
 } catch{
   console.log("No single selector")
 }
-
-
 
 //Changing styles locally
 document.getElementById("header").style.background = "#ffffff"
