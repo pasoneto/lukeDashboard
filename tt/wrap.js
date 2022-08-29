@@ -224,6 +224,8 @@ function completeWrap(){
 
     document.getElementById('selectedVariables').innerHTML = title1
 
+    var xAxis2 = xAxis2.map(i=>shortenLabel(i, 19))
+  
     graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
     graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
 
@@ -278,6 +280,8 @@ function completeWrap(){
 
     document.getElementById('selectedVariables').innerHTML = title1
 
+    var labels1 = labels1.map(i=>shortenLabel(i, 19))
+
     graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
     
     //Rendering up to 3 pieCharts
@@ -329,6 +333,7 @@ function completeWrap(){
 
     document.getElementById('selectedVariables').innerHTML = title1
 
+    var xAxis1 = xAxis1.map(i=>shortenLabel(i, 19))
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
 
   }

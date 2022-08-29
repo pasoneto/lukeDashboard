@@ -162,8 +162,17 @@ function displaySelectedSingleVariables(checkedValues, exception = null, labels 
 function displayNonGraphs(filteredData, whereToAppend, textTranslations, language){
   var noDisplay = Object.values(filteredData).every(i => i.value === 0 || i.value === null || isNaN(i.value))
   if(noDisplay){
-    console.log(textTranslations)
     document.getElementById("graphsContainer").innerHTML = "<div id='noGraphContainer'><div id='noGraph'><div id='textNoGraph'><p><i class='fa fa-info-circle' aria-hidden='true'></i></i>  " + textTranslations['noGraphs']['sorryNoData'][language] + "</p><p id='textNoGraph2'>" + textTranslations['noGraphs']['pleaseTryDifferent'][language] + "</div></p></div></div>"
+  }
+}
+
+//Shorten label
+function shortenLabel(text, max){
+  if(text.length > max){
+    var text = text.slice(0, max) + '...'
+    return text
+  } else {
+    return text
   }
 }
 
@@ -265,7 +274,6 @@ Chart.plugins.register({
       try{
         var data = chart.data.datasets[0].data;
         var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
-        console.log(data)
       } catch{
         console.log("All null")
       }
