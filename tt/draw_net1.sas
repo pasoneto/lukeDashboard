@@ -59,6 +59,8 @@ data _null_;
 	  put '<script>';
     kieli = &kieli;
     put 'var kieli=' kieli;
+    alue="%aluetek";
+    put 'var alue="' alue '"';
     put 'var reportType ="' &rapotsikko '"';
 	  put 'var data =';
 	

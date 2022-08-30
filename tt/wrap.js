@@ -230,15 +230,15 @@ function completeWrap(){
     graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
 
     //Rendering up to 3 pieCharts
-    var pieColors = colorGenerator(xAxis1)
+    var pieColors = colorGenerator(xAxis2)
     var htmlPieCharts = '';
 
-    var nPieCharts = Math.min(yAxis1.length, 3)
+    var nPieCharts = Math.min(yAxis2.length, 3)
     generatePieChartsContainers(nPieCharts)
 
-    for (var i = 2; i < Math.min(yAxis1.length, 3)+2; i++){
+    for (var i = 2; i < Math.min(yAxis2.length, 3)+2; i++){
       //var all0 = yAxis1[i-2].every(i => i === 0)
-      graphCustomPie(xAxis1, yAxis1[i-2], "myChart" + i, "doughnut", labels1[i-2], pieColors)
+      graphCustomPie(xAxis2, yAxis2[i-2], "myChart" + i, "doughnut", labels2[i-2], pieColors)
     }
 
   } 
