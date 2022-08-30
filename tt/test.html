@@ -35,6 +35,18 @@
 
 <script>
 
+    //Model JSON
+    var geoJSON = {
+      "type": "FeatureCollection",
+      "features": [],
+      "totalFeatures": '',
+      "numberMatched": '',
+      "numberReturned": '',
+      "timeStamp": "2022-08-30T21:57:56.647Z",
+      "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4326" } }, 
+      "bbox": []
+    }
+    
     function groupBy(collection, property) {
         var i = 0, val, index,
             values = [], result = [];
@@ -53,7 +65,6 @@
 
   async function a(){
 
-    var url = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
     var zoom = 5
     var centering = [65, 25]
     var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
@@ -64,13 +75,15 @@
     
     map.options.minZoom = 4;
 
-    var tilesLayer;
-    var geoJSON = await loadArea(url);
+    var tilesLayer; //Define another tile layer (not on use)
+    var popup; //Define global popup layer
 
     var um = groupBy(regionsAll, 'maakunta') 
     var um = um.map(i=> groupBy(i, "SEGMENT"))
+
     var maakuntas = []
     var maakuntasProps = []
+
     for(mkunta in um){
       var segments = []
       for(sgment in um[mkunta]){
@@ -96,7 +109,6 @@
     }
 
     function styleGen(feature){
-        console.log(feature)
         var regionName = feature.properties.name
         var available = regionName !== ''
         if(available === true){
@@ -107,7 +119,6 @@
         }
     }
 
-    var popup; //Define global popup layer
     function showProps(e){
       if(e.target.feature.properties.name !== ''){
         window.popup = L.popup()
@@ -127,7 +138,6 @@
           mouseout: closePopup,
           //mousemove: applyMousePositionToBox,
         });
-         
     }
     geoJSON['features'] = allFeatures
       L.geoJson(geoJSON, {
