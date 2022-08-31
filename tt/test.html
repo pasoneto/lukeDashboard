@@ -18,7 +18,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 <script src="https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>
+
 <script src="./data/regions.js"></script>
+<script src="./customFunctions/customFunctions.js"></script>
+<script src="./customFunctions/customMaps.js"></script>
+
 </head>
 
 <style>
@@ -27,126 +31,131 @@
   width: 100vw;
   height: 100vh;
 }
+        .dropdown_button {
+            width: 200px;
+        }
+ 
+        .courses {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+ 
+        .courses li {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            list-style: none;
+            background-color: rgb(47, 47, 47);
+            font-family: montserrat;
+            border: 1px solid white;
+        }
+ 
+        .courses li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 10px;
+        }
+ 
+        .courses li:hover {
+            background-color: #0979ad;
+            color: white;
+        }
 
 </style>
 <body>
-  <div id="mapBox"></div>
+        <div class="dropdown_list">
+            <button class="dropdown_button"
+                onclick="show_list()">
+                Select region division
+            </button>
+ 
+            <div id="courses_id" class="courses">
+                <li><a name="Maakunta" onclick="wrapMap()">Maakunta</a></li>
+                <li><a name="Municipality" onclick="wrapMap2()">Municipality</a></li>
+            </div>
+        </div>
+<div id="mapBox"></div>
 </body>
 
 <script>
-
-    //Model JSON
-    var geoJSON = {
-      "type": "FeatureCollection",
-      "features": [],
-      "totalFeatures": '',
-      "numberMatched": '',
-      "numberReturned": '',
-      "timeStamp": "2022-08-30T21:57:56.647Z",
-      "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4326" } }, 
-      "bbox": []
-    }
-    
-    function groupBy(collection, property) {
-        var i = 0, val, index,
-            values = [], result = [];
-        for (; i < collection.length; i++) {
-            val = collection[i][property];
-            index = values.indexOf(val);
-            if (index > -1)
-                result[index].push(collection[i]);
-            else {
-                values.push(val);
-                result.push([collection[i]]);
+        function show_list() {
+            var courses = document.getElementById("courses_id");
+ 
+            if (courses.style.display == "block") {
+                courses.style.display = "none";
+            } else {
+                courses.style.display = "block";
             }
         }
-        return result;
-    }
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropdown_button')) {
+                document.getElementById('courses_id')
+                    .style.display = "none";
+            }
+        }  
 
-  async function a(){
-
-    var zoom = 5
-    var centering = [65, 25]
-    var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
-
-    var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    })
-    
-    map.options.minZoom = 4;
-
-    var tilesLayer; //Define another tile layer (not on use)
-    var popup; //Define global popup layer
-
-    var um = groupBy(regionsAll, 'maakunta') 
-    var um = um.map(i=> groupBy(i, "SEGMENT"))
-
-    var maakuntas = []
-    var maakuntasProps = []
-
-    for(mkunta in um){
-      var segments = []
-      for(sgment in um[mkunta]){
-        var coords = []
-        for(coordinate in um[mkunta][sgment]){
-          var x = um[mkunta][sgment][coordinate]['x']
-          var y = um[mkunta][sgment][coordinate]['y']
-          coords.push([x, y])
-        }
-        segments.push([coords])
-      }
-      maakuntas.push(segments)
-      var props = {name: um[mkunta][0][0]['alue'], code: um[mkunta][0][0]['maakunta']}
-      maakuntasProps.push(props)
-    }
-
-    var allFeatures = [] 
-    for(k in maakuntas){
-      var featurePrototype = {"type": "Feature", "id": "", "geometry": { "type": "MultiPolygon", "coordinates": [] }, "geometry_name": "geom", "properties": {} }
-      featurePrototype['geometry']['coordinates'] = maakuntas[k]
-      featurePrototype['properties'] = maakuntasProps[k]
-      allFeatures.push(featurePrototype)
-    }
-
-    function styleGen(feature){
-        var regionName = feature.properties.name
-        var available = regionName !== ''
-        if(available === true){
-          return {weight: 2}
-        } else {
-          return {fillColor: "gray",
-                  weight: 1}
-        }
-    }
-
-    function showProps(e){
-      if(e.target.feature.properties.name !== ''){
-        window.popup = L.popup()
-            .setLatLng(e.latlng) 
-            .setContent(e.target.feature.properties.name)
-            .openOn(map);
-      }
-    };
-
-    function closePopup(e) {
-        map.closePopup(window.popup);
-        window.popup = null;
-    }
-    function onEachFeature(feature, layer) {
-        layer.on({
-          mouseover: showProps,
-          mouseout: closePopup,
-          //mousemove: applyMousePositionToBox,
-        });
-    }
-    geoJSON['features'] = allFeatures
-      L.geoJson(geoJSON, {
-          onEachFeature: onEachFeature,
-          style: styleGen,
-        }).addTo(map);
+  //Model JSON
+  var geoModel = {
+    "type": "FeatureCollection",
+    "features": [],
+    "totalFeatures": '',
+    "numberMatched": '',
+    "numberReturned": '',
+    "timeStamp": "2022-08-30T21:57:56.647Z",
+    "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4326" } }, 
+    "bbox": []
   }
 
-  a()
+  var zoom = 5
+  var centering = [65, 25]
+  var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+
+  var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  })
+  
+  map.options.minZoom = 4;
+
+  var tilesLayer; //Define another tile layer (not on use)
+  var popup; //Define global popup layer
+
+  async function wrapMap(){
+    
+    window.map.remove()
+    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+
+    var regionDivision = 'maakunta'
+    var [segmentedRegions, segmentedRegionsProps] = segmentRegions(regionsAll, regionDivision)
+    var allFeatures = featureGenerator(segmentedRegions, segmentedRegionsProps)
+
+    var geoJSON = generateGeoJSON(geoModel, allFeatures)
+
+    L.geoJson(geoJSON, {
+        onEachFeature: onEachFeature,
+        style: styleGen,
+      }).addTo(map);
+  }
+
+  async function wrapMap2(){
+
+    window.map.remove()
+    window.map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+
+    var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
+    var geoJSON = await loadArea(municipality)
+    L.geoJson(geoJSON, {
+        onEachFeature: onEachFeature,
+        style: styleGen,
+      }).addTo(map);
+  }
+
+  wrapMap(regionsAll)
 </script>
 
 <script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>
