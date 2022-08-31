@@ -15,8 +15,9 @@ function colorGenerator(yAxis){
   var choices = ['rgba(179,92,0)', 'rgba(204,0,130)', 'rgba(0,0,0)', 'rgba(255,130,0)', 'rgba(204,240,250)', 'rgba(227,242,209)', 'rgba(0,159,199)', 'rgba(84,88,90)', 'rgba(229,217,235)', 'rgba(204,214,237)', 'rgba(82,131,22)', 'rgba(0,123,154)', 'rgba(255,204,235)', 'rgba(127,63,152)', 'rgba(222,222,222)', 'rgba(120,190,32)', 'rgba(225,60,152)', 'rgba(224,116,0)', 'rgba(0,181,226)', 'rgba(101,161,27)', 'rgba(255,229,204)', 'rgba(0,51,160)']
   var randomColors = [];
   for (var i=0; i<yAxis.length; i++) {
-      var randomColor = _randomNoRepeats(choices);
-      randomColors.push(randomColor())
+    //var randomColor = _randomNoRepeats(choices);
+    //randomColors.push(randomColor())
+    randomColors.push(choices[i])
   }
   return randomColors
 }
