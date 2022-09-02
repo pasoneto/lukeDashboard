@@ -226,16 +226,16 @@ function completeWrap(){
     graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
     graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
 
-    //Rendering up to 3 pieCharts
+    //Rendering up to 2 pieCharts
     var pieColors = colorGenerator(xAxis2)
     var htmlPieCharts = '';
 
-    var nPieCharts = Math.min(yAxis2.length, 3)
+    var nPieCharts = Math.min(yAxis2.length, 2)
     generatePieChartsContainers(nPieCharts)
 
-    for (var i = 2; i < Math.min(yAxis2.length, 3)+2; i++){
-      //var all0 = yAxis1[i-2].every(i => i === 0)
-      graphCustomPie(xAxis2, yAxis2[i-2], "myChart" + i, "doughnut", labels2[i-2], pieColors)
+    if(nPieCharts == 2){
+      graphCustomPie(xAxis2, yAxis2[0], "myChart" + 2, "doughnut", labels2[0], pieColors)
+      graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 3, "doughnut", labels2[yAxis2.length-1], pieColors)
     }
 
   } 
