@@ -14,26 +14,75 @@ function extractCategoriesAndOptions(data, dependentVariableName){
   return [classifiers, options]
 }
 
-//Generates checkbox for classifier selection
+//Generates checkboxes for dimension selection
 function generateCheckBoxes(classifiers, options, data, dependentVariable, labels = null, textTranslations, language, whereAppend = 'boxTop'){
-  html = '';
+  var boxTop = document.getElementById("boxTop")
+
+  var header = document.createElement('div');
+  header.setAttribute('id', 'categorySelectorHeader');
+
+  var btnDimensionSelector = document.createElement('button');
+  btnDimensionSelector.setAttribute('id', 'buttonDimensionSelector2');
+  var paragraphHeader = document.createElement('p');
   if(textTranslations){
-    html += '<div id="categorySelectorHeader"><p>' + textTranslations['checkboxes']['categorySelector'][language] + '</p></div>'; //Header of category selector
-    html += '<button id="buttonDimensionSelector2">' + textTranslations['checkboxes']['renderGraphs'][language] + '</button>';
+    var textHeader = textTranslations['checkboxes']['categorySelector'][language] //Header of category selector
+    var buttonText = textTranslations['checkboxes']['renderGraphs'][language]
   } else {
-    html += '<div id="categorySelectorHeader"><p>Category selector</p></div>'; //Header of category selector
-    html += '<button id="buttonDimensionSelector2">Render graphs</button>';
+    var textHeader = 'Category selector';
+    var buttonText = 'Render graphs</button>';
   }
-  html += '<div id="checkBoxListContainer">';
+
+  paragraphHeader.innerHTML = textHeader
+  btnDimensionSelector.innerHTML = buttonText
+  header.appendChild(paragraphHeader)
+  boxTop.appendChild(header)
+  boxTop.appendChild(btnDimensionSelector)
+
+  var checkBoxListContainer = document.createElement('div');
+  checkBoxListContainer.setAttribute('id', 'checkBoxListContainer');
+
   for(category in classifiers){
-    if(labels && classifiers[category] !== dependentVariable){
-      html += '<label id = ' + classifiers[category] + 'Label' + '>' + labels[0]['classifiers'][classifiers[category]] + '<div id="' + classifiers[category] + 'Label' + 'SingleMultiple"></div></label>'
+
+    var classifierCode = classifiers[category]
+    
+    //Create label (title) of checkbox
+    var labelClassifiers = document.createElement('label');
+    var labelClassifierID = classifierCode + 'Label'
+    labelClassifiers.setAttribute('id', labelClassifierID);
+    
+    //Add singleMultiple text to label (title) of checkbox
+    var singleMultipleDiv = document.createElement("div");
+    var singleMultipleDivID = classifierCode + "LabelSingleMultiple"
+    singleMultipleDiv.setAttribute('id', singleMultipleDivID);
+
+    if(labels && classifierCode !== dependentVariable){
+      var labelText = labels[0]['classifiers'][classifierCode]
     } else {
-      html += '<label id = ' + classifiers[category] + 'Label' + '>' + classifiers[category] + '<div id="' + classifiers[category] + 'Label' + 'SingleMultiple"></div></label>'
+      var labelText = classifierCode
     }
-    html += '<ul id="' + classifiers[category] + '">'
-    for(option in options[category]){
-      html += '<li><input type="checkbox" id="'
+    
+    //Add text and singleMultiple div to label (title)
+    labelClassifiers.innerHTML = labelText
+    labelClassifiers.appendChild(singleMultipleDiv)
+
+    //Append label (title)
+    checkBoxListContainer.appendChild(labelClassifiers)
+
+    var ulElement = document.createElement('ul')
+    ulElement.setAttribute('id', classifierCode)
+
+    for(option in options[category]){ 
+      //Code of currentOption
+      var currentOption = options[category][option]
+      var currentOptionId = currentOption + classifierCode
+
+      var linkElement = document.createElement('li')
+      var inputElement = document.createElement('input')
+      inputElement.setAttribute('type', 'checkbox')
+      inputElement.setAttribute('id', currentOptionId)
+
+      linkElement.appendChild(inputElement) 
+
       //if labels are provided, rendered checkbox will show their names
       if(labels){
         var catItem = options[category][option].toString()
@@ -44,30 +93,60 @@ function generateCheckBoxes(classifiers, options, data, dependentVariable, label
           var allCats = [{}];
         }
         if(allCats.includes(catItem)){ 
-            html += options[category][option] + '">' + labels[0]['subLabels'][classifiers[category]][options[category][option]] + '</li>'
+          var currentOptionText = labels[0]['subLabels'][classifierCode][currentOption]
         } else {
-            html += options[category][option] + '">' + options[category][option] + '</li>'
+          var currentOptionText = currentOption 
         }
       } else {
-            html += options[category][option] + '">' + options[category][option] + '</li>'
+        var currentOptionText = currentOption
       }
-    }
-    html += '</ul>'
-  }
-  html += '</div>'
-  if(textTranslations){
-    html += '<button id="buttonDimensionSelector">' + textTranslations['checkboxes']['renderGraphs'][language] + '</button>'
-  } else {
-    html += '<button id="buttonDimensionSelector">Render graphs</button>'
-  }
-  document.getElementById(whereAppend).innerHTML += html
 
-  //Initiate map
+      //Add text inside label
+      var textLabelElement = document.createElement('label')
+      textLabelElement.setAttribute('for', currentOptionId)
+      var currentOptionText = document.createTextNode(currentOptionText)
+      textLabelElement.appendChild(currentOptionText)
+
+      linkElement.appendChild(inputElement) 
+      linkElement.appendChild(textLabelElement)
+      ulElement.appendChild(linkElement)  
+    }
+
+    checkBoxListContainer.appendChild(ulElement)
+  }
+  
+  //Append all check boxes options and titles to boxTop
+  boxTop.appendChild(checkBoxListContainer)
+
+  //Add render button at the bottom of boxTop
+  var buttonDimensionSelector = document.createElement('button')
+  buttonDimensionSelector.setAttribute('id', 'buttonDimensionSelector')
+  if(textTranslations){
+    var buttonText = textTranslations['checkboxes']['renderGraphs'][language]
+  } else {
+    var buttonText = 'Render graphs'
+  }
+
+  var buttonText = document.createTextNode(buttonText)
+  buttonDimensionSelector.appendChild(buttonText)
+  boxTop.appendChild(buttonDimensionSelector)
+
   var boxSelector = document.getElementById("boxTop")
   var headerSelector = document.getElementById("categorySelectorHeader")
   dragElement(boxSelector, headerSelector);
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 //Changes style of checkBox container. Now it appears in front of everything
 function showBoxSelector(id){
@@ -97,7 +176,12 @@ function verifyCheckedBoxes(category){
   var checkedValues = []
   for(k in items){
     if(items[k].checked){
-      checkedValues.push(items[k].id)
+      //Removing name of classifier from ID
+      var currentSize = items[k].id.length
+      var categorySize = category.length
+      var originalSize = currentSize - categorySize
+      var originalCode = items[k].id.slice(0, originalSize)
+      checkedValues.push(originalCode)
     }
   }
   json[category] = checkedValues

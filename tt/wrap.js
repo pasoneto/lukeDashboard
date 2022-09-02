@@ -108,9 +108,6 @@ for(k in listClassifiers){
   }
 }
 
-//Function translates value -1 to its label (because this does not come from ED's backend)
-function _averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}
-
 //Extracting classifiers and options
 var classifiers = Object.keys(data[0])
 var classifiers = classifiers.filter(i => i !== 'value')

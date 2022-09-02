@@ -38,3 +38,5 @@ function onEachFeature(feature, layer) {
     });
 }
 
+//Function translates value -1 to its label (because this does not come from ED's backend)
+function _averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}

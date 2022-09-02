@@ -1,4 +1,5 @@
 Why the name is being merged together
 Add check all buttons
 Try to fit map in current dashboard.
+Change colors CHECK
 Classifier for pie charts only years CHECK
