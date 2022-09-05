@@ -88,7 +88,6 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
         '<div class="column statisticsSelector" id="statisticsSelector">'+
            'Map Control'+
           '<div id="selector-map"></div>'+
-          '<div id="mapInfo">Hover over map</div>'+
       '</div>'
   }
   if(textTranslations){
@@ -120,7 +119,6 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
                 '<button id="goBackSelection">Back to selection <i class="fa fa-hand-o-left" aria-hidden="true"></i></button>'+
                 '</div>'
   }
-    //'<div id="selectedVariables"></div>'
 
   if(renderMap){
     bodyHTML += '<div class="column mapBox" id="mapBox">'+

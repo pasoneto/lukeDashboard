@@ -15,28 +15,5 @@ function groupBy(collection, property) {
     return result;
 }
 
-//Show information about region
-function showProps(e){
-  if(e.target.feature.properties.name !== ''){
-    window.popup = L.popup()
-        .setLatLng(e.latlng) 
-        .setContent(e.target.feature.properties.name)
-        .openOn(map);
-  }
-};
-
-//Close pop up
-function closePopup(e) {
-    map.closePopup(window.popup);
-    window.popup = null;
-}
-function onEachFeature(feature, layer) {
-    layer.on({
-      mouseover: showProps,
-      mouseout: closePopup,
-      //mousemove: applyMousePositionToBox,
-    });
-}
-
 //Function translates value -1 to its label (because this does not come from ED's backend)
 function _averageSubClass(i){if(i === -1){return('Keskiarvo')}else{return(i)}}

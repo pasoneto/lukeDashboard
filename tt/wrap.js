@@ -42,7 +42,7 @@ var textTranslations = {
 }
 
 //Initiate Map object
-var renderMap = false
+var renderMap = true
 
 if(kieli === 1){
   var language = 'fin'
@@ -74,6 +74,18 @@ var reportType = reportType.slice(0, -1) //Remove empty space from report type
 
 //Extracting classifiers from ED file classifierLabels
 var classifiers = Object.keys(classifierLabels[0])
+
+//Basic map setup
+var zoom = 4.7
+var centering = [65, 25]
+var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
+map.options.minZoom = 4;
+var tilesLayer; //Define another tile layer (not on use)
+var popup; //Define global popup layer
+if('maakunta'.indexOf(classifiers)){
+  var regionDivision = "maakunta" 
+}
 
 //Reshaping json object from wide to long format
 var data = reshapeJSON(data, classifiers)
@@ -335,9 +347,10 @@ function completeWrap(){
 
   }
   if(renderMap){
+    wrapMap(regionDivision)
     //Getting only region codes that exist in data
-    var mrc = renameMapRegions(filteredDataForMap);
-    drawMap(mapURL, mapDivision, mrc, filteredDataForMap, map, zoom = 4.7, centering = [65.3, 25], labels)
+    //var mrc = renameMapRegions(filteredDataForMap);
+    //drawMap(mapURL, mapDivision, mrc, filteredDataForMap, map, zoom = 4.7, centering = [65.3, 25], labels)
   }
 }
 

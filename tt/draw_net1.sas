@@ -25,6 +25,12 @@ proc json out=jsonout4 pretty;
 	export graf_subclasslabel_ / nosastags;
 run;
 
+/* Add region divisions for map generation */
+filename jsonout5 "/data/taloustohtoritulosteet/rap/regionDivisions.txt" encoding="utf-16be";
+proc json out=jsonout5 pretty;
+	export maakunta2020b.sas7bdat / nosastags;
+run;
+
 /* Creates first half of HTML page */
 data _null_;
   /* change directory here */
@@ -127,6 +133,23 @@ data _null_;
 	put _infile_;
 run;
 
+/* Adding region divisions */
+data _null_;
+  /* change directory here */
+	file "/data/taloustohtoritulosteet/rap/regionDivisions.txt" mod;
+	put 'var regionsAll =';
+run;
+
+/* Inserts the classlabels in json format into the HTML page */
+data _null_;
+  /* change directory here */
+  infile "/data/taloustohtoritulosteet/rap/json_classSubLab.txt";
+	input;
+  /* change directory here */
+	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+	put _infile_;
+run;
+
 /* Generates the second half of the HTML page */
 data _null_;
   /* change directory here */
@@ -136,11 +159,14 @@ data _null_;
     put '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>';
     put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
     put '<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>';
+    put '<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customFunctions.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customMaps.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/dataProcessUtils.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/graphFunctions.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/mapFunctions.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/dropdownSelection.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/src/shareFunctions.js"></script>';

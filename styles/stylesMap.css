@@ -13,10 +13,11 @@
 }
 .mapBox  {
   width: 19%;
-  height: 73.5vh;
+  height: 72vh;
   margin: 1px;
-  margin-top: 12px;
+  margin-top: 35px;
   margin-left: 5px;
+  background: blue;
   border-radius: 10px;
   resize:none;
 }

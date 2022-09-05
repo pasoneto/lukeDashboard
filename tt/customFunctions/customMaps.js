@@ -1,5 +1,5 @@
 //Model JSON
-var geoJSON = {
+var geoModel = {
   "type": "FeatureCollection",
   "features": [],
   "totalFeatures": '',
@@ -12,6 +12,15 @@ var geoJSON = {
 
 var tilesLayer; //Define another tile layer (not on use)
 var popup; //Define global popup layer
+
+function assignValueToGeoJsonObject(geoJSONObject, filteredDataForMap, regionDivision){
+  var groupedData = _.groupBy(filteredDataForMap, regionDivision)
+  var features = geoJSONObject.features
+  for(k in features){
+    geoJSONObject.features[k].properties = groupedData[features[k].properties.code]
+  }
+  return geoJSONObject
+}
 
 function segmentRegions(coordinatesFile, regionDivision){
 
@@ -56,12 +65,53 @@ function generateGeoJSON(geoModel, allFeatures){
 }
 
 function styleGen(feature){
-    var regionName = feature.properties.name
-    var available = regionName !== ''
-    if(available === true){
+    var properties = feature.properties
+    if(properties){
       return {weight: 2}
     } else {
       return {fillColor: "gray",
               weight: 1}
     }
+}
+
+//Show information about region
+function showProps(e){
+  if(e.target.feature.properties !== 'undefined'){
+    console.log(e.target.feature.properties[0].maakunta)
+    window.popup = L.popup()
+        .setLatLng(e.latlng) 
+        .setContent("regionCode: " + e.target.feature.properties[0].maakunta)
+        .openOn(map);
+  }
+};
+
+//Close pop up
+function closePopup(e) {
+    map.closePopup(window.popup);
+    window.popup = null;
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+      mouseover: showProps,
+      mouseout: closePopup,
+      //mousemove: applyMousePositionToBox,
+    });
+}
+
+async function wrapMap(regionDivision){
+  
+  window.map.remove()
+  window.map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+
+  var [segmentedRegions, segmentedRegionsProps] = segmentRegions(regionsAll, regionDivision)
+  var allFeatures = featureGenerator(segmentedRegions, segmentedRegionsProps)
+
+  var geoJSON = generateGeoJSON(geoModel, allFeatures)
+  var geoJSON = assignValueToGeoJsonObject(geoJSON, window.filteredData, regionDivision)
+
+  L.geoJson(geoJSON, {
+      onEachFeature: onEachFeature,
+      style: styleGen,
+    }).addTo(map);
 }
