@@ -115,3 +115,18 @@ async function wrapMap(regionDivision){
       style: styleGen,
     }).addTo(map);
 }
+
+function fillMapSelection(checkedValues, whereAppend, labels, textTranslations){
+  var availableYears = checkedValues['vuosi_']
+  var html = ''
+  for(k in availableYears){
+    html += '<a href="#">' + labels[0]['subLabels']['vuosi_'][availableYears[k]] + '</a>'
+  }
+  document.getElementById(whereAppend).innerHTML = html
+}
+
+
+
+
+
+

@@ -41,9 +41,6 @@ var textTranslations = {
   }
 }
 
-//Initiate Map object
-var renderMap = true
-
 if(kieli === 1){
   var language = 'fin'
   var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-taloustohtori-200x150px_1.png'
@@ -56,8 +53,6 @@ if(kieli === 3){
   var language = 'eng'
   var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 }
-
-initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, textTranslations, language)
 
 //URLs to fetch map data
 var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
@@ -75,18 +70,6 @@ var reportType = reportType.slice(0, -1) //Remove empty space from report type
 //Extracting classifiers from ED file classifierLabels
 var classifiers = Object.keys(classifierLabels[0])
 
-//Basic map setup
-var zoom = 4.7
-var centering = [65, 25]
-var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
-var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
-map.options.minZoom = 4;
-var tilesLayer; //Define another tile layer (not on use)
-var popup; //Define global popup layer
-if('maakunta'.indexOf(classifiers)){
-  var regionDivision = "maakunta" 
-}
-
 //Reshaping json object from wide to long format
 var data = reshapeJSON(data, classifiers)
 
@@ -95,6 +78,30 @@ var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
+
+//Initiate Map object
+if('maakunta'.indexOf(classifiers)){
+  var regionDivision = "maakunta" 
+  var renderMap = true
+} else {
+  var renderMap = false
+}
+
+//Render html structure
+initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, textTranslations, language)
+
+//If map is present, set up map properties
+if(renderMap){
+  var zoom = 4.7
+  var centering = [65, 25]
+  var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+  var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
+  map.options.minZoom = 4;
+  var tilesLayer; //Define another tile layer (not on use)
+  var popup; //Define global popup layer
+}
+
+
 
 var dvKeys = Object.keys(labels[0]['dependentVariable'])
 for(k in dvKeys){
@@ -250,6 +257,8 @@ function completeWrap(){
       graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 3, "doughnut", labels2[yAxis2.length-1], pieColors)
     }
 
+    fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+
   } 
   
   ///////For when there is only 1 milticlass classifier
@@ -308,6 +317,8 @@ function completeWrap(){
     graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
     graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
 
+    fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+
   } if(nMulticlassClassifiers < 1) {
     
     renderGraphBoxes(nMulticlassClassifiers, renderMap)
@@ -345,6 +356,7 @@ function completeWrap(){
     var xAxis1 = xAxis1.map(i=>shortenLabel(i, 19))
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
 
+    fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
   }
   if(renderMap){
     wrapMap(regionDivision)

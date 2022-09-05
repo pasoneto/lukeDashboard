@@ -143,7 +143,7 @@ run;
 /* Inserts the classlabels in json format into the HTML page */
 data _null_;
   /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/json_classSubLab.txt";
+  infile "/data/taloustohtoritulosteet/rap/regionDivisions.txt";
 	input;
   /* change directory here */
 	file "/data/taloustohtoritulosteet/rap/test.txt" mod;

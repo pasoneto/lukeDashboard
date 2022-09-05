@@ -86,8 +86,11 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
 
       '<div class="row">'+
         '<div class="column statisticsSelector" id="statisticsSelector">'+
-           'Map Control'+
-          '<div id="selector-map"></div>'+
+            '<div class="dropdown">'+
+              '<button class="dropbtn">Select year</button>'+
+              '<div id="dropdown-content"></div>'+
+            '</div>'+
+      //'<div id="selector-map"></div>'+
       '</div>'
   }
   if(textTranslations){
