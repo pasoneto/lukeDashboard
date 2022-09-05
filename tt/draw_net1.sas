@@ -28,7 +28,7 @@ run;
 /* Add region divisions for map generation */
 filename jsonout5 "/data/taloustohtoritulosteet/rap/regionDivisions.txt" encoding="utf-16be";
 proc json out=jsonout5 pretty;
-	export maakunta2020b.sas7bdat / nosastags;
+	export maakunta2020b / nosastags;
 run;
 
 /* Creates first half of HTML page */
