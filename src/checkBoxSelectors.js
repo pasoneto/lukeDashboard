@@ -350,7 +350,6 @@ function dragElement(elmnt, headerElmnt) {
 function multiCheck(categoryName){
   var a = document.getElementById(categoryName)
   var a = Array.from(a.getElementsByTagName("input"))
-
   for(k in a){
     a[k].click()
   }

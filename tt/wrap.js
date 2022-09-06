@@ -93,12 +93,13 @@ initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory
 //If map is present, set up map properties
 if(renderMap){
   var zoom = 4.7
-  var centering = [65, 25]
+  var centering = [65.5, 25.6]
   var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
   var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
   map.options.minZoom = 4;
   var tilesLayer; //Define another tile layer (not on use)
   var popup; //Define global popup layer
+  var info = L.control(); //Define information box to display name of region
 }
 
 

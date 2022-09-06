@@ -90,6 +90,7 @@ async function initiateDashboardTT(title, logo, renderMap = false, directory = '
               '<button class="dropbtn">Select year</button>'+
               '<div id="dropdown-content"></div>'+
             '</div>'+
+            '<div id="showRegionHover"></div>'+
       //'<div id="selector-map"></div>'+
       '</div>'
   }

@@ -67,7 +67,15 @@ function generateGeoJSON(geoModel, allFeatures){
 function styleGen(feature){
     var properties = feature.properties
     if(properties){
-      return {weight: 2}
+      var regionCode = properties[0][regionDivision]
+      var selectedRegions = window.checkedValues[regionDivision]
+      var regionWasSelected = selectedRegions.indexOf(regionCode.toString()) !== -1
+      if(regionWasSelected){
+        return {weight: 2}
+      } else {
+        return {fillColor: "lightblue",
+                weight: 1}
+      }
     } else {
       return {fillColor: "gray",
               weight: 1}
@@ -75,13 +83,22 @@ function styleGen(feature){
 }
 
 //Show information about region
-function showProps(e){
+function showProps(e, labels, regionDivision){
   if(e.target.feature.properties !== 'undefined'){
-    console.log(e.target.feature.properties[0].maakunta)
-    window.popup = L.popup()
-        .setLatLng(e.latlng) 
-        .setContent("regionCode: " + e.target.feature.properties[0].maakunta)
-        .openOn(map);
+    console.log(e.target.feature.properties[0][regionDivision])
+    if(labels){
+      var regionCode = e.target.feature.properties[0][regionDivision]
+      var regionLabel = labels[0]['subLabels'][regionDivision][regionCode]
+    } else {
+      var regionLabel = e.target.feature.properties[0][regionDivision]
+    }
+    console.log(e)
+    info.update(regionLabel);
+    //document.getElementById("showRegionHover").innerHTML = regionLabel
+    //window.popup = L.popup({autoPan: false})
+    //.setLatLng(e.latlng) 
+    //.setContent(regionLabel)
+    //.openOn(map);
   }
 };
 
@@ -91,10 +108,30 @@ function closePopup(e) {
     window.popup = null;
 }
 
+//Select single region
+function selectRegion(feature, regionDivision){
+  var a = document.getElementById(regionDivision)
+  var a = Array.from(a.getElementsByTagName("input"))
+  for(k in a){
+    if(a[k].checked === true){
+      a[k].click()
+    }
+  }
+  for(k in a){
+    var regionCode = feature.target.feature.properties[0][regionDivision] + regionDivision
+    if(a[k].id === regionCode){
+      a[k].click()
+    }
+  }
+  completeWrap() 
+  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+}
+
 function onEachFeature(feature, layer) {
     layer.on({
-      mouseover: showProps,
+      mouseover: function(feature){showProps(feature, labels, regionDivision)},
       mouseout: closePopup,
+      click: function(feature){selectRegion(feature, regionDivision)}
       //mousemove: applyMousePositionToBox,
     });
 }
@@ -108,7 +145,18 @@ async function wrapMap(regionDivision){
   var allFeatures = featureGenerator(segmentedRegions, segmentedRegionsProps)
 
   var geoJSON = generateGeoJSON(geoModel, allFeatures)
-  var geoJSON = assignValueToGeoJsonObject(geoJSON, window.filteredData, regionDivision)
+  var geoJSON = assignValueToGeoJsonObject(geoJSON, window.data, regionDivision)
+
+  info.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+      this.update();
+      return this._div;
+  };
+  // method that we will use to update the control based on feature properties passed
+  info.update = function (prop) {
+      this._div.innerHTML = (prop ? prop : 'Hover over a state');
+  };
+  info.addTo(map);
 
   L.geoJson(geoJSON, {
       onEachFeature: onEachFeature,
