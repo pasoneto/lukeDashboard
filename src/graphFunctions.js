@@ -93,7 +93,7 @@ function graphCustom(xAxis, yAxis, labels, id, type, title, showLegend = true, f
       }],
       yAxes: [{
         gridLines: {
-          display: false,
+          display: true,
         },
         ticks: {
           //suggestedMin: suggestedMin, //Uncoment to make y axis always show 0 value

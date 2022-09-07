@@ -154,7 +154,7 @@ async function wrapMap(regionDivision){
   };
   // method that we will use to update the control based on feature properties passed
   info.update = function (prop) {
-      this._div.innerHTML = (prop ? prop : 'Hover over a state');
+      this._div.innerHTML = (prop ? prop : '');
   };
   info.addTo(map);
 

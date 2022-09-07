@@ -25,10 +25,9 @@ proc json out=jsonout4 pretty;
 	export graf_subclasslabel_ / nosastags;
 run;
 
-/* Add region divisions for map generation */
 filename jsonout5 "/data/taloustohtoritulosteet/rap/regionDivisions.txt" encoding="utf-16be";
 proc json out=jsonout5 pretty;
-	export maakunta2020b / nosastags;
+  export maakunta2020b / nosastags;
 run;
 
 /* Creates first half of HTML page */
@@ -133,22 +132,42 @@ data _null_;
 	put _infile_;
 run;
 
+
+/* Add region divisions for map generation */
+filename jsonout5 "/data/taloustohtoritulosteet/rap/regionDivisions.txt" encoding="utf-16be";
+proc json out=jsonout5 pretty;
+   export maakunta2020b / nosastags;
+run;
+
 /* Adding region divisions */
 data _null_;
   /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/regionDivisions.txt" mod;
-	put 'var regionsAll =';
+  file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+  put 'var regionsAll =';
 run;
 
-/* Inserts the classlabels in json format into the HTML page */
-data _null_;
-  /* change directory here */
-  infile "/data/taloustohtoritulosteet/rap/regionDivisions.txt";
-	input;
-  /* change directory here */
-	file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-	put _infile_;
-run;
+%macro executeIfExists(dir);
+   	%if %sysfunc(fileexist(&dir)) %then %do;
+	/* Inserts the classlabels in json format into the HTML page */
+	data _null_;
+	  /* change directory here */
+	  infile "/data/taloustohtoritulosteet/rap/regionDivisions.txt";
+		input;
+	  /* change directory here */
+		file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+		put _infile_;
+	run;
+   %end;
+   %else %do;
+	data _null_;
+	  /* change directory here */
+		file "/data/taloustohtoritulosteet/rap/test.txt" mod;
+		put "'nao deu'";
+	run;
+   %end;
+%mend executeIfExists;
+
+%executeIfExists(dir="/data/taloustohtoritulosteet/rap/regionDivisions.txt")
 
 /* Generates the second half of the HTML page */
 data _null_;
