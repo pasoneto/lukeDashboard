@@ -80,7 +80,7 @@ classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Initiate Map object
-if('maakunta'.indexOf(classifiers)){
+if(classifiers.indexOf("maakunta") !== -1){
   var regionDivision = "maakunta" 
   var renderMap = true
 } else {
@@ -258,7 +258,9 @@ function completeWrap(){
       graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 3, "doughnut", labels2[yAxis2.length-1], pieColors)
     }
 
-    fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    if(renderMap){
+      fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    }
 
   } 
   
@@ -318,7 +320,9 @@ function completeWrap(){
     graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
     graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
 
-    fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    if(renderMap){
+      fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    }
 
   } if(nMulticlassClassifiers < 1) {
     
@@ -357,7 +361,10 @@ function completeWrap(){
     var xAxis1 = xAxis1.map(i=>shortenLabel(i, 19))
     graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
 
-    fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    if(renderMap){
+      fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    }
+
   }
   if(renderMap){
     wrapMap(regionDivision)
