@@ -54,12 +54,6 @@ if(kieli === 3){
   var logoURL = 'https://portal.mtt.fi/portal/page/portal/taloustohtori/Kuvat/Luke-economydoctor-213x150px.png'
 }
 
-//URLs to fetch map data
-var ely = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=ely4500k_2022&bbox=17618.920287958812,6569276.976870834,805202.9202879588,7837692.976870834'
-var municipality = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=kunta4500k_2022'
-var maakunta = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=maakunta4500k_2022&bbox=52541.815302265575,6583732.733043339,813213.8153022656,7909316.733043339'
-var suuralue = 'http://geo.stat.fi/geoserver/wfs?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:4326&outputFormat=json&typeNames=suuralue4500k_2022&bbox=-13897.244162771385,6486387.218574781,914028.2558372286,7927801.468574781'
-
 //Initiating global variables
 var filteredDataForMap;
 var filteredData;
@@ -88,7 +82,7 @@ if(classifiers.indexOf("maakunta") !== -1){
 }
 
 //Render html structure
-initiateDashboardTT(title = '', logo = logoURL, renderMap = renderMap, directory = '.', flipperButton = true, textTranslations, language)
+Smartdasher.initiateDashboard(title = '', logo = logoURL, renderMap = renderMap, flipperButton = true, textTranslations, language)
 
 //If map is present, set up map properties
 if(renderMap){
@@ -102,8 +96,6 @@ if(renderMap){
   var info = L.control(); //Define information box to display name of region
 }
 
-
-
 var dvKeys = Object.keys(labels[0]['dependentVariable'])
 for(k in dvKeys){
   labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¶', 'ö')
@@ -112,6 +104,7 @@ for(k in dvKeys){
   labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã–', 'Ö')
   labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã„', 'Ä')
   labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã…', 'Å')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll("Ästerbotten", 'Österbotten')
 }
 
 var listClassifiers = Object.keys(labels[0]['subLabels'])
@@ -150,52 +143,45 @@ for(k in classifiers){
 }
 
 //Generate checkbox inside hidden div
-generateCheckBoxes(classifiers, options, data, '', labels, textTranslations, language)
-
-//if(renderMap){
-  //document.getElementById('selector-map').innerHTML = '<button id="showMap" onclick="showUnderliningMap(baseTile)">Show underlining map</button>'
-  //}
-
-//Add function to show checkboxes div
-document.getElementById("selectDimensionButton").onclick = function(){showBoxSelector("boxTop")}
+Smartdasher.generateCheckBoxes(classifiers, options, data, '', labels, textTranslations, language)
 
 //Once data has been fetched and checkboxes created, Select dimension button will receive the following functions
 var buttonsRenderGraph = document.querySelectorAll(`[id^="buttonDimensionSelector"]`)
 //Applying render function to these buttons
 for(k in buttonsRenderGraph){
   buttonsRenderGraph[k].onclick = function(){
-    showBoxSelector("boxTop") //Hide box with checkboxes
-    showBoxSelector("dimmer") //Hide box with checkboxes
+    Smartdasher.showBoxSelector("boxTop") //Hide box with checkboxes
+    Smartdasher.showBoxSelector("dimmer") //Hide box with checkboxes
     completeWrap() 
-    displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+    Smartdasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
   }
 }
 
 //Add back function to show checkboxes div
 document.getElementById("selectDimensionButton").onclick = function(){
-  showBoxSelector("boxTop")
-  showBoxSelector("dimmer") //Hide box with checkboxes
+  Smartdasher.showBoxSelector("boxTop")
+  Smartdasher.showBoxSelector("dimmer") //Hide box with checkboxes
 }
 
 //Creates empty object with category keys
-var checkedValues = checkedValuesObjectGenerator(classifiers)
+var checkedValues = Smartdasher.checkedValuesObjectGenerator(classifiers)
 
 //Establishes checkbox verification system. Multiple or single selection
-checkBoxVerificationSystem(classifiers, checkedValues, data, filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations) //Value is written inside the global variable checkedValues
+Smartdasher.checkBoxVerificationSystem(classifiers, checkedValues, data, Smartdasher.filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations) //Value is written inside the global variable checkedValues
 
 function completeWrap(){
   //Verifies if user chose at least one options for each classifier. If not, random assignment is made
-  verifyAllClassifiersChecked(checkedValues)
+  Smartdasher.verifyAllClassifiersChecked(checkedValues)
 
   //Selects classifiers which will be used as group and xAxis  
-  pickMultiClassClassifiers(checkedValues, classifiers)
+  Smartdasher.pickMultiClassClassifiers(checkedValues, classifiers)
 
   var nMulticlassClassifiers = window.multiClassClassifiers.length
 
   //For when there are 2 milticlass classifier
   if(nMulticlassClassifiers == 2){
 
-    renderGraphBoxes(nMulticlassClassifiers, renderMap)
+    Smartdasher.renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
     var group1 = window.multiClassClassifiers[1]
     var group2 = window.multiClassClassifiers[0]
@@ -203,17 +189,17 @@ function completeWrap(){
     var xAxisName1 = window.multiClassClassifiers[0]
     var xAxisName2 = window.multiClassClassifiers[1]
 
-    window.filteredDataForMap = filterDataByCheckBox(classifiers, data, window.checkedValues)
+    window.filteredDataForMap = Smartdasher.filterDataByCheckBox(classifiers, data, window.checkedValues)
 
-    var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
-    var [yAxis2, labels2] = separateDataInGroups(window.filteredData, group2, checkedValues)
+    var [yAxis1, labels1] = Smartdasher.separateDataInGroups(window.filteredData, group1, checkedValues)
+    var [yAxis2, labels2] = Smartdasher.separateDataInGroups(window.filteredData, group2, checkedValues)
     
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
 
     //Filtering null and missing values
-    var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
-    var [yAxis2, xAxis2, labels2] = nullsOut(yAxis2, xAxis2, labels2)
+    var [yAxis1, xAxis1, labels1] = Smartdasher.nullsOut(yAxis1, xAxis1, labels1)
+    var [yAxis2, xAxis2, labels2] = Smartdasher.nullsOut(yAxis2, xAxis2, labels2)
     //End of filtering null and missing values
 
     //Translating subClassifier codes to labels
@@ -227,7 +213,7 @@ function completeWrap(){
     var group2Label = labels[0]['classifiers'][group2]
 
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleLabels = Smartdasher.singleLabelExtractor(window.checkedValues, labels)
     //displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
 
     var singleClassifiers = Object.keys(singleLabels)
@@ -241,21 +227,21 @@ function completeWrap(){
 
     document.getElementById('selectedVariables').innerHTML = title1
 
-    var xAxis2 = xAxis2.map(i=>shortenLabel(i, 19))
+    var xAxis2 = xAxis2.map(i=>Smartdasher.shortenLabel(i, 19))
   
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
-    graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
+    Smartdasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
+    Smartdasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
 
     //Rendering up to 2 pieCharts
-    var pieColors = colorGenerator(xAxis2)
+    var pieColors = Smartdasher.colorGenerator(xAxis2)
     var htmlPieCharts = '';
 
     var nPieCharts = Math.min(yAxis2.length, 2)
-    generatePieChartsContainers(nPieCharts)
+    Smartdasher.generatePieChartsContainers(nPieCharts)
 
     if(nPieCharts == 2){
-      graphCustomPie(xAxis2, yAxis2[0], "myChart" + 2, "doughnut", labels2[0], pieColors)
-      graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 3, "doughnut", labels2[yAxis2.length-1], pieColors)
+      Smartdasher.graphCustomPie(xAxis2, yAxis2[0], "myChart" + 2, "doughnut", labels2[0], pieColors)
+      Smartdasher.graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 3, "doughnut", labels2[yAxis2.length-1], pieColors)
     }
 
     if(renderMap){
@@ -267,19 +253,19 @@ function completeWrap(){
   ///////For when there is only 1 milticlass classifier
   if(nMulticlassClassifiers == 1) {
 
-    renderGraphBoxes(nMulticlassClassifiers, renderMap)
+    Smartdasher.renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
     var group1 = window.multiClassClassifiers[0]
     var xAxisName1 = classifiers.filter(i=>i !== group1)[0]
 
-    window.filteredDataForMap = filterDataByCheckBox(classifiers, data, window.checkedValues)
+    window.filteredDataForMap = Smartdasher.filterDataByCheckBox(classifiers, data, window.checkedValues)
 
-    var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
+    var [yAxis1, labels1] = Smartdasher.separateDataInGroups(window.filteredData, group1, checkedValues)
 
     var xAxis1 = window.checkedValues[xAxisName1]
 
     //Filtering null and missing values
-    var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
+    var [yAxis1, xAxis1, labels1] = Smartdasher.nullsOut(yAxis1, xAxis1, labels1)
     
     //End of filtering null and missing values
     
@@ -289,7 +275,7 @@ function completeWrap(){
     var group1Label = labels[0]['classifiers'][group1]
 
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleLabels = Smartdasher.singleLabelExtractor(window.checkedValues, labels)
     var singleClassifiers = Object.keys(singleLabels)
     var singleOptions = Object.values(singleLabels)
 
@@ -301,15 +287,15 @@ function completeWrap(){
 
     document.getElementById('selectedVariables').innerHTML = title1
 
-    var labels1 = labels1.map(i=>shortenLabel(i, 19))
+    var labels1 = labels1.map(i=>Smartdasher.shortenLabel(i, 19))
 
-    graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
+    Smartdasher.graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
     
     //Rendering up to 3 pieCharts
-    var pieColors = colorGenerator(labels1)
+    var pieColors = Smartdasher.colorGenerator(labels1)
 
     var nPieCharts = Math.min(yAxis1.length, 3)
-    generatePieChartsContainers(2)
+    Smartdasher.generatePieChartsContainers(2)
  
     //Define position of legend based on number of classifiers
     if(labels1.length >= 15){
@@ -317,8 +303,8 @@ function completeWrap(){
     } else {
       var position = 'bottom'
     }
-    graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
-    graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
+    Smartdasher.graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
+    Smartdasher.graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
 
     if(renderMap){
       fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
@@ -326,19 +312,19 @@ function completeWrap(){
 
   } if(nMulticlassClassifiers < 1) {
     
-    renderGraphBoxes(nMulticlassClassifiers, renderMap)
+    Smartdasher.renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
     var group1 = classifiers[0]
     var xAxisName1 = classifiers[1]
 
-    window.filteredDataForMap = filterDataByCheckBox(classifiers, data, window.checkedValues)
+    window.filteredDataForMap = Smartdasher.filterDataByCheckBox(classifiers, data, window.checkedValues)
 
-    var [yAxis1, labels1] = separateDataInGroups(window.filteredData, group1, checkedValues)
+    var [yAxis1, labels1] = Smartdasher.separateDataInGroups(window.filteredData, group1, checkedValues)
 
     var xAxis1 = window.checkedValues[xAxisName1]
 
     //Filtering null and missing values
-    var [yAxis1, xAxis1, labels1] = nullsOut(yAxis1, xAxis1, labels1)
+    var [yAxis1, xAxis1, labels1] = Smartdasher.nullsOut(yAxis1, xAxis1, labels1)
     //End of filtering null and missing values
 
     //Translating subClassifier codes to labels
@@ -346,7 +332,7 @@ function completeWrap(){
     var labels1 = labels1.map(i => labels[0]['subLabels'][group1][i])
 
     //Display single variable names
-    var singleLabels = singleLabelExtractor(window.checkedValues, labels)
+    var singleLabels = Smartdasher.singleLabelExtractor(window.checkedValues, labels)
     var singleClassifiers = Object.keys(singleLabels)
     var singleOptions = Object.values(singleLabels)
 
@@ -358,8 +344,8 @@ function completeWrap(){
 
     document.getElementById('selectedVariables').innerHTML = title1
 
-    var xAxis1 = xAxis1.map(i=>shortenLabel(i, 19))
-    graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
+    var xAxis1 = xAxis1.map(i=>Smartdasher.shortenLabel(i, 19))
+    Smartdasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
 
     if(renderMap){
       fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
@@ -376,7 +362,7 @@ function completeWrap(){
 
 //If user is entering for the first time, random selection is done.
 //Otherwise, if the page has url parameters, page will render the selection previously made
-var urlCheckBoxes = checkBoxesFromUrl() //Does the url have checkbox parameters?
+var urlCheckBoxes = Smartdasher.checkBoxesFromUrl() //Does the url have checkbox parameters?
 if(urlCheckBoxes === false){ //If no, run random simulation of elements
   //Selecting two multiclass classifiers
   var multi = ["vuosi_"]; //Vuosi is always present, so we pick this as one multiclassifier
@@ -391,19 +377,19 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
   }
 
   //Running click simulation
-  simulateSelection(multi, single)
-  singleCheck('dependentVariable', 0)
+  Smartdasher.simulateSelection(multi, single)
+  Smartdasher.singleCheck('dependentVariable', 0)
   completeWrap()
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+  Smartdasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 
 } else { //If yes, check checkboxes according to the parameters of the urlCheckBoxes
-  hideSelectors() //If user intends to embed url, there will be a parameter called embed. If embed is true, headers and selectors will be hiden for compactness.
+  Smartdasher.hideSelectors() //If user intends to embed url, there will be a parameter called embed. If embed is true, headers and selectors will be hiden for compactness.
   var checkKeys = Object.keys(urlCheckBoxes)
   for(l in checkKeys){
-    targetCheck(checkKeys[l], urlCheckBoxes[checkKeys[l]])
+    Smartdasher.targetCheck(checkKeys[l], urlCheckBoxes[checkKeys[l]])
   }
   completeWrap()
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+  Smartdasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 
 //Establishing initial state of dependentVariable click box
@@ -411,38 +397,18 @@ var currentCheck = checkedValues['dependentVariable']
 var dependentIndex = classifiersAndOptions['dependentVariable'].indexOf(currentCheck[0])
 
 document.getElementById("nextDependent").onclick = function(){
-  nextDependent(classifiersAndOptions, true, window.dependentIndex, "dependentVariable")
+  Smartdasher.nextDependent(classifiersAndOptions, true, window.dependentIndex, "dependentVariable")
   completeWrap()
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+  Smartdasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 document.getElementById("previousDependent").onclick = function(){
-  nextDependent(classifiersAndOptions, false, window.dependentIndex, "dependentVariable")
+  Smartdasher.nextDependent(classifiersAndOptions, false, window.dependentIndex, "dependentVariable")
   completeWrap()
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+  Smartdasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 //tulostus=1&dim1paataso=1&dim1alataso=18,19,02,21&nayta=2.dimensio&dim2paataso=13&dim2alataso=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21&nayta=3.dimensio&dim3paataso=79&dim3alataso=1,5,6
 document.getElementById("goBackSelection").onclick = function(){
   javascript:history.go(-2);
-  //var urlParameters = new URLSearchParams(window.location.search);
-  //var parameters = ['tulostus', 'dim1paataso', 'dim1alataso', 'nayta=2.dimensio', 'dim2paataso', 'dim2alataso', 'nayta=3.dimensio', 'dim3paataso', 'dim3alataso']
-  //var filteredParams = ''
-  //for(i in parameters){
-    //var parameterValue = urlParameters.get(parameters[i])
-    //if(parameterValue !== null){
-      //filteredParams += parameters[i] + '=' + parameterValue + '&'
-      //} else {
-        //if(parameters[i] === 'nayta=2.dimensio' || parameters[i] === 'nayta=3.dimensio'){
-          //filteredParams += parameters[i] + '&'
-          //}
-        //else{
-          //filteredParams += parameters[i] + '=&'
-          //}
-        //}
-    //}
-  //var newLink = 'http://tykhe.mtt.fi:8090/portal/page/portal/taloustohtori/maatalouskehitys/omat_valinnat/taulukko/?' + filteredParams
-  //var newLink = newLink.slice(0, -1)
-  //console.log(newLink)
-  //location.href = newLink 
 }
 
 //Changing button displays and functions

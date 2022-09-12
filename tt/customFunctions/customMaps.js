@@ -124,7 +124,7 @@ function selectRegion(feature, regionDivision){
     }
   }
   completeWrap() 
-  displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
+  Smartdasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 
 function onEachFeature(feature, layer) {
