@@ -25,11 +25,6 @@ proc json out=jsonout4 pretty;
 	export graf_subclasslabel_ / nosastags;
 run;
 
-filename jsonout5 "/data/taloustohtoritulosteet/rap/regionDivisions.txt" encoding="utf-16be";
-proc json out=jsonout5 pretty;
-  export maakunta2020b / nosastags;
-run;
-
 /* Creates first half of HTML page */
 data _null_;
   /* change directory here */
@@ -44,13 +39,7 @@ data _null_;
     put   '<meta charset="UTF-8">';
     put   '<meta name="viewport" content="width=device-width, initial-scale=1">';
     put   '<!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGeneral.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMap.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesGraph.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesSelectors.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesBoxSelector.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/checkBoxes.css">';
-    put   '<link rel="stylesheet" href="https://pasoneto.github.io/lukeDashboard/styles/stylesMobile.css">';
+    put   '<link rel="stylesheet" href="https://unpkg.com/smartdasher@1.0.4/dist/main.css">';
     put   '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>';
     put   '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css">';
     put   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
@@ -133,12 +122,6 @@ data _null_;
 run;
 
 
-/* Add region divisions for map generation */
-filename jsonout5 "/data/taloustohtoritulosteet/rap/regionDivisions.txt" encoding="utf-16be";
-proc json out=jsonout5 pretty;
-   export maakunta2020b / nosastags;
-run;
-
 /* Adding region divisions */
 data _null_;
   /* change directory here */
@@ -162,7 +145,7 @@ run;
 	data _null_;
 	  /* change directory here */
 		file "/data/taloustohtoritulosteet/rap/test.txt" mod;
-		put "'nao deu'";
+		put "'null'";
 	run;
    %end;
 %mend executeIfExists;
@@ -179,17 +162,10 @@ data _null_;
     put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
     put '<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>';
     put '<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/leafLetFunctions.js"></script>';
+    put '<script src="https://unpkg.com/smartdasher@1.0.4/dist/bundle.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customFunctions.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customMaps.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/generateHTMLstructure.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/dataProcessUtils.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/graphFunctions.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/mapFunctions.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/dropdownSelection.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/shareFunctions.js"></script>';
-    put '<script src="https://pasoneto.github.io/lukeDashboard/src/checkBoxSelectors.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/wrap.js"></script>';
 
     put '</html>';
