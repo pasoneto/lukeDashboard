@@ -121,10 +121,8 @@ data _null_;
 	put _infile_;
 run;
 
-
 /* Adding region divisions */
 data _null_;
-  /* change directory here */
   file "/data/taloustohtoritulosteet/rap/test.txt" mod;
   put 'var regionsAll =';
 run;
@@ -133,17 +131,14 @@ run;
    	%if %sysfunc(fileexist(&dir)) %then %do;
 	/* Inserts the classlabels in json format into the HTML page */
 	data _null_;
-	  /* change directory here */
 	  infile "/data/taloustohtoritulosteet/rap/regionDivisions.txt";
 		input;
-	  /* change directory here */
 		file "/data/taloustohtoritulosteet/rap/test.txt" mod;
 		put _infile_;
 	run;
    %end;
    %else %do;
 	data _null_;
-	  /* change directory here */
 		file "/data/taloustohtoritulosteet/rap/test.txt" mod;
 		put "'null'";
 	run;
