@@ -60,6 +60,10 @@ var filteredData;
 var multiClassClassifiers;
 var map;
 var reportType = reportType.slice(0, -1) //Remove empty space from report type
+var graph1;
+var graph2;
+var pie1;
+var pie2;
 
 //Extracting classifiers from ED file classifierLabels
 var classifiers = Object.keys(classifierLabels[0])
@@ -229,25 +233,48 @@ function completeWrap(){
 
     var xAxis2 = xAxis2.map(i=>SmartDasher.shortenLabel(i, 19))
   
-    SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
-    SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
+    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
+    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
 
     //Rendering up to 2 pieCharts
     var pieColors = SmartDasher.colorGenerator(xAxis2)
-    var htmlPieCharts = '';
 
     var nPieCharts = Math.min(yAxis2.length, 2)
     SmartDasher.generatePieChartsContainers(nPieCharts)
 
     if(nPieCharts == 2){
-      SmartDasher.graphCustomPie(xAxis2, yAxis2[0], "myChart" + 2, "doughnut", labels2[0], pieColors)
-      SmartDasher.graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 3, "doughnut", labels2[yAxis2.length-1], pieColors)
+      pie1 = SmartDasher.graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 2, "doughnut", labels2[yAxis2.length-1], pieColors)
+      pie2 = SmartDasher.graphCustomPie(xAxis2, yAxis2[0], "myChart" + 3, "doughnut", labels2[0], pieColors)
     }
 
     if(renderMap){
       fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
     }
 
+    document.querySelectorAll("#downloadButton")[0].onclick = function(){
+      var a = document.createElement('a');
+      a.href = graph1.toBase64Image();
+      a.download = 'chart1.png';
+      a.click();
+    }
+    document.querySelectorAll("#downloadButton")[1].onclick = function(){
+      var a = document.createElement('a');
+      a.href = graph2.toBase64Image();
+      a.download = 'chart2.png';
+      a.click();
+    }
+    document.querySelectorAll("#downloadButton")[2].onclick = function(){
+      var a = document.createElement('a');
+      a.href = pie1.toBase64Image();
+      a.download = 'pie1.png';
+      a.click();
+    }
+    document.querySelectorAll("#downloadButton")[3].onclick = function(){
+      var a = document.createElement('a');
+      a.href = pie2.toBase64Image();
+      a.download = 'pie2.png';
+      a.click();
+    }
   } 
   
   ///////For when there is only 1 milticlass classifier
@@ -288,7 +315,7 @@ function completeWrap(){
 
     var labels1 = labels1.map(i=>SmartDasher.shortenLabel(i, 19))
 
-    SmartDasher.graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
+    graph1 = SmartDasher.graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
     
     //Rendering up to 3 pieCharts
     var pieColors = SmartDasher.colorGenerator(labels1)
@@ -305,11 +332,30 @@ function completeWrap(){
     } else {
       var position = 'bottom'
     }
-    SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
-    SmartDasher.graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
+    graph2 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart3", 'bar', '', position=position)
+    pie1 = SmartDasher.graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
 
     if(renderMap){
       fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    }
+
+    document.querySelectorAll("#downloadButton")[0].onclick = function(){
+      var a = document.createElement('a');
+      a.href = graph1.toBase64Image();
+      a.download = 'chart1.png';
+      a.click();
+    }
+    document.querySelectorAll("#downloadButton")[1].onclick = function(){
+      var a = document.createElement('a');
+      a.href = pie1.toBase64Image();
+      a.download = 'pie1.png';
+      a.click();
+    }
+    document.querySelectorAll("#downloadButton")[2].onclick = function(){
+      var a = document.createElement('a');
+      a.href = pie2.toBase64Image();
+      a.download = 'pie2.png';
+      a.click();
     }
 
   } if(nMulticlassClassifiers < 1) {
@@ -347,7 +393,7 @@ function completeWrap(){
     document.getElementById('selectedVariables').innerHTML = title1
 
     var xAxis1 = xAxis1.map(i=>SmartDasher.shortenLabel(i, 19))
-    SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
+    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
 
     if(renderMap){
       fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
@@ -360,6 +406,14 @@ function completeWrap(){
     //var mrc = renameMapRegions(filteredDataForMap);
     //drawMap(mapURL, mapDivision, mrc, filteredDataForMap, map, zoom = 4.7, centering = [65.3, 25], labels)
   }
+
+  document.querySelectorAll("#downloadButton")[0].onclick = function(){
+    var a = document.createElement('a');
+    a.href = graph1.toBase64Image();
+    a.download = 'chart1.png';
+    a.click();
+  }
+
 }
 
 //If user is entering for the first time, random selection is done.
