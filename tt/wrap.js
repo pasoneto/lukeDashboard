@@ -225,16 +225,16 @@ function completeWrap(){
     
     var title1 = ''
     for(m in singleClassifiers){
-      title1 += '<b>' + singleClassifiers[m] + '</b>' + ': ' + '<i>' + singleOptions[m] + '</i>' + '    '
+      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '    '
     }
     var title1 = title1.slice(0, -2)
 
-    document.getElementById('selectedVariables').innerHTML = title1
+    //document.getElementById('selectedVariables').innerHTML = title1
 
     var xAxis2 = xAxis2.map(i=>SmartDasher.shortenLabel(i, 19))
   
-    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", '', showLegend = true)
-    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", '', showLegend = true)
+    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true)
+    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
 
     //Rendering up to 2 pieCharts
     var pieColors = SmartDasher.colorGenerator(xAxis2)
@@ -248,7 +248,7 @@ function completeWrap(){
     }
 
     if(renderMap){
-      fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+      //fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
     }
 
     document.querySelectorAll("#downloadButton")[0].onclick = function(){
@@ -307,15 +307,15 @@ function completeWrap(){
 
     var title1 = ''
     for(m in singleClassifiers){
-      title1 += '<b>' + singleClassifiers[m] + '</b>' + ': ' + singleOptions[m] + '    '
+      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '    '
     }
     var title1 = title1.slice(0, -1)
 
-    document.getElementById('selectedVariables').innerHTML = title1
+    //document.getElementById('selectedVariables').innerHTML = title1
 
     var labels1 = labels1.map(i=>SmartDasher.shortenLabel(i, 19))
 
-    graph1 = SmartDasher.graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', '', showLegend=false)
+    graph1 = SmartDasher.graphCustom(labels1, [yAxis1.map(i=> i[0])], '', "myChart", 'line', title1, showLegend=false)
     
     //Rendering up to 3 pieCharts
     var pieColors = SmartDasher.colorGenerator(labels1)
@@ -336,7 +336,7 @@ function completeWrap(){
     pie1 = SmartDasher.graphCustomPie(labels1, yAxis1.map(i=>i[0]), "myChart2", "doughnut", 'Proportions', pieColors, legend=true, position=position)
 
     if(renderMap){
-      fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+      //fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
     }
 
     document.querySelectorAll("#downloadButton")[0].onclick = function(){
@@ -386,17 +386,17 @@ function completeWrap(){
 
     var title1 = ''
     for(m in singleClassifiers){
-      title1 += '<b>' + singleClassifiers[m] + '</b>' + ': ' + singleOptions[m] + '    '
+      title1 += singleClassifiers[m] + ': ' + singleOptions[m] + '    '
     }
     var title1 = title1.slice(0, -1)
 
-    document.getElementById('selectedVariables').innerHTML = title1
+    //document.getElementById('selectedVariables').innerHTML = title1
 
     var xAxis1 = xAxis1.map(i=>SmartDasher.shortenLabel(i, 19))
-    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', '')
+    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", 'bar', title1)
 
     if(renderMap){
-      fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+      //fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
     }
 
   }
