@@ -6,6 +6,12 @@
   //document.head.appendChild(div.children[0]);
   //}
 
+//Changed order of pie charts
+//Y axis always shows 0
+//Change button working again
+//Downloadable image
+//Documentation updated and developed
+
 var textTranslations = {
   selectors: {
     filter: {fin: "Valitse ryhmä", swd: "Välj grupp", eng: "Select Group"},
@@ -66,19 +72,19 @@ var pie1;
 var pie2;
 
 //Extracting classifiers from ED file classifierLabels
-var classifiers = Object.keys(classifierLabels[0])
+var initialClassifiers = Object.keys(classifierLabels[0])
 
 //Reshaping json object from wide to long format
-var data = reshapeJSON(data, classifiers)
+var data = reshapeJSON(data, initialClassifiers)
 
 //Merging labels into one object
-var allLabels = mergeLabelsObject(classifiers, classifierSubLabels)
+var allLabels = mergeLabelsObject(initialClassifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
 //Initiate Map object
-if(classifiers.indexOf("maakunta") !== -1){
+if(initialClassifiers.indexOf("maakunta") !== -1){
   var regionDivision = "maakunta" 
   var renderMap = true
 } else {
@@ -187,11 +193,11 @@ function completeWrap(){
 
     SmartDasher.renderGraphBoxes(nMulticlassClassifiers, renderMap)
 
-    var group1 = window.multiClassClassifiers[1]
-    var group2 = window.multiClassClassifiers[0]
+    var group1 = window.multiClassClassifiers[0]
+    var group2 = window.multiClassClassifiers[1]
 
-    var xAxisName1 = window.multiClassClassifiers[0]
-    var xAxisName2 = window.multiClassClassifiers[1]
+    var xAxisName1 = window.multiClassClassifiers[1]
+    var xAxisName2 = window.multiClassClassifiers[0]
 
     window.filteredDataForMap = SmartDasher.filterDataByCheckBox(classifiers, data, window.checkedValues)
 
@@ -231,6 +237,7 @@ function completeWrap(){
 
     //document.getElementById('selectedVariables').innerHTML = title1
 
+    var xAxis1 = xAxis1.map(i=>SmartDasher.shortenLabel(i, 10))
     var xAxis2 = xAxis2.map(i=>SmartDasher.shortenLabel(i, 19))
   
     graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true)
@@ -421,16 +428,16 @@ function completeWrap(){
 var urlCheckBoxes = SmartDasher.checkBoxesFromUrl() //Does the url have checkbox parameters?
 if(urlCheckBoxes === false){ //If no, run random simulation of elements
   //Selecting two multiclass classifiers
-  var multi = ["vuosi_"]; //Vuosi is always present, so we pick this as one multiclassifier
-  var classifiersNoVuosi = classifiers.filter(i=>i !== "vuosi_" && i !== "dependentVariable")
+  var lastChosen = initialClassifiers[initialClassifiers.length-1]
+  console.log("Last classifier chosen is");
+  console.log(lastChosen);
+  var multi = [lastChosen]; //Vuosi is always present, so we pick this as one multiclassifier
+  var classifiersNoVuosi = classifiers.filter(i=>i !== lastChosen && i !== "dependentVariable")
   var randomElement = classifiersNoVuosi[Math.floor(Math.random() * classifiersNoVuosi.length)];
   multi.push(randomElement)
-
+  
   //Establishing the single classifiers
   var single = classifiers.filter(i => multi.includes(i) == false)
-  if(classifiers.length == 2){
-    multi = ["vuosi_"]
-  }
 
   //Running click simulation
   SmartDasher.simulateSelection(multi, single)
