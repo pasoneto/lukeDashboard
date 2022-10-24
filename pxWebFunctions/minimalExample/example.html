@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/smartdasher@1.0.10/dist/main.css"> <!--Calling the styles of SmartDasher-->
-    <link rel="stylesheet" href="./customSyles.css"> <!--Calling the styles of SmartDasher-->
+    <link rel="stylesheet" href="https://unpkg.com/smartdasher@1.0.10/dist/main.css"> <!--Calling the pre-defined styles of SmartDasher-->
+    <link rel="stylesheet" href="./customSyles.css"> <!--Calling custom styles for SmartDasher. Edit all you want :D-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 </body>
-  <script src="../../../smartdasher/dist/bundle.js"></script> <!--Calling the functions of SmartDasher-->
+  <script src="https://unpkg.com/smartdasher@1.0.13/dist/bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-  <script src="./fetchData.js"></script>
   <script src="./wrapper.js"></script>
 
 <script>
+
     var title = 'Title of the dashboard'
     var logo = './logo-generic.png'
     
@@ -32,14 +32,16 @@
     
     var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
 
-    fetchDataWrapper(url).then((data) => {
+    fetchDataWrapper(url).then(([data, metadata]) => {
       //Verifying, from data, what categories and option are availabele to the user
       var catsAndOptions = SmartDasher.extractCategoriesAndOptions(data, dependentVariableName = 'value')
       window.categories = catsAndOptions[0]
       window.options = catsAndOptions[1]
-       
-      //Setting the check-box system for user-selection of categories
 
+      document.getElementById("title").innerHTML = metadata
+
+      //Setting the check-box system for user-selection of categories
+      console.log(metadata)
       SmartDasher.generateCheckBoxes(categories, options, data, dependentVariable = 'value', labels = null, textTranslations = null, language, wrapGraph)
       var checkedValues = SmartDasher.checkedValuesObjectGenerator(categories)  //Instanciating object which will hold whatever value user selects on check-box verification system
       SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox)

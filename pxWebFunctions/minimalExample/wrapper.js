@@ -1,3 +1,48 @@
+//Basic URL. Shows all parameters that are available for the particular variable.
+async function baseURL(url){
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+function queryBodyMaker(r){
+      var query = []
+      var lObj = r.variables.length
+      for (let i = 0; i < lObj; i++) {
+        let opt = r.variables[i]
+        var values = [];
+        for(let x = 0; x < opt.values.length; x++){
+            values.push(opt.values[x]) //Select values that exist in checked values
+        }
+        var objQuery = {code: opt.code, selection: {filter: "item", values: values} }
+        query.push(objQuery);
+      }
+      var rawBody = query;
+      var query = {query: query, response: {"format": "json"}}
+      const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify(query)
+      };
+      return options
+}
+
+//Structures json into more readable format.
+//Data is the raw response, base are the parameters associated with each API call.
+function restructureData(base, data){
+  var objData = {}
+  for(i in data.data){
+    var json = { };
+    for(k in data.data[i].key){
+      var key = base.variables[k].code;
+      json[key] = data.data[i].key[k];
+      json["value"] = data.data[i].values[0];
+    }
+    objData[i] = json;
+  } 
+  return objData
+}
+
 //Wrapper function to fetch data
 async function fetchDataWrapper(url){
   //Fetching data from pxWeb-API
@@ -7,10 +52,12 @@ async function fetchDataWrapper(url){
   //Fetch all data from given report
   var allData = await fetch(url, queryBody);
   var allData = await allData.json();
+  
+  var report = allData['metadata'][0]['label']
 
   var allData = await restructureData(baseData, allData)
   var allData = Object.values(allData)
-  return(allData)
+  return([allData, report])
 }
 
 function wrapGraph(){

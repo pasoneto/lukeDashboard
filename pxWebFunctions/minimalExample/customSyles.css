@@ -1,4 +1,8 @@
 @media screen and (min-width: 700px) {
+  #title{
+    justify-content: center;
+    color: blue
+  }
   #mainGraphs {
     max-width: 69%;
     height: 72vh;
@@ -46,6 +50,9 @@
   }
   #downloadButton:hover {
     color: darkblue;
+  }
+  #logo {
+    width: 5vw;
   }
 }
 #header{
