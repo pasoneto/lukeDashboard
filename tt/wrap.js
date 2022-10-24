@@ -91,94 +91,6 @@ if(initialClassifiers.indexOf("maakunta") !== -1){
   var renderMap = false
 }
 
-//Render html structure
-SmartDasher.initiateDashboard(title = '', logo = logoURL, renderMap = renderMap, flipperButton = true, textTranslations, language)
-
-//If map is present, set up map properties
-if(renderMap){
-  var zoom = 4.7
-  var centering = [65.5, 25.6]
-  var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
-  var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
-  map.options.minZoom = 4;
-  var tilesLayer; //Define another tile layer (not on use)
-  var popup; //Define global popup layer
-  var info = L.control(); //Define information box to display name of region
-}
-
-var dvKeys = Object.keys(labels[0]['dependentVariable'])
-for(k in dvKeys){
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¶', 'ö')
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¤', 'ä')
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¥', 'å')
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã–', 'Ö')
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã„', 'Ä')
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã…', 'Å')
-  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll("Ästerbotten", 'Österbotten')
-}
-
-var listClassifiers = Object.keys(labels[0]['subLabels'])
-for(k in listClassifiers){
-  var classObject = labels[0]['subLabels'][listClassifiers[k]]
-  var listSubClasses = Object.keys(classObject)
-  for(m in listSubClasses){
-    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¶', 'ö')
-    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¤', 'ä')
-    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¥', 'å')
-    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã–', 'Ö')
-    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã„', 'Ä')
-    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã…', 'Å')
-  }
-}
-
-//Extracting classifiers and options
-var classifiers = Object.keys(data[0])
-var classifiers = classifiers.filter(i => i !== 'value')
-var options = []
-for(k in classifiers){
-  var a = data.map(i=>i[classifiers[k]])
-  var a = a.filter(onlyUnique)
-  var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
-  options.push(a)
-}
-var options = options.filter(i=> i[0] !== undefined)
-
-//Manually extracting classifiersAndOptions because I want to remove N, Eyelain, and Otos
-var classifiersAndOptions = {}
-for(k in classifiers){
-  var a = data.map(i=>i[classifiers[k]])
-  var a = a.filter(onlyUnique)
-  var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
-  classifiersAndOptions[classifiers[k]] = a
-}
-
-//Generate checkbox inside hidden div
-SmartDasher.generateCheckBoxes(classifiers, options, data, '', labels, textTranslations, language)
-
-//Once data has been fetched and checkboxes created, Select dimension button will receive the following functions
-var buttonsRenderGraph = document.querySelectorAll(`[id^="buttonDimensionSelector"]`)
-//Applying render function to these buttons
-for(k in buttonsRenderGraph){
-  buttonsRenderGraph[k].onclick = function(){
-    SmartDasher.showBoxSelector("boxTop") //Hide box with checkboxes
-    SmartDasher.showBoxSelector("dimmer") //Hide box with checkboxes
-    completeWrap() 
-    SmartDasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
-  }
-}
-
-//Add back function to show checkboxes div
-document.getElementById("selectDimensionButton").onclick = function(){
-  SmartDasher.showBoxSelector("boxTop")
-  SmartDasher.showBoxSelector("dimmer") //Hide box with checkboxes
-}
-
-//Creates empty object with category keys
-var checkedValues = SmartDasher.checkedValuesObjectGenerator(classifiers)
-
-//Establishes checkbox verification system. Multiple or single selection
-SmartDasher.checkBoxVerificationSystem(classifiers, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations) //Value is written inside the global variable checkedValues
-
 function completeWrap(){
   //Verifies if user chose at least one options for each classifier. If not, random assignment is made
   SmartDasher.verifyAllClassifiersChecked(checkedValues)
@@ -421,7 +333,78 @@ function completeWrap(){
     a.click();
   }
 
+  SmartDasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
+
+//Render html structure
+SmartDasher.initiateDashboard(title = '', logo = logoURL, renderMap = renderMap, flipperButton = true, textTranslations, language)
+
+//If map is present, set up map properties
+if(renderMap){
+  var zoom = 4.7
+  var centering = [65.5, 25.6]
+  var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+  var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
+  map.options.minZoom = 4;
+  var tilesLayer; //Define another tile layer (not on use)
+  var popup; //Define global popup layer
+  var info = L.control(); //Define information box to display name of region
+}
+
+var dvKeys = Object.keys(labels[0]['dependentVariable'])
+for(k in dvKeys){
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¶', 'ö')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¤', 'ä')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã¥', 'å')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã–', 'Ö')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã„', 'Ä')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll('Ã…', 'Å')
+  labels[0]['dependentVariable'][dvKeys[k]] = labels[0]['dependentVariable'][dvKeys[k]].replaceAll("Ästerbotten", 'Österbotten')
+}
+
+var listClassifiers = Object.keys(labels[0]['subLabels'])
+for(k in listClassifiers){
+  var classObject = labels[0]['subLabels'][listClassifiers[k]]
+  var listSubClasses = Object.keys(classObject)
+  for(m in listSubClasses){
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¶', 'ö')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¤', 'ä')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã¥', 'å')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã–', 'Ö')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã„', 'Ä')
+    labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]] = labels[0]['subLabels'][listClassifiers[k]][listSubClasses[m]].replaceAll('Ã…', 'Å')
+  }
+}
+
+//Extracting classifiers and options
+var classifiers = Object.keys(data[0])
+var classifiers = classifiers.filter(i => i !== 'value')
+var options = []
+for(k in classifiers){
+  var a = data.map(i=>i[classifiers[k]])
+  var a = a.filter(onlyUnique)
+  var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
+  options.push(a)
+}
+var options = options.filter(i=> i[0] !== undefined)
+
+//Manually extracting classifiersAndOptions because I want to remove N, Eyelain, and Otos
+var classifiersAndOptions = {}
+for(k in classifiers){
+  var a = data.map(i=>i[classifiers[k]])
+  var a = a.filter(onlyUnique)
+  var a = a.filter(i => {return i !== "N" && i !== 'eyelain' && i !== 'otos'});
+  classifiersAndOptions[classifiers[k]] = a
+}
+
+//Generate checkbox inside hidden div
+SmartDasher.generateCheckBoxes(classifiers, options, data, '', labels, textTranslations, language, completeWrap)
+
+//Creates empty object with category keys
+var checkedValues = SmartDasher.checkedValuesObjectGenerator(classifiers)
+
+//Establishes checkbox verification system. Multiple or single selection
+SmartDasher.checkBoxVerificationSystem(classifiers, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations) //Value is written inside the global variable checkedValues
 
 //If user is entering for the first time, random selection is done.
 //Otherwise, if the page has url parameters, page will render the selection previously made
@@ -443,7 +426,6 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
   SmartDasher.simulateSelection(multi, single)
   SmartDasher.singleCheck('dependentVariable', 0)
   completeWrap()
-  SmartDasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 
 } else { //If yes, check checkboxes according to the parameters of the urlCheckBoxes
   SmartDasher.hideSelectors() //If user intends to embed url, there will be a parameter called embed. If embed is true, headers and selectors will be hiden for compactness.
@@ -452,7 +434,6 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
     SmartDasher.targetCheck(checkKeys[l], urlCheckBoxes[checkKeys[l]])
   }
   completeWrap()
-  SmartDasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 
 //Establishing initial state of dependentVariable click box
@@ -462,12 +443,10 @@ var dependentIndex = classifiersAndOptions['dependentVariable'].indexOf(currentC
 document.getElementById("nextDependent").onclick = function(){
   SmartDasher.nextDependent(classifiersAndOptions, true, window.dependentIndex, "dependentVariable")
   completeWrap()
-  SmartDasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 document.getElementById("previousDependent").onclick = function(){
   SmartDasher.nextDependent(classifiersAndOptions, false, window.dependentIndex, "dependentVariable")
   completeWrap()
-  SmartDasher.displayNonGraphs(window.filteredData, whereToAppend = "graphsContainer", textTranslations, language)
 }
 //tulostus=1&dim1paataso=1&dim1alataso=18,19,02,21&nayta=2.dimensio&dim2paataso=13&dim2alataso=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21&nayta=3.dimensio&dim3paataso=79&dim3alataso=1,5,6
 document.getElementById("goBackSelection").onclick = function(){
@@ -506,12 +485,3 @@ try{
 } catch{
   console.log("No single selector")
 }
-
-//Changing styles locally
-document.getElementById("header").style.background = "#ffffff"
-document.getElementById("header").style.padding = '0'
-document.getElementById("dimensionSelector").style.background = "#ffffff"
-document.getElementById("dimensionSelector").style.alignItems = 'start'
-document.getElementById("dimensionSelector").style.margin = '0'
-document.getElementsByTagName("body")[0].style.background = 'white'
-

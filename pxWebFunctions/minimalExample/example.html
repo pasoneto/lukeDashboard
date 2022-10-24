@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="https://unpkg.com/smartdasher@1.0.10/dist/main.css"> <!--Calling the styles of SmartDasher-->
+    <link rel="stylesheet" href="./customSyles.css"> <!--Calling the styles of SmartDasher-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 </body>
-  <script src="https://unpkg.com/smartdasher@1.0.10/dist/bundle.js"></script> <!--Calling the functions of SmartDasher-->
+  <script src="../../../smartdasher/dist/bundle.js"></script> <!--Calling the functions of SmartDasher-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-  <script src="./wrapGraph.js"></script> <!--Calling function to generate graphs-->
-  <script src="./ficData.js"></script> <!--Calling ficticious data-->
+  <script src="./fetchData.js"></script>
+  <script src="./wrapper.js"></script>
 
 <script>
     var title = 'Title of the dashboard'
     var logo = './logo-generic.png'
     
+    //Initiating global variables
+    var categories;
+    var options;
+
     //Initiate dashboard with basic information
     SmartDasher.initiateDashboard(
         title = title,
@@ -22,34 +27,36 @@
         renderMap = false, 
         flipperButton = false, 
         textTranslations = null, 
-        language = null
+        language = null,
       )
+    
+    var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
 
-    //Verifying, from data, what categories and option are availabele to the user
-    var [categories, options] = SmartDasher.extractCategoriesAndOptions(data, dependentVariableName = 'value')
+    fetchDataWrapper(url).then((data) => {
+      //Verifying, from data, what categories and option are availabele to the user
+      var catsAndOptions = SmartDasher.extractCategoriesAndOptions(data, dependentVariableName = 'value')
+      window.categories = catsAndOptions[0]
+      window.options = catsAndOptions[1]
+       
+      //Setting the check-box system for user-selection of categories
 
-    //Setting the check-box system for user-selection of categories
-    SmartDasher.generateCheckBoxes(categories, options, data, dependentVariable = 'value', labels = null, textTranslations = null, language, whereAppend = 'boxTop', wrapFunction = console.log)
-    var checkedValues = SmartDasher.checkedValuesObjectGenerator(categories)     //Instanciating object which will hold whatever value user selects on check-box verification system
-    SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "statistic")
+      SmartDasher.generateCheckBoxes(categories, options, data, dependentVariable = 'value', labels = null, textTranslations = null, language, wrapGraph)
+      var checkedValues = SmartDasher.checkedValuesObjectGenerator(categories)  //Instanciating object which will hold whatever value user selects on check-box verification system
+      SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox)
 
-    //Creating instance of wrap-generating function
-    function wraperGraph(){
-        wrapGraph(checkedValues, categories, filteredData)
-    }
+      //Automatically choose selection when user opens page
+      var multi = ["Vuosi", "Tieto"]; //Selecting two multiclass categories for automatic selection
+      var single = categories.filter(i => multi.includes(i) == false)//Establishing the single categories
+      SmartDasher.simulateSelection(multi, single)
 
-    //Assigning graph-generating function to button of the page
-    var renderButton = document.getElementById("buttonDimensionSelector");
-    var renderButton2 = document.getElementById("buttonDimensionSelector2");
-    renderButton.addEventListener("click", wraperGraph);
-    renderButton2.addEventListener("click", wraperGraph);
+      SmartDasher.pickMultiClassClassifiers(checkedValues, categories)
 
-    //Automatically choose selection when user opens page
-    var multi = ["year", "region"];//Selecting two multiclass classifiers for automatic selection
-    var single = categories.filter(i => multi.includes(i) == false)//Establishing the single classifiers
-    SmartDasher.simulateSelection(multi, single)
-    wrapGraph(checkedValues, categories, filteredData)
-    SmartDasher.displayNonGraphs(window.filteredData)
+      wrapGraph()
+
+    })
+
+
+
 
 </script>
 </html>
