@@ -78,7 +78,7 @@ var initialClassifiers = Object.keys(classifierLabels[0])
 var data = reshapeJSON(data, initialClassifiers)
 
 //Merging labels into one object
-var allLabels = mergeLabelsObject(initialClassifiers, classifierSubLabels)
+var allLabels = mergeLabelsObject(initialClassifiers, classifierSubLabels) //PROBLEM IS HERE. THIS Function
 allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
@@ -90,6 +90,11 @@ if(initialClassifiers.indexOf("maakunta") !== -1){
 } else {
   var renderMap = false
 }
+
+//Testing different orders
+var initialClassifiers = ['maakunta', 'tuotantosuuntaso', 'vuosi_']
+var initialClassifiers = ['tuotantosuuntaso', 'vuosi_', 'maakunta']
+var initialClassifiers = ['vuosi_', 'maakunta', 'tuotantosuuntaso']
 
 function completeWrap(){
   //Verifies if user chose at least one options for each classifier. If not, random assignment is made
@@ -136,7 +141,6 @@ function completeWrap(){
 
     //Display single variable names
     var singleLabels = SmartDasher.singleLabelExtractor(window.checkedValues, labels)
-    //displaySelectedSingleVariables(window.checkedValues, exception = "dependentVariable", labels)
 
     var singleClassifiers = Object.keys(singleLabels)
     var singleOptions = Object.values(singleLabels)
@@ -379,6 +383,11 @@ for(k in listClassifiers){
 //Extracting classifiers and options
 var classifiers = Object.keys(data[0])
 var classifiers = classifiers.filter(i => i !== 'value')
+
+var classifiers = ['dependentVariable', 'maakunta', 'tuotantosuuntaso', 'vuosi_']
+var classifiers = ['dependentVariable', 'tuotantosuuntaso', 'vuosi_', 'maakunta']
+var classifiers = ['dependentVariable', initialClassifiers[0], initialClassifiers[1], initialClassifiers[2]]
+
 var options = []
 for(k in classifiers){
   var a = data.map(i=>i[classifiers[k]])
