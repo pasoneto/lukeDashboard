@@ -412,8 +412,18 @@ SmartDasher.generateCheckBoxes(classifiers, options, data, '', labels, textTrans
 //Creates empty object with category keys
 var checkedValues = SmartDasher.checkedValuesObjectGenerator(classifiers)
 
+
+//Establishes functions to be added to "howToButton"
+function howToFunction(){
+  var multiClassChosen = window.multiClassClassifiers.map(i=>labels[0]['classifiers'][i])
+  console.log(multiClassChosen)
+  var messageTitle = textTranslations['selectors']['messageSingle'][language][0]
+  var messageBody = textTranslations['selectors']['messageSingle'][language][1]
+  messageBody += multiClassChosen[0] + ' / ' + multiClassChosen[1]
+  Swal.fire(messageTitle, messageBody);
+}
 //Establishes checkbox verification system. Multiple or single selection
-SmartDasher.checkBoxVerificationSystem(classifiers, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations) //Value is written inside the global variable checkedValues
+SmartDasher.checkBoxVerificationSystem(classifiers, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations, howToFunction = howToFunction) //Value is written inside the global variable checkedValues
 
 //If user is entering for the first time, random selection is done.
 //Otherwise, if the page has url parameters, page will render the selection previously made
@@ -478,19 +488,11 @@ button3.onclick = function(){
   javascript:history.go(-1);
 }
 
-function buttonQuestion(){
-  var multiClassChosen = window.multiClassClassifiers.map(i=>labels[0]['classifiers'][i])
-  var messageTitle = textTranslations['selectors']['messageSingle'][language][0]
-  var messageBody = textTranslations['selectors']['messageSingle'][language][1]
-  messageBody += multiClassChosen[0] + ' / ' + multiClassChosen[1]
-  Swal.fire(messageTitle, messageBody);
-}
-
-try{
-  var buttonHowTo = document.getElementById("howToButton")
-  buttonHowTo.onclick = function(){
-    buttonQuestion()
-  }
-} catch{
-  console.log("No single selector")
-}
+//try{
+  //var buttonHowTo = document.getElementById("howToButton")
+  //buttonHowTo.onclick = function(){
+    //buttonQuestion()
+    //}
+  //} catch{
+    //console.log("No single selector")
+    //}
