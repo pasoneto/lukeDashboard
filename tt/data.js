@@ -1,4 +1,4 @@
-var reportType = 'Tuloslaskelma '
+var reportType = 'Taselaskelma '
 var kieli = 3
 var data =
 [

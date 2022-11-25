@@ -31,8 +31,8 @@
         language = null,
       )
     
+    var url = "https://statdb.luke.fi:443/PXWeb/api/v1/en/LUKE/02 Maatalous/02 Rakenne/02 Maatalous- ja puutarhayritysten rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px"
     var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
-
     fetchDataWrapper(url).then(([data, metadata]) => {
       //Verifying, from data, what categories and option are availabele to the user
       var catsAndOptions = SmartDasher.extractCategoriesAndOptions(data, dependentVariableName = 'value')

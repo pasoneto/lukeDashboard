@@ -92,9 +92,9 @@ if(initialClassifiers.indexOf("maakunta") !== -1){
 }
 
 //Testing different orders
-var initialClassifiers = ['maakunta', 'tuotantosuuntaso', 'vuosi_']
-var initialClassifiers = ['tuotantosuuntaso', 'vuosi_', 'maakunta']
-var initialClassifiers = ['vuosi_', 'maakunta', 'tuotantosuuntaso']
+//var initialClassifiers = ['maakunta', 'tuotantosuuntaso', 'vuosi_']
+//var initialClassifiers = ['tuotantosuuntaso', 'vuosi_', 'maakunta']
+//var initialClassifiers = ['vuosi_', 'maakunta', 'tuotantosuuntaso']
 
 function completeWrap(){
   //Verifies if user chose at least one options for each classifier. If not, random assignment is made
@@ -384,9 +384,9 @@ for(k in listClassifiers){
 var classifiers = Object.keys(data[0])
 var classifiers = classifiers.filter(i => i !== 'value')
 
-var classifiers = ['dependentVariable', 'maakunta', 'tuotantosuuntaso', 'vuosi_']
-var classifiers = ['dependentVariable', 'tuotantosuuntaso', 'vuosi_', 'maakunta']
-var classifiers = ['dependentVariable', initialClassifiers[0], initialClassifiers[1], initialClassifiers[2]]
+//var classifiers = ['dependentVariable', 'maakunta', 'tuotantosuuntaso', 'vuosi_']
+//var classifiers = ['dependentVariable', 'tuotantosuuntaso', 'vuosi_', 'maakunta']
+//var classifiers = ['dependentVariable', initialClassifiers[0], initialClassifiers[1], initialClassifiers[2]]
 
 var options = []
 for(k in classifiers){
@@ -440,7 +440,9 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
   
   //Establishing the single classifiers
   var single = classifiers.filter(i => multi.includes(i) == false)
-
+  
+  console.log(single)
+  console.log(multi)
   //Running click simulation
   SmartDasher.simulateSelection(multi, single)
   SmartDasher.singleCheck('dependentVariable', 0)
