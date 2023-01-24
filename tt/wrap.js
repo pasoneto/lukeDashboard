@@ -83,9 +83,12 @@ allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
 
-//Initiate Map object
-if(initialClassifiers.indexOf("maakunta") !== -1){
-  var regionDivision = "maakunta" 
+
+//Removing last -empty- character from alue
+var alue = alue.slice(0, -1)
+
+if(alue != "tukialue"){
+  var regionDivision = alue
   var renderMap = true
 } else {
   var renderMap = false

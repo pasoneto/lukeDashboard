@@ -147,6 +147,8 @@ async function wrapMap(regionDivision){
   var geoJSON = generateGeoJSON(geoModel, allFeatures)
   var geoJSON = assignValueToGeoJsonObject(geoJSON, window.data, regionDivision)
 
+  console.log(geoJSON)
+
   info.onAdd = function (map) {
       this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
       this.update();

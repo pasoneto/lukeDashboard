@@ -1,5 +1,7 @@
 var reportType = 'Taselaskelma '
 var kieli = 3
+var alue = "maakunta "
+var regionalClassifier = 2
 var data =
 [
 {
