@@ -1,2 +1,4 @@
 #For automatic selection, select the ones with data in order
 #Border darker and middle with opacity
+
+#Allow selection of many variables

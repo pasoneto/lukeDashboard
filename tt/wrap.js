@@ -426,7 +426,7 @@ function howToFunction(){
   Swal.fire(messageTitle, messageBody);
 }
 //Establishes checkbox verification system. Multiple or single selection
-SmartDasher.checkBoxVerificationSystem(classifiers, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "dependentVariable", textTranslations = textTranslations, howToFunction = howToFunction) //Value is written inside the global variable checkedValues
+SmartDasher.checkBoxVerificationSystem(classifiers, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "", textTranslations = textTranslations, howToFunction = howToFunction) //Value is written inside the global variable checkedValues
 
 //If user is entering for the first time, random selection is done.
 //Otherwise, if the page has url parameters, page will render the selection previously made
