@@ -139,7 +139,7 @@ function onEachFeature(feature, layer) {
 async function wrapMap(regionDivision){
   
   window.map.remove()
-  window.map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+  window.map = L.map("mapBox", {zoomSnap: 0.1, crs: crs}).setView(centering, zoom);
 
   var [segmentedRegions, segmentedRegionsProps] = segmentRegions(regionsAll, regionDivision)
   var allFeatures = featureGenerator(segmentedRegions, segmentedRegionsProps)

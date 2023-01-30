@@ -348,9 +348,17 @@ SmartDasher.initiateDashboard(title = '', logo = logoURL, renderMap = renderMap,
 
 //If map is present, set up map properties
 if(renderMap){
-  var zoom = 4.7
-  var centering = [65.5, 25.6]
-  var map = L.map("mapBox", {zoomSnap: 0.1}).setView(centering, zoom);
+  var zoom = 1.7
+  var centering = [65.0, 25.1]
+  var crs = new L.Proj.CRS('EPSG:3067',
+    "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs",
+    {
+      resolutions: [
+        8192, 4096, 2048, 1024, 512, 256, 128
+      ],
+      origin: [0, 0]
+    })
+  var map = L.map("mapBox", {zoomSnap: 0.1, crs: crs}).setView(centering, zoom);
   var baseTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' })
   map.options.minZoom = 4;
   var tilesLayer; //Define another tile layer (not on use)
