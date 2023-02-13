@@ -165,6 +165,8 @@ data _null_;
     put '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>';
     put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
     put '<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>';
+    put '<script src="https://unpkg.com/proj4@2.8.1/dist/proj4-src.js"></script>';
+    put '<script src="https://unpkg.com/proj4leaflet@1.0.2/src/proj4leaflet.js"></script>';
     put '<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>';
     put '<script src="https://unpkg.com/smartdasher@1.0.16/dist/bundle.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customFunctions.js"></script>';

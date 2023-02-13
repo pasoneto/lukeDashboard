@@ -82,6 +82,32 @@ function styleGen(feature){
     }
 }
 
+//Manipulate size of the map
+function openNav() {
+  document.getElementById("graphsContainer").style.display = 'none'
+  document.getElementById("mapBox").style.width = "100vw";
+  document.getElementById("dimensionSelector").style.display = 'none'
+
+  setTimeout(function(){ 
+    wrapMap(regionDivision)
+    document.querySelector(".retractMap").style.display = 'block';
+    document.querySelector(".expandMap").style.display = 'none';
+  }, 300);
+}
+
+function closeNav() {
+  document.getElementById("graphsContainer").style.display = ''
+  document.getElementById("mapBox").style.width = "20vw";
+  document.getElementById("dimensionSelector").style.display = 'none'
+
+  setTimeout(function(){ 
+    wrapMap(regionDivision)
+    document.querySelector(".retractMap").style.display = 'none';
+    document.querySelector(".expandMap").style.display = 'block';
+  }, 300);
+}
+
+
 //Show information about region
 function showProps(e, labels, regionDivision){
   if(e.target.feature.properties !== 'undefined'){
@@ -134,6 +160,17 @@ function onEachFeature(feature, layer) {
       click: function(feature){selectRegion(feature, regionDivision)}
       //mousemove: applyMousePositionToBox,
     });
+    
+    //Adding region names
+    if(feature.properties){
+      var regionCode = feature.properties[0][regionDivision]
+      var nameRegionLabel = labels[0]['subLabels'][regionDivision][regionCode]
+      layer.bindTooltip("<span style='font-size:10px'>" + nameRegionLabel + "</span>", {
+        className: "label",
+        permanent: true,
+        direction: "center"
+      }).openTooltip();
+    }
 }
 
 async function wrapMap(regionDivision){
@@ -164,6 +201,25 @@ async function wrapMap(regionDivision){
       onEachFeature: onEachFeature,
       style: styleGen,
     }).addTo(map);
+
+  //Creating map extension box
+  var expandMapDiv = L.DomUtil.create('div', 'expandMap');
+  var retractMapDiv = L.DomUtil.create('div', 'retractMap');
+  var controlDivs = document.querySelector(".leaflet-control-zoom.leaflet-bar.leaflet-control")
+
+  controlDivs.append(expandMapDiv);
+  controlDivs.append(retractMapDiv);
+
+  expandMapDiv.innerHTML = ">"
+  retractMapDiv.innerHTML = "<"
+
+  expandMapDiv.onclick = function(){
+    openNav()    
+  }
+  retractMapDiv.onclick = function(){
+    closeNav()    
+  }
+
 }
 
 function fillMapSelection(checkedValues, whereAppend, labels, textTranslations){
@@ -174,6 +230,8 @@ function fillMapSelection(checkedValues, whereAppend, labels, textTranslations){
   }
   document.getElementById(whereAppend).innerHTML = html
 }
+
+
 
 
 
