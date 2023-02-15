@@ -52,9 +52,8 @@ body{
 button{
 }
 
-.expandMap, .retractMap{
+.expandMap, .mapType{
     background-color: #fff;
-    border-bottom: 1px solid #ccc;
     width: 26px;
     height: 26px;
     line-height: 26px;
@@ -62,17 +61,20 @@ button{
     text-align: center;
     text-decoration: none;
     color: black;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
     font: bold 18px 'Lucida Console', Monaco, monospace;
     text-indent: 1px;
 }
 
-.retractMap{
-  display: none
+.mapType{
+  border-bottom: 1px solid #ccc;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.expandMap{
+  border-bottom: 1px solid #ccc;
 }
 
-.expandMap:hover, .retractMap:hover{
+.expandMap:hover, .mapType:hover{
   background-color: rgba(51, 181, 229, 0.4);
   border-bottom: 1px solid #ccc;
   width: 26px;
@@ -101,4 +103,12 @@ button{
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+}
+.info.legend.leaflet-control{
+    padding: 10px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+    border-radius: 5px;
 }
