@@ -78,11 +78,10 @@ var initialClassifiers = Object.keys(classifierLabels[0])
 var data = reshapeJSON(data, initialClassifiers)
 
 //Merging labels into one object
-var allLabels = mergeLabelsObject(initialClassifiers, classifierSubLabels) //PROBLEM IS HERE. THIS Function
+var allLabels = mergeLabelsObject(initialClassifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
-
 
 //Removing last -empty- character from alue
 var alue = alue.slice(0, -1)
@@ -158,7 +157,7 @@ function completeWrap(){
 
     var xAxis1 = xAxis1.map(i=>SmartDasher.shortenLabel(i, 10))
     var xAxis2 = xAxis2.map(i=>SmartDasher.shortenLabel(i, 19))
-  
+
     graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true)
     graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
 
@@ -189,17 +188,21 @@ function completeWrap(){
       a.download = 'chart2.png';
       a.click();
     }
-    document.querySelectorAll("#downloadButton")[2].onclick = function(){
-      var a = document.createElement('a');
-      a.href = pie1.toBase64Image();
-      a.download = 'pie1.png';
-      a.click();
-    }
-    document.querySelectorAll("#downloadButton")[3].onclick = function(){
-      var a = document.createElement('a');
-      a.href = pie2.toBase64Image();
-      a.download = 'pie2.png';
-      a.click();
+    try{
+      document.querySelectorAll("#downloadButton")[2].onclick = function(){
+        var a = document.createElement('a');
+        a.href = pie1.toBase64Image();
+        a.download = 'pie1.png';
+        a.click();
+      }
+      document.querySelectorAll("#downloadButton")[3].onclick = function(){
+        var a = document.createElement('a');
+        a.href = pie2.toBase64Image();
+        a.download = 'pie2.png';
+        a.click();
+      }
+    } catch(e){
+      console.log("No pie charts to download")
     }
   } 
   

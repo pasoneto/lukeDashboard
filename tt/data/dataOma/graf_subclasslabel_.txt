@@ -1,0 +1,50 @@
+[
+  {
+    "r21": "2018",
+    "r22": "2019",
+    "r8": "",
+    "r9": "",
+    "r10": "",
+    "r11": "",
+    "r5": "",
+    "r4": "",
+    "r6": "",
+    "r18": ""
+  },
+  {
+    "r21": "",
+    "r22": "",
+    "r8": "Kymenlaakso",
+    "r9": "Etelä-Karjala",
+    "r10": "Etelä-Savo",
+    "r11": "Pohjois-Savo",
+    "r5": "",
+    "r4": "",
+    "r6": "",
+    "r18": ""
+  },
+  {
+    "r21": "",
+    "r22": "",
+    "r8": "",
+    "r9": "",
+    "r10": "",
+    "r11": "",
+    "r5": "Dairy Farms",
+    "r4": "",
+    "r6": "",
+    "r18": ""
+  },
+  {
+    "r21": "",
+    "r22": "",
+    "r8": " Farm Net Income  Strong: 55% -99%",
+    "r9": "",
+    "r10": "",
+    "r11": "",
+    "r5": "",
+    "r4": " Farm Net Income  Weak: 1% -45%",
+    "r6": " Farm Net Income Average",
+    "r18": " Farm Net Income Example Dairy Farm"
+  }
+]

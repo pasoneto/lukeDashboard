@@ -1,0 +1,8 @@
+[
+  {
+    "vuosi_": "Year",
+    "maakunta": "County",
+    "tuotantosuuntaso": "Production Type",
+    "lka": "lka"
+  }
+]

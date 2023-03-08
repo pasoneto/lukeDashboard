@@ -2,3 +2,5 @@
 #Border darker and middle with opacity
 
 #Allow selection of many variables
+
+#Weak strong groups agriculture and horticulture

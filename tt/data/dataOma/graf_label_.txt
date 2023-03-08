@@ -1,0 +1,24 @@
+[
+  {
+    "yrittajatulo": "Farm Net Income",
+    "tulyrittajanvoitto": "Entrepreneurial Profit",
+    "palkkavaatimus": "+ Wages Claim",
+    "korkovaatimus": "+ Interest Claim",
+    "kannattavuuskerroin": "Profitability Ratio",
+    "tyontuotto": "Return on hour of family work",
+    "paaomantuotto": "Return on equity %",
+    "yrittajatulo1": "Farm Net Income",
+    "tuloponkorko": "- Interest Claim",
+    "tyoansio": "=Earnings",
+    "tyotunnit1": "Hours of family work",
+    "tyotuntiansio": "=Hourly earnings",
+    "opoloppu": "Equity",
+    "taseloppuMennakot1": "Total assets",
+    "omavaraisuusaste": "Equity ratio",
+    "kokonaispotuotto": "Net Result",
+    "tase": "Total assets",
+    "kokonaispotuotto_pros": "Return on assets %",
+    "sotalkoko": "Standard Output. euro per farm",
+    "yrittajatulo_per_awuvp": "Farm Net Income per FWU"
+  }
+]
