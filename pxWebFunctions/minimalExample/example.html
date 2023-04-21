@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/smartdasher@1.0.10/dist/main.css"> <!--Calling the pre-defined styles of SmartDasher-->
+    <link rel="stylesheet" href="https://unpkg.com/smartdasher@1.1.4/dist/main.css"> <!--Calling the pre-defined styles of SmartDasher-->
     <link rel="stylesheet" href="./customSyles.css"> <!--Calling custom styles for SmartDasher. Edit all you want :D-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -8,7 +8,7 @@
 
 <body>
 </body>
-  <script src="https://unpkg.com/smartdasher@1.0.13/dist/bundle.js"></script>
+  <script src="https://unpkg.com/smartdasher@1.1.4/dist/bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script src="./wrapper.js"></script>
 
@@ -31,9 +31,27 @@
         language = null,
       )
     
-    var url = "https://statdb.luke.fi:443/PXWeb/api/v1/en/LUKE/02 Maatalous/02 Rakenne/02 Maatalous- ja puutarhayritysten rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px"
-    var url = 'http://statdb.luke.fi/PXWeb/api/v1/en/LUKE/08%20Indikaattorit/02%20Ilmastonmuutos/02%20Maatalouden%20kasvihuonekaasupäästöt/01_Maatal_kasvihuonekaasupaastot.px'
-    fetchDataWrapper(url).then(([data, metadata]) => {
+    var urlList = [{
+        "reportCategory": "Agricultural statistics",
+        "subCategory": "Structure of agricultural and horticultural enterprises",
+        "url": "https://statdb.luke.fi:443/PxWeb/api/v1/en/LUKE/02 Maatalous/02 Rakenne/02 Maatalous- ja puutarhayritysten rakenne/01_Maatalous_ja_puutarhayrit_lkm_ELY.px"
+      },{
+        "reportCategory": "Agricultural statistics",
+        "subCategory": "Horticulture statistics",
+        "url": "https://statdb.luke.fi:443/PxWeb/api/v1/en/LUKE/02 Maatalous/04 Tuotanto/20 Puutarhatilastot/03b_Kasvihuonetuotanto_syotavat.px",
+      },{
+        "reportCategory": "Agricultural statistics",
+        "subCategory": "Land purchase prices and agricultural land rents",
+        "report": "Agricultural land rents by year, ELY Centre and production sector",
+        "url": "https://statdb.luke.fi:443/PxWeb/api/v1/en/LUKE/02 Maatalous/06 Talous/03 Pellon vuokrahinnat/01_Pellon_vuokrahinnat.px"
+      },{
+        "reportCategory": "Agricultural statistics",
+        "subCategory": "Balance Sheet for Food Commodities",
+        "url": "https://statdb.luke.fi:443/PxWeb/api/v1/en/LUKE/02 Maatalous/08 Muut/02 Ravintotase/01_Elintarvikkeiden_kulutus.px"
+      },
+    ]
+
+    fetchDataWrapper(urlList[1].url).then(([data, metadata]) => {
       //Verifying, from data, what categories and option are availabele to the user
       var catsAndOptions = SmartDasher.extractCategoriesAndOptions(data, dependentVariableName = 'value')
       window.categories = catsAndOptions[0]
@@ -42,7 +60,6 @@
       document.getElementById("title").innerHTML = metadata
 
       //Setting the check-box system for user-selection of categories
-      console.log(metadata)
       SmartDasher.generateCheckBoxes(categories, options, data, dependentVariable = 'value', labels = null, textTranslations = null, language, wrapGraph)
       var checkedValues = SmartDasher.checkedValuesObjectGenerator(categories)  //Instanciating object which will hold whatever value user selects on check-box verification system
       SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox)
@@ -57,8 +74,6 @@
       wrapGraph()
 
     })
-
-
 
 
 </script>

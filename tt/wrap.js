@@ -1,17 +1,4 @@
-//var headHTML = '<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">'
-//var div = document.createElement('div');
-
-//div.innerHTML = headHTML;
-//while (div.children.length > 0) {
-  //document.head.appendChild(div.children[0]);
-  //}
-
-//Changed order of pie charts
-//Y axis always shows 0
-//Change button working again
-//Downloadable image
-//Documentation updated and developed
-
+//var data = data.filter(i => i.omaluok !== 5)
 var textTranslations = {
   selectors: {
     filter: {fin: "Valitse ryhmä", swd: "Välj grupp", eng: "Select Group"},
@@ -44,6 +31,18 @@ var textTranslations = {
     pleaseTryDifferent: {fin: "Ole hyvä ja kokeile toista muuttujien yhdistelmää", 
                          swd: "Prova en annan kombination av variabler", 
                          eng: "Please, try a different combination of variables"},
+  },
+  hajonta: {
+    average: {
+      fin: "Keskiarvo",
+      swd: "Genomsnitt",
+      eng: "Average",
+    },
+    sum: {
+      fin: "Summa",
+      swd: "Belopp",
+      eng: "Summ",
+    }
   }
 }
 
@@ -82,6 +81,35 @@ var allLabels = mergeLabelsObject(initialClassifiers, classifierSubLabels)
 allLabels["dependentVariable"] = dependentLabels[0]
 classifierLabels[0]['dependentVariable'] = reportType
 var labels = [{"dependentVariable": dependentLabels[0], "classifiers": classifierLabels[0], "subLabels": allLabels}]
+
+//Fixing not expanded data frame problem for omaluok
+if(false){
+var allMaakuntasSelected = Object.keys(labels[0]['subLabels'].maakunta).filter(i => i !== 'code')
+var problemExpanded = [];
+
+var exampleRegion = problem[0].maakunta
+for(j in allMaakuntasSelected){
+  for(k in problem){
+    var pC = JSON.parse(JSON.stringify(problem[k]));
+    pC.maakunta = Number(allMaakuntasSelected[j])
+    problemExpanded.push(pC)
+  }
+}
+
+function removeNonExample(i){
+  if(Number(i.maakunta) !== exampleRegion){
+    i.value = null;
+  }
+  return(i)
+}
+
+var problem = reshapeJSON(problemExpanded, initialClassifiers)
+var problem = problem.map(i => removeNonExample(i))
+var data = data.concat(problem);
+}
+//End of fixing not expanded data frame problem for omaluok
+
+
 
 //Removing last -empty- character from alue
 var alue = alue.slice(0, -1)
@@ -122,7 +150,7 @@ function completeWrap(){
 
     var [yAxis1, labels1] = SmartDasher.separateDataInGroups(window.filteredData, group1, checkedValues)
     var [yAxis2, labels2] = SmartDasher.separateDataInGroups(window.filteredData, group2, checkedValues)
-    
+
     var xAxis1 = window.checkedValues[xAxisName1]
     var xAxis2 = window.checkedValues[xAxisName2]
 
@@ -158,23 +186,40 @@ function completeWrap(){
     var xAxis1 = xAxis1.map(i=>SmartDasher.shortenLabel(i, 10))
     var xAxis2 = xAxis2.map(i=>SmartDasher.shortenLabel(i, 19))
 
-    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true)
-    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true)
+    console.log(xAxis2)
+    console.log(yAxis2)
+    console.log(labels2)
 
+    var yAxisTitle = yksikkokieli
+
+    console.log(yAxisTitle)
+    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true, fill = false, suggestedMin = null, position = 'bottom', yAxisTitle = yAxisTitle)
+    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true, fill = false, suggestedMin = null, position = 'bottom', yAxisTitle = yAxisTitle)
+
+    console.log("Seeing pie charts")
     //Rendering up to 2 pieCharts
     var pieColors = SmartDasher.colorGenerator(xAxis2)
 
     var nPieCharts = Math.min(yAxis2.length, 2)
-    SmartDasher.generatePieChartsContainers(nPieCharts)
+    //It is possible that all values of a given classifier are null.
+    //In this case, the nPieCharts will be lower than 2. Then we cancel pie charts completelly.
+    if(nPieCharts == 2){
+      SmartDasher.generatePieChartsContainers(nPieCharts)
+    } else {
+      SmartDasher.generatePieChartsContainers(0)
+      document.getElementById("pieChartsContainer").style.display = "none"
+      document.getElementById("mainGraphs").style.maxWidth = "100%"
+    }
 
     if(nPieCharts == 2){
       pie1 = SmartDasher.graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 2, "doughnut", labels2[yAxis2.length-1], pieColors)
       pie2 = SmartDasher.graphCustomPie(xAxis2, yAxis2[0], "myChart" + 3, "doughnut", labels2[0], pieColors)
     }
-
-    if(renderMap){
-      //fillMapSelection(checkedValues, 'dropdown-content', labels, textTranslations)
+    if(nPieCharts == 1){
+      //pie1 = SmartDasher.graphCustomPie(xAxis2, yAxis2[yAxis2.length-1], "myChart" + 2, "doughnut", labels2[yAxis2.length-1], pieColors)
     }
+
+    console.log("End of seeing pie charts")
 
     document.querySelectorAll("#downloadButton")[0].onclick = function(){
       var a = document.createElement('a');
@@ -398,10 +443,6 @@ for(k in listClassifiers){
 var classifiers = Object.keys(data[0])
 var classifiers = classifiers.filter(i => i !== 'value')
 
-//var classifiers = ['dependentVariable', 'maakunta', 'tuotantosuuntaso', 'vuosi_']
-//var classifiers = ['dependentVariable', 'tuotantosuuntaso', 'vuosi_', 'maakunta']
-//var classifiers = ['dependentVariable', initialClassifiers[0], initialClassifiers[1], initialClassifiers[2]]
-
 var options = []
 for(k in classifiers){
   var a = data.map(i=>i[classifiers[k]])
@@ -430,7 +471,6 @@ var checkedValues = SmartDasher.checkedValuesObjectGenerator(classifiers)
 //Establishes functions to be added to "howToButton"
 function howToFunction(){
   var multiClassChosen = window.multiClassClassifiers.map(i=>labels[0]['classifiers'][i])
-  console.log(multiClassChosen)
   var messageTitle = textTranslations['selectors']['messageSingle'][language][0]
   var messageBody = textTranslations['selectors']['messageSingle'][language][1]
   messageBody += multiClassChosen[0] + ' / ' + multiClassChosen[1]
@@ -455,8 +495,6 @@ if(urlCheckBoxes === false){ //If no, run random simulation of elements
   //Establishing the single classifiers
   var single = classifiers.filter(i => multi.includes(i) == false)
   
-  console.log(single)
-  console.log(multi)
   //Running click simulation
   SmartDasher.simulateSelection(multi, single)
   SmartDasher.singleCheck('dependentVariable', 0)

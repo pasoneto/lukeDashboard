@@ -1,7 +1,6 @@
 /* Dataset is generated here by ED's system */
 
 /* Generates json file */
-/* change directory here */
 filename jsonout1 "/data/taloustohtoritulosteet/rap/json.txt" encoding="utf-16be";
 proc json out=jsonout1 pretty;
 	export graf_data_ / nosastags;
@@ -63,6 +62,15 @@ data _null_;
     alue="%aluetek";
     put 'var alue="' alue '"';
     rClas = &dimpaanro;
+    
+    yksikkokieli="%yksikko&kieli";
+    put 'var yksikkokieli="' yksikkokieli '"';
+
+    /*harjonta = &hajonta;
+    put 'var harjonta="' harjonta '"';
+    akajanro = &jakajanro
+    put 'var akajanro="' akajanro '"';*/
+
     put 'var regionalClassifier=' rClas;
     put 'var reportType ="' &rapotsikko '"';
 	  put 'var data =';
@@ -168,7 +176,7 @@ data _null_;
     put '<script src="https://unpkg.com/proj4@2.8.1/dist/proj4-src.js"></script>';
     put '<script src="https://unpkg.com/proj4leaflet@1.0.2/src/proj4leaflet.js"></script>';
     put '<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>';
-    put '<script src="https://unpkg.com/smartdasher@1.1.2/dist/bundle.js"></script>';
+    put '<script src="https://unpkg.com/smartdasher@1.1.7/dist/bundle.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customFunctions.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/customFunctions/customMaps.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
