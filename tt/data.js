@@ -3,6 +3,7 @@ var kieli = 1
 var alue = "maakunta "
 var yksikkokieli = "Summa"
 var regionalClassifier = 2
+var jakajanro = 2
 var data =
 [
 {

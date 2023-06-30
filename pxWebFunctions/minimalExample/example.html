@@ -8,7 +8,7 @@
 
 <body>
 </body>
-  <script src="https://unpkg.com/smartdasher@1.1.4/dist/bundle.js"></script>
+  <script src="https://unpkg.com/smartdasher@1.1.9/dist/bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script src="./wrapper.js"></script>
 
@@ -20,6 +20,7 @@
     //Initiating global variables
     var categories;
     var options;
+    var map;
 
     //Initiate dashboard with basic information
     SmartDasher.initiateDashboard(
@@ -29,8 +30,8 @@
         flipperButton = false, 
         textTranslations = null, 
         language = null,
-      )
-    
+    )
+
     var urlList = [{
         "reportCategory": "Agricultural statistics",
         "subCategory": "Structure of agricultural and horticultural enterprises",
@@ -51,7 +52,31 @@
       },
     ]
 
-    fetchDataWrapper(urlList[1].url).then(([data, metadata]) => {
+    let wrapDrop = document.createElement("div")
+    wrapDrop.classList.add("dropdown");
+
+    let btn = document.createElement("button");
+    btn.classList.add("dropbtn");
+    btn.innerHTML = "Select report";
+
+    let dropMenu = document.createElement("div");
+    dropMenu.classList.add("dropdown-content");
+
+    for(i in urlList){
+      var a = document.createElement("a");
+      a.innerHTML = urlList[i].subCategory
+      dropMenu.appendChild(a);
+    }
+
+    document.body.appendChild(dropMenu)
+    wrapDrop.appendChild(btn);
+    wrapDrop.appendChild(dropMenu);
+
+    var firstChild = document.getElementById("selectDimensionButton")
+    document.getElementById("dimensionSelector").insertBefore(wrapDrop, firstChild);
+
+
+    fetchDataWrapper(urlList[3].url).then(([data, metadata]) => {
       //Verifying, from data, what categories and option are availabele to the user
       var catsAndOptions = SmartDasher.extractCategoriesAndOptions(data, dependentVariableName = 'value')
       window.categories = catsAndOptions[0]
@@ -74,7 +99,6 @@
       wrapGraph()
 
     })
-
 
 </script>
 </html>

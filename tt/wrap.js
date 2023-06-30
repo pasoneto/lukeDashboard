@@ -190,11 +190,23 @@ function completeWrap(){
     console.log(yAxis2)
     console.log(labels2)
 
-    var yAxisTitle = yksikkokieli
-
+    var yAxisTitle = yksikkokieli + " (" + jakajanro + ")"
+    
     console.log(yAxisTitle)
-    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true, fill = false, suggestedMin = null, position = 'bottom', yAxisTitle = yAxisTitle)
-    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true, fill = false, suggestedMin = null, position = 'bottom', yAxisTitle = yAxisTitle)
+    console.log(yAxis1)
+    console.log(yAxis2)
+
+    //Thousand separator
+    //yAxis1 = yAxis
+
+    if(kieli == 3){
+      var thousandSeparator = "en-US"
+    } else {
+      var thousandSeparator = "de-DE"
+    }
+
+    graph1 = SmartDasher.graphCustom(xAxis1, yAxis1, labels1, "myChart", "line", title1, showLegend = true, fill = false, suggestedMin = null, position = 'bottom', yAxisTitle = yAxisTitle, thousandSeparator = thousandSeparator)
+    graph2 = SmartDasher.graphCustom(xAxis2, yAxis2, labels2, "myChart1", "bar", title1, showLegend = true, fill = false, suggestedMin = null, position = 'bottom', yAxisTitle = yAxisTitle, thousandSeparator = thousandSeparator)
 
     console.log("Seeing pie charts")
     //Rendering up to 2 pieCharts
