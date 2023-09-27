@@ -68,10 +68,10 @@ data _null_;
     yksikkokieli="%yksikko&kieli";
     put 'var yksikkokieli="' yksikkokieli '"';
 
-    /*harjonta = &hajonta;
+    harjonta = &hajonta;
     put 'var harjonta="' harjonta '"';
-    akajanro = &jakajanro
-    put 'var akajanro="' akajanro '"';*/
+    akajanro = &jakajanro;
+    put 'var jakajanro="' akajanro '"';
 
     put 'var regionalClassifier=' rClas;
     put 'var reportType ="' &rapotsikko '"';

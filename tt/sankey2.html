@@ -7,12 +7,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <link rel="stylesheet" href="../styles/stylesGeneral.css">
-  <link rel="stylesheet" href="../styles/stylesMap.css">
-  <link rel="stylesheet" href="../styles/stylesGraph.css">
-  <link rel="stylesheet" href="../styles/stylesSelectors.css">
-  <link rel="stylesheet" href="../styles/stylesBoxSelector.css">
-  <link rel="stylesheet" href="../styles/stylesMobile.css">
 </head>
 
 <body>
@@ -25,14 +19,22 @@
   <script src="./sankey/costs.js"></script>
   <script src="./sankey/income.js"></script>
   <script src="./data.js"></script>
-  <script src="../src/generateHTMLstructure.js"></script>
-  <script src="./dataProcess.js"></script>
-  <script src="../src/dataProcessUtils.js"></script>
-  <script src="../src/graphFunctions.js"></script>
-  <script src="../src/leafLetFunctions.js"></script>
-  <script src="../src/mapFunctions.js"></script>
-  <script src="../src/dropdownSelection.js"></script>
-  <script src="../src/checkBoxSelectors.js"></script>
+
+
+
+  <!-- change directories here if you're not working within the /documentation folder -->
+  <script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>
+  <script src="./data.js"></script>
+  <script src="./sankey/sankeyFunctions.js"></script>
+  <script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-sankey.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/smartdasher@1.1.2/dist/main.css"> <!--NEW-->
+  <script src="https://unpkg.com/smartdasher@1.1.9/dist/bundle.js">
+  <meta charset="UTF-8">
+
 
 <script>
 
@@ -42,7 +44,8 @@
     
     var classifiers = Object.keys(classifierLabels[0])
     var classifiers = classifiers.concat(['type'])
-
+    
+    console.log(classifiers)
     //var income = income.map(i=> i.type = 'income')
     //var costs = costs.map(i=> i.type = 'costs')
 
