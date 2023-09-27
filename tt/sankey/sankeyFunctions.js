@@ -142,8 +142,3 @@ document.getElementById("selectDimensionButton").onclick = function(){
     SmartDasher.showBoxSelector("boxTop")
 }
 document.getElementById("buttonDimensionSelector2").style.display = "none"
-
-
-
-
-
