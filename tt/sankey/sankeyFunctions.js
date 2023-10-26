@@ -83,7 +83,7 @@ var checkedValues = SmartDasher.checkedValuesObjectGenerator(categories)
 var allCheckBoxes = document.querySelectorAll('input');
 
 //Establishes checkbox verification system. Multiple or single selection
-SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = "") //Value is written inside the global variable checkedValues
+SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = null) //Value is written inside the global variable checkedValues
 
 var lastChosen = classifiers[classifiers.length-1]
 console.log("Last classifier chosen is");
