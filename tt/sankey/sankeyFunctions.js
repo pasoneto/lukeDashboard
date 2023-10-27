@@ -62,9 +62,10 @@ SmartDasher.initiateDashboard("", logoURL)
 
 //Adding event listener for database selector
 var classifiers = Object.keys(classifierLabels[0])
+var classifiers = classifiers.filter(i => i != 'keskiarvo')
 
 //Variable to hold chosen of sankey node. Values assigned by 
-var orderClassifiers = classifiers
+var orderClassifiers = [classifiers, "dependentVariable"].flat(1000)
 //Creates checkboxes for sankey order and assigns function to verify which values were chosen
 sankeyControls(classifiers)
 
@@ -83,7 +84,7 @@ var checkedValues = SmartDasher.checkedValuesObjectGenerator(categories)
 var allCheckBoxes = document.querySelectorAll('input');
 
 //Establishes checkbox verification system. Multiple or single selection
-SmartDasher.checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = null) //Value is written inside the global variable checkedValues
+checkBoxVerificationSystem(categories, checkedValues, data, SmartDasher.filterDataByCheckBox, exception = null) //Value is written inside the global variable checkedValues
 
 var lastChosen = classifiers[classifiers.length-1]
 console.log("Last classifier chosen is");
@@ -114,7 +115,7 @@ function wrapGraphFunction(){
        
       filteredData0 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[0]][i[orderClassifiers[0]]], 'to': labels[0]['subLabels'][orderClassifiers[1]][i[orderClassifiers[1]]], 'weight': i.value }))
       filteredData1 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[1]][i[orderClassifiers[1]]], 'to': labels[0]['subLabels'][orderClassifiers[2]][i[orderClassifiers[2]]], 'weight': i.value }))
-      filteredData2 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[2]][i[orderClassifiers[2]]], 'to': selectedDependent, 'weight': i.value }))
+      filteredData2 = filteredData.map(i=> ({'from': labels[0]['subLabels'][orderClassifiers[2]][i[orderClassifiers[2]]], 'to': labels[0]['subLabels'][orderClassifiers[3]][i[orderClassifiers[3]]], 'weight': i.value }))
 
       filteredData1 = filteredData1.concat(filteredData2)  
       filteredData1 = filteredData1.concat(filteredData0)  

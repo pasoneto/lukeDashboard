@@ -37,10 +37,6 @@ data _null_;
 
     put '<head>';
       put '<script src="https://unpkg.com/smartdasher@1.1.9/dist/bundle.js">';
-
-      put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
-
-      put '<script src="https://pasoneto.github.io/lukeDashboard/pxWebFunctions/dataFilter.js"></script>';
       put '<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>';
       put '<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>';
       put '<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-sankey.min.js"></script>';
@@ -122,6 +118,8 @@ data _null_;
 	file "test.txt" mod;
 
 	  put '</script>';
+
+    put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/sankey/sankeyFunctions.js"></script>';
 
     put '</html>';
