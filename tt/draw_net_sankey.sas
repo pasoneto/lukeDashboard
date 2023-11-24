@@ -120,6 +120,7 @@ data _null_;
 	  put '</script>';
 
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/dataProcess.js"></script>';
+    put '<script src="https://pasoneto.github.io/lukeDashboard/tt/sankey/redoChecks.js"></script>';
     put '<script src="https://pasoneto.github.io/lukeDashboard/tt/sankey/sankeyFunctions.js"></script>';
 
     put '</html>';
